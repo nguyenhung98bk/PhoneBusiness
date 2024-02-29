@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "@rails/webpacker": "5.4.4",
+    "axios": "^0.19.2",
+    "bootstrap": "^5.3.3",
+    "bootstrap-vue": "^2.23.1",
+    "vue": "^2.6.12",
+    "vue-loader": "^15.9.6",
+    "vue-router": "^3.3.2",
+    "vue-template-compiler": "^2.7.16"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
