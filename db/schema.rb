@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_29_100722) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_05_092835) do
   create_table "admins", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "username", null: false
+    t.string "email", null: false
     t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["username"], name: "index_admins_on_username", unique: true
+    t.index ["email"], name: "index_admins_on_email", unique: true
   end
 
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -44,6 +44,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_29_100722) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_customers_on_email", unique: true
+  end
+
+  create_table "item_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "item_id", null: false
+    t.string "image_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_item_images_on_item_id"
   end
 
   create_table "items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -104,11 +112,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_29_100722) do
 
   create_table "suppliers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
+    t.string "logo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   add_foreign_key "customer_destinations", "customers"
+  add_foreign_key "item_images", "items"
   add_foreign_key "items", "categories", column: "categorie_id"
   add_foreign_key "items", "suppliers"
   add_foreign_key "order_items", "items"

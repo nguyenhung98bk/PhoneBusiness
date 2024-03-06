@@ -2,11 +2,15 @@ import Vue from 'vue';
 import App from '../App.vue';
 import router from '../routes';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import DisableAutocomplete from 'vue-disable-autocomplete';
+import VueLoading from '../plugins/loading';
+
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
+Vue.use(DisableAutocomplete);
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
@@ -16,3 +20,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.body.appendChild(app.$el);
 });
+
+Vue.use(VueLoading);

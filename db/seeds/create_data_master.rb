@@ -1,6 +1,6 @@
 if Admin.count == 0
   Admin.create(
-    username: 'admin',
+    email: 'admin@test.com',
     password: '12345678'
   )
 end

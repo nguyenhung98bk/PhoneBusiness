@@ -12,17 +12,23 @@
 
                 <div class="form-outline form-white mb-4 text-start">
                   <label class="form-label" for="typeEmailX">Email</label>
-                  <input type="email" id="typeEmailX" class="form-control form-control-lg" />
+                  <input v-model="email" type="email" id="typeEmailX" class="form-control form-control-lg" />
+                  <span v-for="error in errors['email']" :key="error" class="text-danger">
+                    {{ error }}
+                  </span>
                 </div>
 
                 <div class="form-outline form-white mb-4 text-start">
                   <label class="form-label" for="typePasswordX">Mật khẩu</label>
-                  <input type="password" id="typePasswordX" class="form-control form-control-lg" />
+                  <input v-model="password" type="password" id="typePasswordX" class="form-control form-control-lg" />
+                  <span v-for="error in errors['password']" :key="error" class="text-danger">
+                    {{ error }}
+                  </span>
                 </div>
 
                 <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Quên mật khẩu</a></p>
                 
-                <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+                <button class="btn btn-outline-light btn-lg px-5" type="submit" @click="loginAdmin">Đăng nhập</button>
 
                 <div class="d-flex justify-content-center text-center mt-4 pt-1">
                   <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
@@ -38,6 +44,41 @@
     </div>
   </section>
 </template>
+
+<script>
+import { AuthService } from '../../../services/admin/auth.service';
+import Validator from '../../../validator';
+
+export default {
+  data () {
+    return {
+      email: '',
+      password: '',
+      errors: {}
+    };
+  },
+
+  methods: {
+    async loginAdmin() {
+      this.validate();
+      if (Object.keys(this.errors).length) return;
+      try {
+        await AuthService.login({ email: this.email, password: this.password });
+        return this.$router.push({ path: '/admin' });
+      } catch (error) {
+        return this.errors = {password: ['Tên đăng nhập hoặc mật khẩu của bạn là không chính xác.']};
+      }
+    },
+    validate() {
+      const validator = new Validator();
+      validator.checkRequire('email', this.email, 'Email') &&
+        validator.checkEmail('email',this.email, 'Email');
+      validator.checkRequire('password', this.password, 'Mật khẩu');
+      this.errors = validator.errors;
+    },
+  },
+}
+</script>
 
 <style scoped>
 .gradient-custom {

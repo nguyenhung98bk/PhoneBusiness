@@ -1,3 +1,4 @@
-.test {
-  color: red;
-}
+@import 'main';
+@import 'admin';
+@import 'admin-mobile';
+@import 'vue-select';

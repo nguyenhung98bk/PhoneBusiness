@@ -8,8 +8,9 @@ gem "rails", "~> 7.1.3", ">= 7.1.3.2"
 gem 'webpacker'
 
 gem 'bcrypt', '~> 3.1.7'
-
 gem 'sass-rails', '>= 6'
+gem 'jwt_sessions'
+gem 'pagy'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
