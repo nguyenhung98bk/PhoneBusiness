@@ -17,6 +17,8 @@ import StaffLogin from './pages/Staff/Login/Index.vue';
 import StaffCategory from './pages/Staff/Category/Index.vue';
 import StaffSupplier from './pages/Staff/Supplier/Index.vue';
 import StaffSupplierForm from './pages/Staff/Supplier/Form.vue';
+import StaffItem from './pages/Staff/Item/Index.vue';
+import StaffItemForm from './pages/Staff/Item/Form.vue';
 
 Vue.use(VueRouter);
 
@@ -46,10 +48,15 @@ const router = new VueRouter({
       component: StaffLayout,
       children: [
         { path: '', meta: { title: 'Trang chủ nhân viên' }, name: 'staff-home', component: AdminHome },
-        { path: 'categories', meta: { title: 'Phân loại sản phẩm' }, name: 'staff-category', component: StaffCategory },
-        { path: 'suppliers', meta: { title: 'Hãng sản phẩm' }, name: 'staff-supplier', component: StaffSupplier },
+        { path: 'categories', meta: { title: 'Phân loại sản phẩm' }, name: 'staff-categories', component: StaffCategory },
+
+        { path: 'suppliers', meta: { title: 'Hãng sản phẩm' }, name: 'staff-suppliers', component: StaffSupplier },
         { path: 'supplier/create', meta: { title: 'Thêm mới hãng sản phẩm' }, name: 'staff-supplier-create', component: StaffSupplierForm },
         { path: 'supplier/:id/edit', meta: { title: 'Chỉnh sửa hãng sản phẩm' }, name: 'staff-supplier-edit', component: StaffSupplierForm },
+
+        { path: 'items', meta: { title: 'Quản lý sản phẩm' }, name: 'staff-items', component: StaffItem },
+        { path: 'item/create', meta: { title: 'Thêm mới sản phẩm' }, name: 'staff-item-create', component: StaffItemForm },
+        { path: 'item/:id/edit', meta: { title: 'Chỉnh sửa sản phẩm' }, name: 'staff-item-edit', component: StaffItemForm },
       ]
     },
     { path: '/admin/login', meta: { title: 'Quản trị đăng nhập' }, name: 'admin-login', component: AdminLogin },

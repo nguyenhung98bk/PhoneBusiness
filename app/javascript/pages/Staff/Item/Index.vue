@@ -5,7 +5,7 @@
         <div class="white_card_header">
           <div class="box_header m-0">
             <div class="main-title">
-              <h3 class="m-0">Danh sách hãng sản phẩm</h3>
+              <h3 class="m-0">Danh sách sản phẩm</h3>
             </div>
           </div>
         </div>
@@ -14,12 +14,12 @@
             <div class="box_right d-flex lms_block">
               <div class="serach_field_2">
                 <div class="search_inner">
-                  <input v-model="keySearch" type="text" class="" placeholder="Tìm kiếm hãng sản phẩm" @input="onSearch">
+                  <input v-model="keySearch" type="text" class="" placeholder="Tìm kiếm sản phẩm" @input="onSearch">
                   <div class="icon-search"><b-icon-search scale="1.5" /></div>
                 </div>
               </div>
               <div class="add_button ms-2">
-                <button class="btn-create" @click="$router.push(`supplier/create`)">Thêm mới</button>
+                <button class="btn-create" @click="$router.push(`item/create`)">Thêm mới</button>
               </div>
             </div>
           </div>
@@ -32,10 +32,12 @@
                   </td>
                 </thead>
                 <tbody>
-                  <tr v-for="(supplier, index) in suppliers" :key="index" class="cursor-pointer" @click="$router.push(`supplier/${supplier.id}/edit`)">
-                    <td>{{ index + 1 }}</td>
-                    <td><img :src="supplier.logo ? supplier.logo : noImage" class="image-in-table"></td>
-                    <td>{{ supplier.name }}</td>
+                  <tr v-for="(item, index) in items" :key="index" class="cursor-pointer" @click="$router.push(`item/${item.id}/edit`)">
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.supplier_name }}</td>
+                    <td>{{ item.category_name }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.quantity }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -54,7 +56,7 @@
 </template>
 
 <script>
-import { SuppliersService } from '../../../services/staff/suppliers.service';
+import { ItemsService } from '../../../services/staff/items.service';
 import _ from 'lodash';
 import Pager from '../../../components/AdminPager.vue';
 import noImage from '../../../../assets/images/no_image.png';
@@ -65,8 +67,8 @@ export default {
   },
   data() {
     return {
-      tableHeader: ["STT", "Logo", "Hãng sản phẩm"],
-      suppliers: [],
+      tableHeader: ["Tên sản phẩm", "Hãng sản phẩm", "Loại sản phẩm", "Giá bán", "Số lượng"],
+      items: [],
       keySearch: null,
       pager: {
         page: 1,
@@ -83,18 +85,18 @@ export default {
     }
   },
   mounted() {
-    this.getSuppliers();
+    this.getItems();
   },
   methods: {
-    async getSuppliers() {
+    async getItems() {
       const params = {
         name: this.keySearch,
         ...this.pageParams,
       }
       this.$loading(true);
       try {
-        const { response } = await SuppliersService.index(params);
-        this.suppliers = response.data;
+        const { response } = await ItemsService.index(params);
+        this.items = response.data;
         this.pager = response.pager;
         this.$loading(false);
       } catch (e) {
@@ -103,12 +105,12 @@ export default {
     },
 
     onSearch: _.debounce(async function() {
-      this.getSuppliers();
+      this.getItems();
     }, 500),
 
     onPageChange(page) {
       this.pageParams.page = page;
-      this.getSuppliers();
+      this.getItems();
     },
   },
 }

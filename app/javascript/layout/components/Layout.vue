@@ -1,7 +1,7 @@
 <template>
   <main class="admin-main-container">
     <div :class="showSidebar ? 'sidebar-backdrop' : 'd-none'" @click="showSidebar = false"></div>
-    <div :class="showSidebar ? 'admin-sidebar admin-sidebar-menu' : 'admin-sidebar'">
+    <div :class="showSidebar ? 'admin-sidebar admin-sidebar-menu' : 'admin-sidebar admin-hidden-sidebar'">
       <div class="d-flex align-items-center p-4 admin-sidebar-header">
         <b-icon-lightning-charge variant="warning" scale="2"></b-icon-lightning-charge>
         <div class="text-light fs-3 ms-4">Store</div>
@@ -15,7 +15,7 @@
         </a>
       </ul>
     </div>
-    <section class="admin-main-content">
+    <section class="admin-main-content" :class="showSidebar ? '' : 'admin-hidden-sidebar-container'">
       <div class="admin-navbar header_iner d-flex justify-content-between align-items-center">
         <div @click="showSidebar=!showSidebar" class="cursor-pointer">
           <b-icon-blockquote-left v-if="showSidebar" variant="primary" scale="2" />

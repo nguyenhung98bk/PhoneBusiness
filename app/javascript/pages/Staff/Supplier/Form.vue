@@ -14,7 +14,7 @@
             <form class="" autocomplete="off">
               <div class="d-blox">
                 <div class="mb-3">
-                  <FormUploadImage
+                  <UploadSingleImage
                     :imageProps="supplier.logo"
                     @setDataImage="setDataImage"
                   />
@@ -41,11 +41,11 @@
 <script>
 import Validator from '../../../validator';
 import { SuppliersService } from '../../../services/staff/suppliers.service';
-import FormUploadImage from '../../../components/FormUploadImage.vue';
+import UploadSingleImage from '../../../components/UploadSingleImage.vue';
 
 export default {
   components: {
-    FormUploadImage,
+    UploadSingleImage,
   },
 
   data() {
@@ -64,6 +64,8 @@ export default {
   },
   methods: {
     async onSubmit() {
+      console.log(this.image);
+      console.log(this.imageName);
       this.validate();
       if (Object.keys(this.errors).length) return;
       

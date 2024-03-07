@@ -27,6 +27,7 @@
   grid-template-columns: 24px auto;
   grid-gap: 15px;
   align-items: center;
+  min-height: 64px;
 }
 
 .admin-sidebar-li:hover {
@@ -170,6 +171,7 @@
   img {
     object-fit: contain;
     display: block;
+    max-width: 100%;
     height: 100%;
   }
   &.no_image {
@@ -222,4 +224,28 @@
   width: 60px;
   height: 40px;
   object-fit: cover;
+}
+
+.admin-form-image-container {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+}
+
+.admin-image-item {
+  margin-right: 20px;
+}
+
+.btn-upload-image {
+  height: fit-content;
+  margin-left: 20px;
+}
+
+@media (min-width: 1025px) {
+  .admin-hidden-sidebar {
+    left: -288px;
+  }
+  .admin-hidden-sidebar-container {
+    margin-left: 0;
+  }
 }

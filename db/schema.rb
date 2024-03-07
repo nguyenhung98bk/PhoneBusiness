@@ -55,7 +55,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_092835) do
   end
 
   create_table "items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "categorie_id", null: false
+    t.bigint "category_id", null: false
     t.bigint "supplier_id", null: false
     t.string "name", null: false
     t.string "product_no", null: false
@@ -66,7 +66,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_092835) do
     t.string "note"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["categorie_id"], name: "index_items_on_categorie_id"
+    t.index ["category_id"], name: "index_items_on_category_id"
     t.index ["supplier_id"], name: "index_items_on_supplier_id"
   end
 
@@ -119,7 +119,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_092835) do
 
   add_foreign_key "customer_destinations", "customers"
   add_foreign_key "item_images", "items"
-  add_foreign_key "items", "categories", column: "categorie_id"
+  add_foreign_key "items", "categories"
   add_foreign_key "items", "suppliers"
   add_foreign_key "order_items", "items"
   add_foreign_key "order_items", "orders"

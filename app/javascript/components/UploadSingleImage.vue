@@ -6,11 +6,9 @@
     <div v-show="!image" class="file_upload_image no_image" @click="$refs.file.click()">
       <div class="file_upload_image_main">
         <div class="icon add_image" />
-        <div class="file_upload_image_text">Thêm Logo</div>
+        <div class="file_upload_image_text">{{ textUploadImage }}</div>
       </div>
     </div>
-    <div class="file_upload_image_sub">Vui lòng sử dụng hình ảnh.</div>
-    <div class="file_upload_image_sub">Kích thước tải lên tối đa là 3 MB.</div>
     <div>
       <input id="file_uploader" ref="file" type="file"
               class="file_uploader"
@@ -24,22 +22,23 @@
 <script>
 export default {
   props: {
-    imageProps: {
+    image: {
       typeof: String,
-      defaultValue: "",
+      default: "",
+    },
+    index: {
+      typeof: Number,
+      default: null,
+    },
+    textUploadImage: {
+      typeof: String,
+      default: "Upload ảnh",
     }
   },
   data() {
     return {
-      image: '',
+
     }
-  },
-  watch: {
-    imageProps: {
-      handler(value) {
-        this.image = value;
-      }
-    },
   },
   methods: {
     previewFiles(event) {
@@ -58,8 +57,7 @@ export default {
       const reader = new FileReader();
 
       reader.onload = (e) => {
-        this.image = e.target.result;
-        this.$emit('setDataImage', {name: file.name, image: this.image});
+        this.$emit('setDataImage', {name: file.name, image: e.target.result, index: this.index});
       };
       reader.readAsDataURL(file);
     },
