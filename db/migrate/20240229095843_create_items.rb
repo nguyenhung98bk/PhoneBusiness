@@ -9,7 +9,8 @@ class CreateItems < ActiveRecord::Migration[7.1]
       t.string :purchase_price, null: false
       t.string :original_price, null: false
       t.string :price, null: false
-      t.string :note
+      t.text :note
+      t.integer :order
 
       t.timestamps
     end

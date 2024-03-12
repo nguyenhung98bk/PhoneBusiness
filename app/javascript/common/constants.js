@@ -1,0 +1,7 @@
+const PHONECATEGORYID = 1;
+const IPADCATEGORYID = 2;
+
+export default {
+  PHONECATEGORYID,
+  IPADCATEGORYID,
+};

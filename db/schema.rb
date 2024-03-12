@@ -21,6 +21,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_092835) do
 
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
+    t.integer "order"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -63,7 +64,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_092835) do
     t.string "purchase_price", null: false
     t.string "original_price", null: false
     t.string "price", null: false
-    t.string "note"
+    t.text "note"
+    t.integer "order"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_items_on_category_id"
@@ -113,6 +115,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_092835) do
   create_table "suppliers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "logo"
+    t.integer "order"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

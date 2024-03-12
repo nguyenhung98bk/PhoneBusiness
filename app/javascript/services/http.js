@@ -6,11 +6,9 @@ import axios from 'axios';
 export class Http {
   constructor() {
     this.instance = axios.create({
-      baseURL: `${window.location.origin}/api/staffs`,
+      baseURL: `${window.location.origin}/api`,
       withCredentials: false,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('csrf')}`
-      }
+      headers: {}
     });
 
     return this.init();
@@ -18,15 +16,8 @@ export class Http {
 
   init() {
     this.instance.interceptors.response.use(undefined, async error => {
-      if (error.response.status === 401) {
-        window.location.href = '/staff/login';
-      }
-      if (error.response.status === 423) {
-        window.location.href = '/staff/login';
-      }
-      // redirect to LP if get 404 and specific error code
       if (error.response.status === 404) {
-        window.location.href = '/staff/not_found';
+        window.location.href = '/not_found';
       }
       return Promise.reject(error);
     });

@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module Api
   module Staffs
     class ItemsController < Staffs::ApplicationController
@@ -31,6 +33,7 @@ module Api
           :purchase_price,
           :original_price,
           :price,
+          :note,
         ).merge(item_images_attributes: image_params)
       end
 
@@ -49,6 +52,7 @@ module Api
         item_images.push({
                 id: image[:id],
                 image_url: image_path,
+                _destroy: image[:_destroy]
               })
         end
   
@@ -56,19 +60,19 @@ module Api
       end
 
       def upload_image(content, name)
-        p "=================="
         require 'base64'
         data = Base64.decode64(content.to_s['data:image/png;base64,'.length..])
-        p "xxxxxxxxxxxxxxxxx"
 
         if data.size > 3.megabytes
           error_422('写真が大きすぎます。')
         else
-          p name
-          File.open(Rails.root.join('public', 'uploads', name), 'wb') do |file|
+          folder_path = Rails.root.join('public', 'uploads', 'items')
+          FileUtils.mkdir_p(folder_path)
+
+          File.open(File.join(folder_path, name), 'wb') do |file|
             file.write(data)
           end
-          @image = "/uploads/#{name}"
+          @image = "/uploads/items/#{name}"
         end
       end
 

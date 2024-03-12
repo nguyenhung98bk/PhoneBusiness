@@ -15,7 +15,7 @@
               <div class="d-blox">
                 <div class="mb-3">
                   <UploadSingleImage
-                    :imageProps="supplier.logo"
+                    :image="image"
                     @setDataImage="setDataImage"
                   />
                 </div>
@@ -64,8 +64,6 @@ export default {
   },
   methods: {
     async onSubmit() {
-      console.log(this.image);
-      console.log(this.imageName);
       this.validate();
       if (Object.keys(this.errors).length) return;
       
@@ -97,6 +95,7 @@ export default {
     async getSupplier() {
       const { response } = await SuppliersService.get(this.id);
       this.supplier = response.data;
+      this.image = this.supplier.logo;
     },
 
     validate() {
@@ -110,7 +109,6 @@ export default {
     setDataImage(dataImage) {
       this.imageName = dataImage.name;
       this.image = dataImage.image;
-      console.log(this.image);
     }
   },
 }

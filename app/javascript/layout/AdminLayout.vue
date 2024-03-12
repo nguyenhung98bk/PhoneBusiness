@@ -6,10 +6,9 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import Layout from './components/Layout.vue';
 
-export default Vue.extend({
+export default {
   components: {
     Layout,
   },
@@ -24,6 +23,5 @@ export default Vue.extend({
       loginUrl: "/admin/login",
     };
   },
-})
-;
+}
 </script>

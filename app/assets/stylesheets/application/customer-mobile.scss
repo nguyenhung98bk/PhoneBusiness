@@ -1,0 +1,30 @@
+@media (max-width: 1024px) {
+  .home-left-header {
+    display: none;
+  }
+
+  .home-right-header {
+    width: 100%;
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-right-header {
+    height: 250px;
+  }
+
+  .categories-header {
+    display: block;
+  }
+
+  .list-supplier {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-right-header {
+    height: 200px;
+  }
+}

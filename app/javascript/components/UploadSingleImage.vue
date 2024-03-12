@@ -1,5 +1,5 @@
 <template>
-  <div class="input_wrapper vertical">
+  <div class="admin-input-image">
     <div v-show="image" class="file_upload_image" @click="$refs.file.click()">
       <img :src="image">
     </div>
@@ -15,6 +15,9 @@
               accept="image/x-png,image/gif,image/jpeg,image/jpg,image/tiff,image/bmp"
               hidden @change="previewFiles"
       >
+    </div>
+    <div v-if="image && isDeleteImage" class="admin-button-delete-image" @click="onDeleteImage">
+      <b-icon-x-circle variant="danger" scale="1.3"></b-icon-x-circle>
     </div>
   </div>
 </template>
@@ -33,7 +36,11 @@ export default {
     textUploadImage: {
       typeof: String,
       default: "Upload ảnh",
-    }
+    },
+    isDeleteImage: {
+      typeof: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -60,6 +67,10 @@ export default {
         this.$emit('setDataImage', {name: file.name, image: e.target.result, index: this.index});
       };
       reader.readAsDataURL(file);
+    },
+
+    onDeleteImage() {
+      this.$emit('onDeleteImage', this.index);
     },
   },
 }

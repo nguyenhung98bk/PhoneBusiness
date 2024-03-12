@@ -44,10 +44,13 @@ module Api
         if data.size > 3.megabytes
           error_422('写真が大きすぎます。')
         else
-          File.open(Rails.root.join('public', 'uploads', params[:image][:name]), 'wb') do |file|
+          folder_path = Rails.root.join('public', 'uploads', 'suppliers')
+          FileUtils.mkdir_p(folder_path)
+
+          File.open(File.join(folder_path, params[:image][:name]), 'wb') do |file|
             file.write(data)
           end
-          @image = "/uploads/#{params[:image][:name]}"
+          @image = "/uploads/suppliers/#{params[:image][:name]}"
         end
       end
     end

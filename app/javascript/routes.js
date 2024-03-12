@@ -20,6 +20,8 @@ import StaffSupplierForm from './pages/Staff/Supplier/Form.vue';
 import StaffItem from './pages/Staff/Item/Index.vue';
 import StaffItemForm from './pages/Staff/Item/Form.vue';
 
+import NotFoundPage from './pages/Notfound.vue';
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({
@@ -30,7 +32,7 @@ const router = new VueRouter({
       path: '/',
       component: CustomerLayout,
       children: [
-        { path: '/', meta: { title: 'Trang chủ' }, name: 'home', component: CustomerHome }
+        { path: '', meta: { title: 'Trang chủ' }, name: 'home', component: CustomerHome },
       ]
     },
     {
@@ -61,6 +63,7 @@ const router = new VueRouter({
     },
     { path: '/admin/login', meta: { title: 'Quản trị đăng nhập' }, name: 'admin-login', component: AdminLogin },
     { path: '/staff/login', meta: { title: 'Nhân viên đăng nhập' }, name: 'staff-login', component: StaffLogin },
+    { path: '*', name: '404', component: NotFoundPage },
   ],
   linkActiveClass: 'active',
 });
@@ -108,6 +111,8 @@ router.beforeEach(async (to, from, next) => {
         return;
       }
     }
+  } else {
+    next();
   }
 });
 

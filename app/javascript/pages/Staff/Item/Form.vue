@@ -91,6 +91,10 @@
                     </span>
                   </div>
                 </div>
+                <div class="mb-3">
+                  <label class="form-label">Giới thiệu sản phẩm</label>
+                  <textarea v-model="item.note" class="form-control height-three-line" />
+                </div>
               </div>
               <div class="admin-form-button d-flex justify-content-center mt-2">
                 <button type="button" class="btn btn-primary admin-btn-primary mb-2" @click="onSubmit">{{ id ? "Chỉnh sửa" : "Thêm mới" }}</button>
@@ -149,6 +153,7 @@ export default {
         purchase_price: this.item.purchase_price,
         original_price: this.item.original_price,
         price: this.item.price,
+        note: this.item.note,
       }
 
       if (this.images.length) {
@@ -157,6 +162,7 @@ export default {
             id: image.id,
             image_url: image.image_url,
             name: image.name,
+            _destroy: image._destroy,
           }
         });
       }
@@ -229,3 +235,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.height-three-line {
+  height: 120px;
+}
+</style>

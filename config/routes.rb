@@ -29,6 +29,10 @@ Rails.application.routes.draw do
       resources :suppliers
       resources :items
     end
+
+    resources :suppliers
+    resources :items
+    resources :categories
   end
 
   scope do

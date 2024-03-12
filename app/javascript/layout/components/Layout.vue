@@ -9,7 +9,7 @@
       <ul>
         <a v-for="(item, key) in sidebar" :href="item.url" class="text-light admin-sidebar-url">
           <li class="admin-sidebar-li">
-            <b-icon-brightness-high-fill variant="secondary" scale="1.5"></b-icon-brightness-high-fill>
+            <b-icon :icon="item.icon" v-if='showSidebar' variant='Light' scale='2' />
             {{ item.text }}
           </li>
         </a>
@@ -27,12 +27,12 @@
               <img src="../../../assets/images/adminAvatar.jpeg" style="width: 40px;">
             </div>
             <div class="author_name">
-              <h4 class="f_s_15 f_w_500 mb-0">Admin</h4>
-              <p class="f_s_12 f_w_400">admin@test.com</p>
+              <p class="f_s_12 f_w_400">{{ emailLogin }}</p>
             </div>
             <div class="profile_info_iner">
               <div class="profile_info_details">
                 <a @click="logout"><b-icon-box-arrow-left scale="2"/></a>
+                <div class="tooltip-logout">Đăng xuất</div>
               </div>
             </div>
           </div>
@@ -59,10 +59,10 @@ export default {
   },
   data() {
     return {
-      showSidebar: false,
+      showSidebar: screen.width > 1024,
+      emailLogin: localStorage.getItem('email_login'),
     };
   },
-
   methods: {
     async logout() {
       await AuthService.logout();
@@ -113,6 +113,26 @@ body {
 
 .icon_shevron_down.after:after {
   margin-left: 8px !important;
+}
+
+.profile_info_details {
+  position: relative;
+}
+
+.tooltip-logout {
+  visibility: hidden;
+  position: absolute;
+  left: -25px;
+  background-color: gray;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  top: 50px;
+}
+
+.profile_info_details:hover .tooltip-logout {
+  visibility: visible;
 }
 
 </style>

@@ -9,9 +9,15 @@ json.data do
     json.purchase_price item.purchase_price
     json.original_price item.original_price
     json.price item.price
-    json.note item.note
     json.supplier_name item.supplier.name
     json.category_name item.category.name
+    json.note item.note
+    json.item_images do
+      json.array! item.item_images do |item_image|
+        json.id item_image.id
+        json.image_url item_image.image_url
+      end
+    end
   end
 end
 

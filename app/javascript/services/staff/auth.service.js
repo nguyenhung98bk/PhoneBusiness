@@ -13,7 +13,8 @@ export class AuthService {
         params
       );
       localStorage.setItem('csrf', response.data.csrf);
-      localStorage.setItem('login_admin', JSON.parse(response.config.data).email);
+      console.log(response.config.data);
+      localStorage.setItem('email_login', JSON.parse(response.config.data).email);
       return new ResponseWrapper(response);
     } catch (error) {
       throw new ApiError(error);
@@ -48,11 +49,11 @@ export class AuthService {
         }
       );
       localStorage.removeItem('csrf');
-      localStorage.removeItem('login_admin');
+      localStorage.removeItem('email_login');
       return new ResponseWrapper(response);
     } catch (error) {
       localStorage.removeItem('csrf');
-      localStorage.removeItem('login_admin');
+      localStorage.removeItem('email_login');
       throw new ApiError(error);
     }
   }
