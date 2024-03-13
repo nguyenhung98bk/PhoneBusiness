@@ -31,7 +31,11 @@ Rails.application.routes.draw do
     end
 
     resources :suppliers
-    resources :items
+    resources :items do
+      collection do
+        get :get_item_by_category_ids
+      end
+    end
     resources :categories
   end
 

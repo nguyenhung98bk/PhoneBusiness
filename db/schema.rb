@@ -66,6 +66,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_092835) do
     t.string "price", null: false
     t.text "note"
     t.integer "order"
+    t.integer "view", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_items_on_category_id"

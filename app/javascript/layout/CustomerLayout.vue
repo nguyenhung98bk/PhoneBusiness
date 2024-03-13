@@ -11,6 +11,9 @@
             <div class="serach_field_2">
               <input type="text" class="form-control input-search-user" placeholder="Hôm nay bạn cần tìm gì">
               <div class="icon-search-end"><b-icon-search scale="1.5" /></div>
+              <div class="list-item-suggest-container">
+                xxxxxxxxxxxxxxxxxxx
+              </div>
             </div>
           </div>
         </div>
@@ -116,7 +119,7 @@ export default {
 }
 
 .customer-container {
-  padding: 80px 30px 30px 30px;
+  padding: 59px 30px 30px 30px;
   background: #f9f9f9;
   height: 100%;
   min-height: 100vh;

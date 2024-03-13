@@ -11,6 +11,7 @@ class CreateItems < ActiveRecord::Migration[7.1]
       t.string :price, null: false
       t.text :note
       t.integer :order
+      t.integer :view, default: 0, null: false
 
       t.timestamps
     end

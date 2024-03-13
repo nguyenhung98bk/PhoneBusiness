@@ -7,6 +7,8 @@ import AdminLayout from './layout/AdminLayout.vue';
 import StaffLayout from './layout/StaffLayout.vue';
 
 import CustomerHome from './pages/Customer/Home/Index.vue';
+import SelectCategory from './pages/Customer/SelectCategory/Index.vue';
+import SelectSupplier from './pages/Customer/SelectSupplier/Index.vue';
 
 import AdminLogin from './pages/Admin/Login/Index.vue';
 import AdminHome from './pages/Admin/Home/Index.vue';
@@ -33,6 +35,8 @@ const router = new VueRouter({
       component: CustomerLayout,
       children: [
         { path: '', meta: { title: 'Trang chủ' }, name: 'home', component: CustomerHome },
+        { path: ':category_id-:category_name', meta: { title: 'Trang chủ' }, name: 'select-category', component: SelectCategory },
+        { path: ':category_id-:category_name/:supplier_id-:supplier_name', meta: { title: 'Trang chủ' }, name: 'select-supplier', component: SelectSupplier },
       ]
     },
     {
