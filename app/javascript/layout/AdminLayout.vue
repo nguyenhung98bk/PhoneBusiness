@@ -15,10 +15,10 @@ export default {
   data() {
     return {
       sidebar: [
-        { text: 'Trang chủ', url: '/admin', icon: '' },
-        { text: 'Quản lý nhân viên', url: '/admin/staffs', icon: '' },
-        { text: 'Quản lý khách hàng', url: '/admin/customers', icon: '' },
-        { text: 'Thống kê', url: '/admin/thongke', icon: '' },
+        { text: 'Trang chủ', url: '/admin', icon: 'house-door' },
+        { text: 'Quản lý nhân viên', url: '/admin/staffs', icon: 'person-bounding-box' },
+        { text: 'Quản lý khách hàng', url: '/admin/customers', icon: 'people' },
+        { text: 'Thống kê', url: '/admin/thongke', icon: 'reception-4' },
       ],
       loginUrl: "/admin/login",
     };

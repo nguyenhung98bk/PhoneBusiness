@@ -32,7 +32,7 @@
       <div class="categories-content">
         <div v-for="(phone, index) in phones" :key="index" class="item-standing">
           <div class="price-sale">
-            {{ Math.round(((phone.original_price - phone.price) / phone.original_price) * 100) }} %
+            <p>Giảm {{ Math.round(((phone.original_price - phone.price) / phone.original_price) * 100) }} %</p>
           </div>
           <div class="item-standing-container">
             <div class="item-standing-image-container">

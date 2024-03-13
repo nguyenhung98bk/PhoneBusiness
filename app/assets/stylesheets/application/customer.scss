@@ -56,7 +56,7 @@
 .categories-content {
   margin-top: 10px;
   display: grid;
-  grid-template-columns: 5;
+  grid-template-columns: auto auto auto auto auto;
 
   .item-standing {
     width: 225px;
@@ -72,6 +72,9 @@
     height: 31px;
     left: -3px;
     background: image-url('price_sale.svg') no-repeat;
+    color: #ffffff;
+    font-size: 12px;
+    text-align: center;
   }
 
   .item-standing-container {

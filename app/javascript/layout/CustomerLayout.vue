@@ -71,6 +71,7 @@ export default {
   padding: 10px 20px;
   background: #d70018;
   color: #FFFFFF;
+  z-index: 10;
 
   .customer-sidebar-container {
     display: flex;
@@ -117,7 +118,8 @@ export default {
 .customer-container {
   padding: 80px 30px 30px 30px;
   background: #f9f9f9;
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
 }
 
 .input-search-user {
