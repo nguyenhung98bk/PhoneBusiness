@@ -4,6 +4,7 @@ import createPersistedState from 'vuex-persistedstate';
 import SecureLS from 'secure-ls';
 import admins from './modules/admins';
 import staffs from './modules/staffs';
+import customers from './modules/customers';
 
 var ls = new SecureLS();
 
@@ -28,6 +29,7 @@ export default new Vuex.Store({
   modules: {
     admins,
     staffs,
+    customers,
   },
   mutations: {
     LOADING(state, isLoading) {

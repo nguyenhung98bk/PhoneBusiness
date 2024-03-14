@@ -4,6 +4,7 @@ json.data do
     json.id item.id
     json.name item.name
     json.supplier_id item.supplier_id
+    json.category_id item.category_id
     json.product_no item.product_no
     json.quantity item.quantity
     json.purchase_price item.purchase_price

@@ -12,9 +12,8 @@ export class AuthService {
         'auth/login',
         params
       );
-      localStorage.setItem('staff_csrf', response.data.csrf);
-      console.log(response.config.data);
-      localStorage.setItem('staff_login', JSON.parse(response.config.data).email);
+      localStorage.setItem('customer_csrf', response.data.csrf);
+      localStorage.setItem('customer_login', JSON.parse(response.config.data).email);
       return new ResponseWrapper(response);
     } catch (error) {
       throw new ApiError(error);
@@ -28,7 +27,7 @@ export class AuthService {
         params,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('staff_csrf')}`
+            Authorization: `Bearer ${localStorage.getItem('customer_csrf')}`
           }
         }
       );
@@ -39,22 +38,21 @@ export class AuthService {
   }
 
   static async logout() {
-    console.log(localStorage.getItem('staff_csrf'));
     try {
       const response = await this.request().delete(
         'auth/logout',
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('staff_csrf')}`
+            Authorization: `Bearer ${localStorage.getItem('customer_csrf')}`
           }
         }
       );
-      localStorage.removeItem('staff_csrf');
-      localStorage.removeItem('staff_login');
+      localStorage.removeItem('customer_csrf');
+      localStorage.removeItem('customer_login');
       return new ResponseWrapper(response);
     } catch (error) {
-      localStorage.removeItem('staff_csrf');
-      localStorage.removeItem('staff_login');
+      localStorage.removeItem('customer_csrf');
+      localStorage.removeItem('customer_login');
       throw new ApiError(error);
     }
   }

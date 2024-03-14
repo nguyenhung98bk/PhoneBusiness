@@ -9,6 +9,13 @@ import StaffLayout from './layout/StaffLayout.vue';
 import CustomerHome from './pages/Customer/Home/Index.vue';
 import SelectCategory from './pages/Customer/SelectCategory/Index.vue';
 import SelectSupplier from './pages/Customer/SelectSupplier/Index.vue';
+import SelectItem from './pages/Customer/SelectItem/Index.vue';
+import CustomerLogin from './pages/Customer/Login/Index.vue';
+import CustomerRegister from './pages/Customer/Login/Register.vue';
+import CustomerPasswordSetting from './pages/Customer/Login/PasswordSetting.vue';
+import CustomerRegisterSuccess from './pages/Customer/Login/RegisterSuccess.vue';
+import CustomerVerifyFail from './pages/Customer/Login/VerifyFail.vue';
+import CustomerCart from './pages/Customer/Cart/Index.vue';
 
 import AdminLogin from './pages/Admin/Login/Index.vue';
 import AdminHome from './pages/Admin/Home/Index.vue';
@@ -37,6 +44,7 @@ const router = new VueRouter({
         { path: '', meta: { title: 'Trang chủ' }, name: 'home', component: CustomerHome },
         { path: ':category_id-:category_name', meta: { title: 'Trang chủ' }, name: 'select-category', component: SelectCategory },
         { path: ':category_id-:category_name/:supplier_id-:supplier_name', meta: { title: 'Trang chủ' }, name: 'select-supplier', component: SelectSupplier },
+        { path: ':category_id-:category_name/:supplier_id-:supplier_name/:item_id-:item_name', meta: { title: 'Trang chủ' }, name: 'select-item', component: SelectItem },
       ]
     },
     {
@@ -63,6 +71,20 @@ const router = new VueRouter({
         { path: 'items', meta: { title: 'Quản lý sản phẩm' }, name: 'staff-items', component: StaffItem },
         { path: 'item/create', meta: { title: 'Thêm mới sản phẩm' }, name: 'staff-item-create', component: StaffItemForm },
         { path: 'item/:id/edit', meta: { title: 'Chỉnh sửa sản phẩm' }, name: 'staff-item-edit', component: StaffItemForm },
+      ]
+    },
+    {
+      path: '/customer',
+      component: CustomerLayout,
+      children: [
+        { path: '', meta: { title: 'Trang chủ' }, name: 'home', component: CustomerHome },
+        { path: 'login', meta: { title: 'Đăng nhập' }, name: 'customer-login', component: CustomerLogin },
+        { path: 'login', meta: { title: 'Đăng nhập' }, name: 'customer-login', component: CustomerLogin },
+        { path: 'register', meta: { title: 'Đăng ký', hideForAuth: true }, name: 'customer-register', component: CustomerRegister },
+        { path: 'register_success', meta: { title: 'Xác thực thành công', hideForAuth: true }, name: 'customer-register-success', component: CustomerRegisterSuccess },
+        { path: 'verify_fail', meta: { title: 'Xác thực thất bại', hideForAuth: true }, name: 'customer-verify-fail', component: CustomerVerifyFail },
+        { path: 'password_setting/:token', meta: { title: 'Xác thực token', hideForAuth: true }, name: 'customer-password-setting', component: CustomerPasswordSetting },
+        { path: 'cart', meta: { title: 'Giỏ hàng' }, name: 'customer-cart', component: CustomerCart },
       ]
     },
     { path: '/admin/login', meta: { title: 'Quản trị đăng nhập' }, name: 'admin-login', component: AdminLogin },
@@ -96,19 +118,37 @@ router.beforeEach(async (to, from, next) => {
       }
     }
   } else if (to.path.split('/')[1] === 'staff') {
-    if (!localStorage.getItem('csrf') && !['/staff/login'].includes(to.path)) {
+    if (!localStorage.getItem('staff_csrf') && !['/staff/login'].includes(to.path)) {
       next('/staff/login');
     } else {
       if ([
         '/staff/login',
       ].includes(to.path)) {
-        const data = await store.dispatch('getStaff', { csrf: localStorage.getItem('csrf') });
-        console.log(data);
+        const data = await store.dispatch('getStaff', { csrf: localStorage.getItem('staff_csrf') });
         if (data && data.status == 401) {
           next();
           return;
         } else {
           window.location.href = '/staff';
+        }
+      } else {
+        next();
+        return;
+      }
+    }
+  } else if (to.path.split('/')[1] === 'customer') {
+    if (!localStorage.getItem('customer_csrf') && !['/customer/login'].includes(to.path) && !hideForAuth) {
+      next('/customer/login');
+    } else {
+      if ([
+        '/customer/login',
+      ].includes(to.path) || hideForAuth) {
+        const data = await store.dispatch('getCustomer', { csrf: localStorage.getItem('customer_csrf') });
+        if (data && data.status == 401) {
+          next();
+          return;
+        } else {
+          window.location.href = '/customer';
         }
       } else {
         next();

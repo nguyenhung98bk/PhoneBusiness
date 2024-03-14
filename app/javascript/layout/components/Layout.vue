@@ -46,8 +46,6 @@
 </template>
 
 <script>
-import {AuthService} from '../../services/admin/auth.service';
-
 export default {
   props: {
     loginUrl: {
@@ -55,18 +53,20 @@ export default {
     },
     sidebar: {
       type: Array,
+    },
+    emailLogin: {
+      type: String,
+      default: "",
     }
   },
   data() {
     return {
       showSidebar: screen.width > 1024,
-      emailLogin: localStorage.getItem('email_login'),
     };
   },
   methods: {
-    async logout() {
-      await AuthService.logout();
-      return this.$router.push(this.loginUrl);
+    logout() {
+      this.$emit('logout');
     }
   }
 }

@@ -66,6 +66,7 @@
     background-color: #ffffff;
     border-radius: 8px;
     position: relative;
+    cursor: pointer;
   }
 
   .price-sale {
@@ -148,7 +149,7 @@
 
 .customer-bottom-sidebar {
   position: fixed;
-  z-index: 10;
+  z-index: 9;
   width: 100%;
   background-color: #ffffff;
   padding: 10px;
@@ -172,15 +173,267 @@
   justify-content: center;
 }
 
-.list-item-suggest-container {
+.backdrop-main {
   position: fixed;
   width: 100vw;
   height: 100vh;
   background: rgba(0,0,0,.53);
-  z-index: 9;
-  display: none;
+  z-index: 10;
 }
 
-.input-search-user:focus .list-item-suggest-container {
-  display: block;
+.list-item-suggest-container {
+  position: absolute;
+  z-index: 10;
+  max-height: 310px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 10px;
+  margin-top: 10px;
+  color: #000000;
+  padding: 10px 20px;
+}
+
+.item-suggest {
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.div-img-search {
+  width: 40px;
+  height: 40px;
+}
+
+.img-search {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.item-suggest-header {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #707070;
+}
+
+.item-suggest-name {
+  font-size: 14px;
+}
+
+.item-suggest-red {
+  font-size: 14px;
+  color: red;
+}
+
+.item-suggest-gray {
+  color: #707070;
+  font-size: 12px;
+  margin-left: 10px;
+  text-decoration: line-through;
+}
+
+.show-item-container {
+  margin-top: 40px;
+  width: 100%;
+}
+
+.show-list-image {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  background: #ffffff;
+  margin-top: 10px;
+  padding: 10px 20px;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+}
+
+.show-image-scroll {
+  display: flex;
+  gap: 20px;
+  width: calc(100% - 70px);
+}
+
+.show-image-first {
+  width: 400px;
+  height: 500px;
+  max-width: 100%;
+}
+
+.show-image-bonus {
+  width: 50px;
+  height: 50px;
+}
+
+.image-full-width {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.show-item-image {
+  width: 400px;
+  max-width: 100%;
+}
+
+.br-10 {
+  border-radius: 10px;
+}
+
+.br-8 {
+  border-radius: 8px;
+}
+
+.br-4 {
+  border-radius: 4px;
+}
+
+.show-item-content {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-around;
+}
+
+.customer-content-container {
+  width: 100%;
+}
+
+.info-item {
+  max-width: 100%;
+}
+
+.info-item-price {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.info-item-price-red {
+  color: red;
+  font-size: 25px;
+}
+
+.info-item-price-gray {
+  margin-left: 10px;
+  margin-right: 10px;
+  color: #000000;
+  font-size: 16px;
+  text-decoration: line-through;
+}
+
+.info-item-order {
+  width: 400px;
+  max-width: 100%;
+}
+
+.info-free-ship {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px 20px;
+  background: #00483d;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.info-group-button {
+  margin-top: 30px;
+  display: flex;
+  gap: 10px;
+}
+
+.button-buy {
+  width: 50%;
+  height: 100px;
+  background-color: #d70018;
+  border-radius: 10px;
+  color: #ffffff;
+}
+
+.button-save-buy {
+  width: 50%;
+  height: 100px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #F64850, #FB810B);
+  color: #ffffff;
+}
+
+.customer-auth-container {
+  width: 100%;
+  min-height: calc(100vh - 110px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.customer-auth-header {
+  font-size: 22px;
+  color: #4a4a4a;
+  text-align: center;
+}
+
+.customer-auth-container-background {
+  width: 700px;
+  max-width: 100%;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+}
+
+.customer-auth-content {
+  margin-top: 30px;
+
+  input {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+}
+
+.btn-reset-password {
+  width: 100%;
+  text-align: right;
+  font-size: 13px;
+  color: #777;
+
+  a:hover {
+    opacity: 0.7;
+  }
+}
+
+.btn-submit-login-customer {
+  width: 100%;
+  background-color: #e0052b;
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 11px 0;
+  color: #ffffff;
+}
+
+.link-sigup {
+  margin-left: 10px;
+  color: #e0052b;
+}
+
+.link-sigup:hover {
+  opacity: 0.7;
+}
+
+.text-not-account {
+  color: #777;
+}
+
+.btn-submit-login-customer:hover {
+  opacity: 0.7;
+}
+
+.customer-auth-content {
+  .text-danger {
+    font-size: 12px;
+    padding-left: 10px;
+  }
 }

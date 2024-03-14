@@ -7,6 +7,7 @@
 
 <script>
 import Layout from './components/Layout.vue';
+import {AuthService} from '../services/admin/auth.service';
 
 export default {
   components: {
@@ -21,7 +22,14 @@ export default {
         { text: 'Thống kê', url: '/admin/thongke', icon: 'reception-4' },
       ],
       loginUrl: "/admin/login",
+      emailLogin: localStorage.getItem('admin_login'),
     };
+  },
+  methods: {
+    async logout() {
+      await AuthService.logout();
+      return this.$router.push(this.loginUrl);
+    }
   },
 }
 </script>

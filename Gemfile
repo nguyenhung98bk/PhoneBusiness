@@ -11,6 +11,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'sass-rails', '>= 6'
 gem 'jwt_sessions'
 gem 'pagy'
+gem 'enumerize'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"

@@ -2,7 +2,7 @@
   <div class="customer-content-container">
     <div class="customer-home-header">
       <div class="home-left-header">
-        <div v-for="(category, index) in categories" :key="index" class="home-left-header-item" @click="onSelectCategory(category)">
+        <div v-for="(category, index) in categories" :key="index" class="home-left-header-item" @click="$router.push(`/${category.id}-${category.name}`)">
           <div>{{ category.name }}</div>
           <div>
             <b-icon-caret-right />

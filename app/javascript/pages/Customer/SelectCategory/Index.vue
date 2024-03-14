@@ -70,7 +70,7 @@ export default {
         category_id: this.category.id,
         ...this.pageParams,
       }
-      const { response }  = await ItemsService.index(params);
+      const { response } = await ItemsService.index(params);
       this.pager = response.pager;
       this.items = [...this.items, ...response.data];
       this.totalItemNotDisplay = this.pager.item_count - this.pager.page * this.pager.page_size;

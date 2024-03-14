@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_05_092835) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_14_082606) do
   create_table "admins", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", null: false
     t.string "password_digest", null: false
@@ -102,6 +102,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_092835) do
     t.index ["staff_id"], name: "index_orders_on_staff_id"
   end
 
+  create_table "password_resets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.string "token", null: false
+    t.datetime "expired_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_password_resets_on_customer_id"
+  end
+
+  create_table "password_settings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.string "token", null: false
+    t.datetime "expired_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_password_settings_on_customer_id"
+  end
+
   create_table "staffs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", null: false
     t.string "name", null: false
@@ -130,4 +148,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_092835) do
   add_foreign_key "orders", "customer_destinations"
   add_foreign_key "orders", "customers"
   add_foreign_key "orders", "staffs"
+  add_foreign_key "password_resets", "customers"
+  add_foreign_key "password_settings", "customers"
 end

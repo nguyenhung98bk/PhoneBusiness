@@ -22,7 +22,6 @@
 import { ItemsService } from '../../../services/items.service';
 import ListItem from '../components/ListItem.vue';
 import { SuppliersService } from '../../../services/suppliers.service';
-import router from '../../../routes';
 
 export default {
   components: {
@@ -39,7 +38,6 @@ export default {
         name: this.$router.history.current.params.supplier_name,
       },
       items: [],
-      suppliers: [],
       pager: {
         page: 1,
         page_count: 1,
@@ -56,7 +54,6 @@ export default {
   },
   async mounted() {
     await this.getItems();
-    await this.getSuppliers();
   },
   methods: {
     async getItems() {
@@ -65,15 +62,10 @@ export default {
         supplier_id: this.supplier.id,
         ...this.pageParams,
       }
-      const { response }  = await ItemsService.index(params);
+      const { response } = await ItemsService.index(params);
       this.pager = response.pager;
       this.items = [...this.items, ...response.data];
       this.totalItemNotDisplay = this.pager.item_count - this.pager.page * this.pager.page_size;
-    },
-
-    async getSuppliers() {
-      const { response } = await SuppliersService.index();
-      this.suppliers = response.data;
     },
 
     onNextPage() {
