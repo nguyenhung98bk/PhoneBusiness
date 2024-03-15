@@ -40,6 +40,12 @@ Rails.application.routes.draw do
           post 'check_token', to: 'sessions#check_token'
         end
       end
+
+      resources :carts do
+        collection do
+          post 'update_carts', to: 'carts#update_carts'
+        end
+      end
       
       post 'account/register', to: 'account#register'
       get 'account/active_account/:token', to: 'account#active_account'

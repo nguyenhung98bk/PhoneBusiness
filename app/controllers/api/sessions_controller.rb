@@ -2,7 +2,6 @@ module Api
   class SessionsController < ActionController::Base
     protect_from_forgery with: :null_session
     include JWTSessions::RailsAuthorization
-    helper ApplicationHelper
     include ErrorResponseGenerateable
     rescue_from JWTSessions::Errors::Unauthorized, with: :not_authorized
     skip_before_action :verify_authenticity_token

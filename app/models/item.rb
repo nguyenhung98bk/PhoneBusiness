@@ -2,6 +2,7 @@ class Item < ApplicationRecord
   belongs_to :category
   belongs_to :supplier
   has_many :order_items
+  has_many :carts
   has_many :item_images, dependent: :destroy
   before_create :set_initial_data
 

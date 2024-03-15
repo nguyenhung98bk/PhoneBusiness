@@ -9,7 +9,7 @@ export class Http {
       baseURL: `${window.location.origin}/api/customers`,
       withCredentials: false,
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('csrf')}`
+        Authorization: `Bearer ${localStorage.getItem('customer_csrf')}`
       }
     });
 

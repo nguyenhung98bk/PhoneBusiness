@@ -48,6 +48,10 @@
   .item-standing-gray {
     font-size: 11px;
   }
+
+  .cart-content-container {
+    grid-template-columns: auto;
+  }
 }
 
 @media (max-width: 680px) {

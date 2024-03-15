@@ -10,13 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_14_082606) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
   create_table "admins", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", null: false
     t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
+  end
+
+  create_table "carts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.bigint "item_id", null: false
+    t.integer "quantity", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_carts_on_customer_id"
+    t.index ["item_id"], name: "index_carts_on_item_id"
   end
 
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -139,6 +149,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_14_082606) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "carts", "customers"
+  add_foreign_key "carts", "items"
   add_foreign_key "customer_destinations", "customers"
   add_foreign_key "item_images", "items"
   add_foreign_key "items", "categories"

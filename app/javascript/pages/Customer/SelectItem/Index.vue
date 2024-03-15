@@ -45,7 +45,7 @@
             </div>
             <div class="info-group-button">
               <button class="button-buy">Mua ngay</button>
-              <button class="button-save-buy">Thêm vào giỏ hàng</button>
+              <button class="button-save-buy" @click="addToCart">Thêm vào giỏ hàng</button>
             </div>
           </div>
         </div>
@@ -58,6 +58,7 @@
 import { ItemsService } from '../../../services/items.service';
 import noImage from '../../../../assets/images/no_image.png';
 import utils from '../../../common/util';
+import { CartsService } from '../../../services/customer/carts.service';
 
 export default {
   data() {
@@ -91,7 +92,16 @@ export default {
 
     onChangeImage(index) {
       this.indexImage = index % this.item.item_images.length;
-    }
+    },
+
+    addToCart() {
+      const params = {
+        quantity: 1,
+        item_id: this.item.id,
+      }
+
+      CartsService.create(params);
+    },
   },
 }
 </script>

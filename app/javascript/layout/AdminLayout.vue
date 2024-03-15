@@ -2,6 +2,8 @@
   <Layout
     :sidebar="sidebar"
     :loginUrl="loginUrl"
+    :emailLogin="emailLogin"
+    @logout="logout"
   />
 </template>
 

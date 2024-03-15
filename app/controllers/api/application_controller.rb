@@ -1,5 +1,7 @@
 module Api
   class ApplicationController < ActionController::Base
+    protect_from_forgery with: :null_session
+    include ErrorResponseGenerateable
     include JWTSessions::RailsAuthorization
     include Pagy::Backend
     helper_method %i[pager_meta]
@@ -15,9 +17,9 @@ module Api
     end
 
     private
-    
-    def check_authentication
-      
+
+    def set_default_request_format
+      request.format = :json
     end
   end
 end
