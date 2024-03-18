@@ -102,6 +102,12 @@
       .item-standing-name {
         font-weight: 500;
         margin-top: 20px;
+        max-height: 50px;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
       }
   
       .item-standing-price {
@@ -133,8 +139,8 @@
       
       .item-standing-note-p {
         display: -webkit-box;
-        height: 70px;
-        -webkit-line-clamp: 4;
+        max-height: 52px;
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -182,6 +188,7 @@
 }
 
 .list-item-suggest-container {
+  min-width: 300px;
   position: absolute;
   z-index: 10;
   max-height: 310px;
@@ -218,6 +225,12 @@
 
 .item-suggest-name {
   font-size: 14px;
+  display: -webkit-box;
+  max-height: 16px;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .item-suggest-red {

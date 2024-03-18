@@ -78,8 +78,7 @@ const router = new VueRouter({
       path: '/customer',
       component: CustomerLayout,
       children: [
-        { path: '', meta: { title: 'Trang chủ' }, name: 'home', component: CustomerHome },
-        { path: 'login', meta: { title: 'Đăng nhập' }, name: 'customer-login', component: CustomerLogin },
+        // { path: '', meta: { title: 'Trang chủ' }, name: 'home', component: CustomerHome },
         { path: 'login', meta: { title: 'Đăng nhập' }, name: 'customer-login', component: CustomerLogin },
         { path: 'register', meta: { title: 'Đăng ký', hideForAuth: true }, name: 'customer-register', component: CustomerRegister },
         { path: 'register_success', meta: { title: 'Xác thực thành công', hideForAuth: true }, name: 'customer-register-success', component: CustomerRegisterSuccess },
