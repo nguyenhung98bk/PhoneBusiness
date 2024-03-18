@@ -12,8 +12,8 @@ export class AccountService {
         'account/register',
         params
       );
-      localStorage.setItem('customer_csrf', response.data.customer_csrf);
-      localStorage.setItem('customer_login', JSON.parse(response.config.data).email);
+      // localStorage.setItem('customer_csrf', response.data.csrf);
+      // localStorage.setItem('customer_login', JSON.parse(response.config.data).email);
       return new ResponseWrapper(response);
     } catch (error) {
       throw new ApiError(error);

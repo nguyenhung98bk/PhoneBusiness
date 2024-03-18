@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       resources :categories
       resources :suppliers
       resources :items
+      resources :orders
     end
 
     namespace :customers do
@@ -49,6 +50,9 @@ Rails.application.routes.draw do
       
       post 'account/register', to: 'account#register'
       get 'account/active_account/:token', to: 'account#active_account'
+
+      resources :customer_destinations
+      resources :orders
     end
 
     resources :suppliers

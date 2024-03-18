@@ -6,7 +6,7 @@ module Api
       private
 
       def current_customer
-        @current_customer ||= Staff.find(payload['customer_id'])
+        @current_customer ||= Customer.find(payload['customer_id'])
       end
     end
   end

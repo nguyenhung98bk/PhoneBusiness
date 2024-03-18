@@ -446,6 +446,8 @@
 
 .cart-content {
   margin-top: 20px;
+  height: 63vh;
+  overflow-y: auto;
 }
 
 .cart-content-container {
@@ -490,4 +492,27 @@
 .display-item-quantity {
   width: 30px;
   text-align: center;
+}
+
+.button-by-order {
+  width: 600px;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.customer-destinations {
+  width: 50%;
+  padding-right: 10px;
+}
+
+.customer-destinations-container {
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  height: 100px;
+  background-color: #ffffff;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
 }

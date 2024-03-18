@@ -19,14 +19,14 @@ export class Http {
   init() {
     this.instance.interceptors.response.use(undefined, async error => {
       if (error.response.status === 401) {
-        window.location.href = '/staff/login';
+        window.location.href = '/customer/login';
       }
       if (error.response.status === 423) {
-        window.location.href = '/staff/login';
+        window.location.href = '/customer/login';
       }
       // redirect to LP if get 404 and specific error code
       if (error.response.status === 404) {
-        window.location.href = '/staff/not_found';
+        window.location.href = '/customer/not_found';
       }
       return Promise.reject(error);
     });

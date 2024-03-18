@@ -3,6 +3,7 @@ module Api
     class CartsController < Customers::ApplicationController
       def index
         @carts = Cart.where(customer_id: @current_customer.id)
+        @carts = @carts.where(id: params[:cart_ids]) if params[:cart_ids].present?
       end
 
       def create

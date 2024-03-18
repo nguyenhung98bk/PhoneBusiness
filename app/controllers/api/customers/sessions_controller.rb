@@ -7,7 +7,7 @@ module Api
           password: ''
         }
         if params[:email].present? && params[:email].present?
-          @customer = Customer.find_by(email: params[:email])
+          @customer = Customer.find_by(email: params[:email], status: :active)
           if !@customer.nil? && @customer.authenticate(params[:password])
             session[:customer_id] = nil
             session[:customer_id] = @customer.id

@@ -38,9 +38,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
 
   create_table "customer_destinations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "customer_id", null: false
-    t.string "prefecture"
-    t.string "city"
+    t.string "recipient_name"
+    t.string "recipient_phone"
+    t.integer "province_id"
+    t.string "province_name"
+    t.integer "district_id"
+    t.string "district_name"
+    t.string "ward_code"
+    t.string "ward_name"
     t.string "address"
+    t.boolean "default"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_customer_destinations_on_customer_id"
@@ -97,13 +104,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
 
   create_table "orders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "customer_id", null: false
-    t.bigint "staff_id", null: false
+    t.bigint "staff_id"
     t.bigint "customer_destination_id", null: false
     t.string "order_number", null: false
     t.string "total_price", null: false
     t.string "ship_amount", null: false
     t.string "message"
-    t.integer "status", default: 10, null: false
+    t.integer "transport_status", default: 10, null: false
+    t.integer "payment_status", default: 10, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_destination_id"], name: "index_orders_on_customer_destination_id"

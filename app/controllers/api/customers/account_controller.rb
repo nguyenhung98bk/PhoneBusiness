@@ -11,6 +11,13 @@ module Api
             @token.save
           end
         end
+        url = "#{request.base_url}/customer/password_setting/#{@token}"
+        begin
+          ::CustomerMailer.send_mail_verify_login_id(@customer.id, url).deliver_later
+        rescue StandardError => e
+          Rails.logger.info("send mail false customer_id: #{@customer.id}")
+        end
+        # @token = "abcgxgaufdklad"
       end
 
       def active_account

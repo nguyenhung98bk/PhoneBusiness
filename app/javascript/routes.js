@@ -16,6 +16,7 @@ import CustomerPasswordSetting from './pages/Customer/Login/PasswordSetting.vue'
 import CustomerRegisterSuccess from './pages/Customer/Login/RegisterSuccess.vue';
 import CustomerVerifyFail from './pages/Customer/Login/VerifyFail.vue';
 import CustomerCart from './pages/Customer/Cart/Index.vue';
+import CustomerOrder from './pages/Customer/Order/Index.vue';
 
 import AdminLogin from './pages/Admin/Login/Index.vue';
 import AdminHome from './pages/Admin/Home/Index.vue';
@@ -85,6 +86,7 @@ const router = new VueRouter({
         { path: 'verify_fail', meta: { title: 'Xác thực thất bại', hideForAuth: true }, name: 'customer-verify-fail', component: CustomerVerifyFail },
         { path: 'password_setting/:token', meta: { title: 'Xác thực token', hideForAuth: true }, name: 'customer-password-setting', component: CustomerPasswordSetting },
         { path: 'cart', meta: { title: 'Giỏ hàng' }, name: 'customer-cart', component: CustomerCart },
+        { path: 'order', meta: { title: 'Đặt hàng' }, name: 'customer-order', component: CustomerOrder },
       ]
     },
     { path: '/admin/login', meta: { title: 'Quản trị đăng nhập' }, name: 'admin-login', component: AdminLogin },
