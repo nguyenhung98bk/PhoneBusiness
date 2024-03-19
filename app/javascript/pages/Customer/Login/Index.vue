@@ -58,7 +58,7 @@ export default {
       try {
         await AuthService.login(params);
         this.$loading(false);
-        this.$router.push('/customer/cart');
+        window.location.href = "/customer/cart";
       } catch (error) {
         this.errors = {password: ['Tên đăng nhập hoặc mật khẩu của bạn là không chính xác.']};
         this.$loading(false);

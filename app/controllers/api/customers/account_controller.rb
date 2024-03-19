@@ -1,6 +1,7 @@
 module Api
   module Customers
     class AccountController < ActionController::Base
+      include ErrorResponseGenerateable
       skip_before_action :verify_authenticity_token
 
       def register
@@ -9,6 +10,8 @@ module Api
           if @customer.save
             @token = PasswordSetting.new(customer_id: @customer.id)
             @token.save
+          else
+            return error_422(@customer.errors.full_messages)
           end
         end
         url = "#{request.base_url}/customer/password_setting/#{@token.token}"

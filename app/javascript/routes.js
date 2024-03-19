@@ -12,6 +12,7 @@ import SelectSupplier from './pages/Customer/SelectSupplier/Index.vue';
 import SelectItem from './pages/Customer/SelectItem/Index.vue';
 import CustomerLogin from './pages/Customer/Login/Index.vue';
 import CustomerRegister from './pages/Customer/Login/Register.vue';
+import CustomerRegisterConfirm from './pages/Customer/Login/RegisterConfirm.vue';
 import CustomerPasswordSetting from './pages/Customer/Login/PasswordSetting.vue';
 import CustomerRegisterSuccess from './pages/Customer/Login/RegisterSuccess.vue';
 import CustomerVerifyFail from './pages/Customer/Login/VerifyFail.vue';
@@ -86,6 +87,8 @@ const router = new VueRouter({
         { path: 'password_setting/:token', meta: { title: 'Xác thực token', hideForAuth: true }, name: 'customer-password-setting', component: CustomerPasswordSetting },
         { path: 'cart', meta: { title: 'Giỏ hàng' }, name: 'customer-cart', component: CustomerCart },
         { path: 'order', meta: { title: 'Đặt hàng' }, name: 'customer-order', component: CustomerOrder },
+        { path: 'register_confirm', meta: { title: 'Xác thực email', hideForAuth: true }, name: 'customer-confirm', component: CustomerRegisterConfirm },
+
       ]
     },
     { path: '/admin/login', meta: { title: 'Quản trị đăng nhập' }, name: 'admin-login', component: AdminLogin },
@@ -149,7 +152,7 @@ router.beforeEach(async (to, from, next) => {
           next();
           return;
         } else {
-          window.location.href = '/customer';
+          window.location.href = '/customer/cart';
         }
       } else {
         next();

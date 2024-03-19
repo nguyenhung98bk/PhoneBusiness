@@ -51,6 +51,10 @@
         </div>
       </div>
     </div>
+    <CheckSuccess
+      :show="showCheckSuccess"
+      @onClose="showCheckSuccess = false"
+    />
   </div>
 </template>
 
@@ -59,8 +63,12 @@ import { ItemsService } from '../../../services/items.service';
 import noImage from '../../../../assets/images/no_image.png';
 import utils from '../../../common/util';
 import { CartsService } from '../../../services/customer/carts.service';
+import CheckSuccess from '../../../components/CheckSuccess.vue';
 
 export default {
+  components: {
+    CheckSuccess,
+  },
   data() {
     return {
       category: {
@@ -77,6 +85,7 @@ export default {
       },
       noImage: noImage,
       indexImage: 0,
+      showCheckSuccess: false,
     }
   },
   async mounted() {
@@ -109,6 +118,7 @@ export default {
       this.$loading(true);
       try {
         await CartsService.create(params);
+        this.showCheckSuccess = true;
         this.$loading(false);
       } catch (error) {
         this.$loading(false);

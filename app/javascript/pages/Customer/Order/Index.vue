@@ -24,7 +24,7 @@
           <div class="cart-item-image-container">
             <img :src="cart.item_images[0] ? cart.item_images[0].image_url : noImage" class="image-full-width">
           </div>
-          <div>
+          <div class="cart-item-name-price">
             <div class="cart-item-name">{{ cart.item_name }}</div>
             <div class="cart-item-price">{{ convertNumberFormat(cart.item_price) }}đ</div>
           </div>
@@ -38,7 +38,7 @@
     </div>
     <div class="cart-footer">
       <div class="info-group-button">
-        <button class="button-buy button-by-order" @click="onSubmit">Mua ngay</button>
+        <button class="button-buy button-by-order h-60" @click="onSubmit">Mua ngay</button>
       </div>
     </div>
     <DestinationModal

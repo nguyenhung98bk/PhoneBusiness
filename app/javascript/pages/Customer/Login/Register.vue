@@ -73,12 +73,14 @@ export default {
         phone: this.phone,
         password: this.password,
       }
-
+      
       this.$loading(true);
       try {
         await AccountService.register(params);
+        this.$router.push('/customer/register_confirm')
         this.$loading(false);
       } catch (error) {
+        this.errors = {email: ['Địa chỉ email đã tồn tại.']};
         this.$loading(false);
       }
         

@@ -8,7 +8,7 @@
           <div class="cart-item-image-container">
             <img :src="cart.item_images[0] ? cart.item_images[0].image_url : noImage" class="image-full-width">
           </div>
-          <div>
+          <div class="cart-item-name-price">
             <div class="cart-item-name">{{ cart.item_name }}</div>
             <div class="cart-item-price">{{ convertNumberFormat(cart.item_price) }}đ</div>
           </div>
@@ -22,10 +22,14 @@
     </div>
     <div class="cart-footer">
       <div class="info-group-button">
-        <button class="button-save-buy" @click="updateCarts">Cập nhật giỏ hàng</button>
-        <button class="button-buy" @click="onSubmit">Mua ngay</button>
+        <button class="button-save-buy h-60" @click="updateCarts">Cập nhật giỏ hàng</button>
+        <button class="button-buy h-60" @click="onSubmit">Mua ngay</button>
       </div>
     </div>
+    <CheckSuccess
+      :show="showCheckSuccess"
+      @onClose="showCheckSuccess = false"
+    />
   </div>
 </template>
 
@@ -33,12 +37,17 @@
 import { CartsService } from '../../../services/customer/carts.service';
 import noImage from '../../../../assets/images/no_image.png';
 import utils from '../../../common/util';
+import CheckSuccess from '../../../components/CheckSuccess.vue';
 
 export default {
+  components: {
+    CheckSuccess,
+  },
   data() {
     return {
       carts: [],
       noImage: noImage,
+      showCheckSuccess: false,
     }
   },
   mounted() {
@@ -59,8 +68,8 @@ export default {
     },
 
     changeQuantity(cart, value) {
+      if (cart.quantity + value < 0 || cart.quantity + value > 99) return;
       cart.quantity = cart.quantity + value;
-      if (cart.quantity < 0 || cart.quantity > 99) return;
     },
 
     async updateCarts() {
@@ -74,7 +83,9 @@ export default {
       this.$loading(true);
       try {
         await CartsService.updateCarts(params);
+        this.getCarts();
         this.$loading(false);
+        this.showCheckSuccess = true;
       } catch (error) {
         this.$loading(false);
       }
