@@ -159,23 +159,47 @@ export default {
   },
   methods: {
     async getCustomerDestinations() {
-      const { response } = await CustomerDestinationsService.index();
-      this.customerDestinations = response.data;
+      this.$loading(true);
+      try {
+        const { response } = await CustomerDestinationsService.index();
+        this.customerDestinations = response.data;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     },
 
     async getProvinces() {
-      const { response } = await DestinationsService.getProvinces();
-      this.provinces = response.data;
+      this.$loading(true);
+      try {
+        const { response } = await DestinationsService.getProvinces();
+        this.provinces = response.data;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     },
 
     async getDistricts() {
-      const { response } = await DestinationsService.getDistricts(this.destination.province_id);
-      this.districts = response.data;
+      this.$loading(true);
+      try {
+        const { response } = await DestinationsService.getDistricts(this.destination.province_id);
+        this.districts = response.data;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     },
 
     async getWards() {
-      const { response } = await DestinationsService.getWards(this.destination.district_id);
-      this.wards = response.data;
+      this.$loading(true);
+      try {
+        const { response } = await DestinationsService.getWards(this.destination.district_id);
+        this.wards = response.data;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     },
 
     addDestination() {

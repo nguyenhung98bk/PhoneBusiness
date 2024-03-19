@@ -23,7 +23,7 @@ x-app: &app
     DATABASE_URL: mysql2://root@mysql:3306
     ACCESS_TOKEN: dummy_key
     MAILER_HOST: CONTACT_ADMINISTRATOR
-    MAILER_SENDER: 
+    MAILER_SENDER: nguyenviethung98.bk@gmail.com
     GMAIL_USER: nguyenviethung98.bk@gmail.com
     GMAIL_PASSWORD: wysxduvvkovkqjvr
 

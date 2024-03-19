@@ -54,11 +54,14 @@ export default {
         password: this.password,
       }
 
+      this.$loading(true);
       try {
         await AuthService.login(params);
-        this.$router.push('/customer/cart')
+        this.$loading(false);
+        this.$router.push('/customer/cart');
       } catch (error) {
-        return this.errors = {password: ['Tên đăng nhập hoặc mật khẩu của bạn là không chính xác.']};
+        this.errors = {password: ['Tên đăng nhập hoặc mật khẩu của bạn là không chính xác.']};
+        this.$loading(false);
       }
     },
 

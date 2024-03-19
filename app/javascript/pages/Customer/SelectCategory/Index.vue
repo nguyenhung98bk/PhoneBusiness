@@ -70,15 +70,28 @@ export default {
         category_id: this.category.id,
         ...this.pageParams,
       }
-      const { response } = await ItemsService.index(params);
-      this.pager = response.pager;
-      this.items = [...this.items, ...response.data];
-      this.totalItemNotDisplay = this.pager.item_count - this.pager.page * this.pager.page_size;
+
+      this.$loading(true);
+      try {
+        const { response } = await ItemsService.index(params);
+        this.pager = response.pager;
+        this.items = [...this.items, ...response.data];
+        this.totalItemNotDisplay = this.pager.item_count - this.pager.page * this.pager.page_size;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     },
 
     async getSuppliers() {
-      const { response } = await SuppliersService.index();
-      this.suppliers = response.data;
+      this.$loading(true);
+      try {
+        const { response } = await SuppliersService.index();
+        this.suppliers = response.data;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     },
 
     onNextPage() {

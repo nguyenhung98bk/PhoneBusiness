@@ -65,8 +65,8 @@ export default {
   },
   methods: {
     async onSubmit() {
-      // this.validate();
-      // if (Object.keys(this.errors).length) return;
+      this.validate();
+      if (Object.keys(this.errors).length) return;
       const params = {
         name: this.name,
         email: this.email,
@@ -74,7 +74,14 @@ export default {
         password: this.password,
       }
 
-      await AccountService.register(params);
+      this.$loading(true);
+      try {
+        await AccountService.register(params);
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
+        
     },
 
     validate() {

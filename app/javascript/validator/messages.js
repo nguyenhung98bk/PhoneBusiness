@@ -11,7 +11,7 @@ export default {
   },
 
   // validationエラーメッセージ
-  1111: '{attr}を入力してください。',
+  1111: 'Vui lòng nhập đầy đủ {attr}',
   1112: '{attr}を選択してください。',
   1113: '{attr}を追加してください。',
 

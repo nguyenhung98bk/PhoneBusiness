@@ -70,13 +70,25 @@ export default {
       const params = {
         category_ids: this.categories.map(category => category.id),
       }
-      const { response } = await ItemsService.getItemByCategoryIds(params);
-      this.items = response.data;
+      this.$loading(true);
+      try {
+        const { response } = await ItemsService.getItemByCategoryIds(params);
+        this.items = response.data;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     },
 
     async getSuppliers() {
-      const { response } = await SuppliersService.index();
-      this.suppliers = response.data;
+      this.$loading(true);
+      try {
+        const { response } = await SuppliersService.index();
+        this.suppliers = response.data;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     },
   },
 }

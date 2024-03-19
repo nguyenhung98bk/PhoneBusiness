@@ -48,8 +48,14 @@ export default {
     ...utils,
 
     async getCarts() {
-      const { response } = await CartsService.index();
-      this.carts = response.data;
+      this.$loading(true);
+      try {
+        const { response } = await CartsService.index();
+        this.carts = response.data;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     },
 
     changeQuantity(cart, value) {
@@ -64,7 +70,14 @@ export default {
           quantity: cart.quantity,
         }
       })};
-      await CartsService.updateCarts(params);
+
+      this.$loading(true);
+      try {
+        await CartsService.updateCarts(params);
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     },
 
     async onSubmit() {

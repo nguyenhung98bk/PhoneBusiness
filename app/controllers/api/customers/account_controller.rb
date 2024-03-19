@@ -11,7 +11,7 @@ module Api
             @token.save
           end
         end
-        url = "#{request.base_url}/customer/password_setting/#{@token}"
+        url = "#{request.base_url}/customer/password_setting/#{@token.token}"
         begin
           ::CustomerMailer.send_mail_verify_login_id(@customer.id, url).deliver_later
         rescue StandardError => e

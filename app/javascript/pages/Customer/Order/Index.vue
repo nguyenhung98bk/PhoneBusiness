@@ -84,14 +84,26 @@ export default {
       const params = {
         cart_ids: this.cartIds.split(","),
       }
-      const { response } = await CartsService.index(params);
-      this.carts = response.data;
+      this.$loading(true);
+      try {
+        const { response } = await CartsService.index(params);
+        this.carts = response.data;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     },
 
     async getDestination() {
-      const { response } = await CustomerDestinationsService.index();
-      this.destinations = response.data;
-      this.destination = this.destinations[0];
+      this.$loading(true);
+      try {
+        const { response } = await CustomerDestinationsService.index();
+        this.destinations = response.data;
+        this.destination = this.destinations[0];
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     },
 
     openSelectDestination() {
@@ -116,7 +128,14 @@ export default {
         ship_amount: 0,
         message: 'xxxxxxxxxxxxx',
       }
-      await OrdersService.create(params);
+
+      this.$loading(true);
+      try {
+        await OrdersService.create(params);
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     },
   }
 }

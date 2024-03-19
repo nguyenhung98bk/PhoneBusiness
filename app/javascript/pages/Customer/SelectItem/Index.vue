@@ -86,21 +86,33 @@ export default {
     ...utils,
 
     async getItems() {
-      const { response } = await ItemsService.get(this.item.id);
-      this.item = response.data;
+      this.$loading(true);
+      try {
+        const { response } = await ItemsService.get(this.item.id);
+        this.item = response.data;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     },
 
     onChangeImage(index) {
       this.indexImage = index % this.item.item_images.length;
     },
 
-    addToCart() {
+    async addToCart() {
       const params = {
         quantity: 1,
         item_id: this.item.id,
       }
 
-      CartsService.create(params);
+      this.$loading(true);
+      try {
+        await CartsService.create(params);
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     },
   },
 }

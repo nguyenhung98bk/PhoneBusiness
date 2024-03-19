@@ -62,10 +62,16 @@ export default {
         supplier_id: this.supplier.id,
         ...this.pageParams,
       }
-      const { response } = await ItemsService.index(params);
-      this.pager = response.pager;
-      this.items = [...this.items, ...response.data];
-      this.totalItemNotDisplay = this.pager.item_count - this.pager.page * this.pager.page_size;
+      this.$loading(true);
+      try {
+        const { response } = await ItemsService.index(params);
+        this.pager = response.pager;
+        this.items = [...this.items, ...response.data];
+        this.totalItemNotDisplay = this.pager.item_count - this.pager.page * this.pager.page_size;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     },
 
     onNextPage() {

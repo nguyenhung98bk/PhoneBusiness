@@ -108,8 +108,14 @@ export default {
       const params = {
         name: this.nameSearch,
       }
-      const { response } = await ItemsService.index({...params, page_size: 5});
-      this.suggestItems = response.data;
+      this.$loading(true);
+      try {
+        const { response } = await ItemsService.index({...params, page_size: 5});
+        this.suggestItems = response.data;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     },
 
     onSearchItems: _.debounce(async function() {
@@ -122,7 +128,13 @@ export default {
     },
 
     async logout() {
-      await AuthService.logout();
+      this.$loading(true);
+      try {
+        await AuthService.logout();
+        this.$loading(true);
+      } catch (error) {
+        this.$loading(false);
+      }
       window.location.reload();
     }
   },
