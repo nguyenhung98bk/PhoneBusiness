@@ -49,18 +49,14 @@
     font-size: 11px;
   }
 
-  .cart-content-container {
-    grid-template-columns: auto;
+  .cart-item {
+    width: 100%;
   }
 }
 
 @media (max-width: 680px) {
   .categories-content {
     grid-template-columns: auto auto;
-  }
-
-  .customer-destinations {
-    width: 100%;
   }
 }
 

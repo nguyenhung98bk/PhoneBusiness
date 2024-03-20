@@ -72,7 +72,7 @@ export default {
       cart.quantity = cart.quantity + value;
     },
 
-    async updateCarts() {
+    async updateCarts(fromSubmit = false) {
       const params = { carts: this.carts.map(cart => {
         return {
           id: cart.id,
@@ -85,16 +85,18 @@ export default {
         await CartsService.updateCarts(params);
         this.getCarts();
         this.$loading(false);
-        this.showCheckSuccess = true;
+        if (!fromSubmit) {
+          this.showCheckSuccess = true;
+        }
       } catch (error) {
         this.$loading(false);
       }
     },
 
     async onSubmit() {
-      await this.updateCarts();
       const cartIds = this.carts.filter(c => c.checked).map(c => c.id).join(',');
       if (cartIds != '') {
+        await this.updateCarts(true);
         localStorage.setItem('cart_ids', cartIds);
         this.$router.push('/customer/order');
       }

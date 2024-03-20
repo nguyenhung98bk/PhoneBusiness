@@ -18,6 +18,7 @@ import CustomerRegisterSuccess from './pages/Customer/Login/RegisterSuccess.vue'
 import CustomerVerifyFail from './pages/Customer/Login/VerifyFail.vue';
 import CustomerCart from './pages/Customer/Cart/Index.vue';
 import CustomerOrder from './pages/Customer/Order/Index.vue';
+import CustomerOrderSuccess from './pages/Customer/Order/Success.vue';
 
 import AdminLogin from './pages/Admin/Login/Index.vue';
 import AdminHome from './pages/Admin/Home/Index.vue';
@@ -79,15 +80,15 @@ const router = new VueRouter({
       path: '/customer',
       component: CustomerLayout,
       children: [
-        // { path: '', meta: { title: 'Trang chủ' }, name: 'home', component: CustomerHome },
         { path: 'login', meta: { title: 'Đăng nhập' }, name: 'customer-login', component: CustomerLogin },
         { path: 'register', meta: { title: 'Đăng ký', hideForAuth: true }, name: 'customer-register', component: CustomerRegister },
         { path: 'register_success', meta: { title: 'Xác thực thành công', hideForAuth: true }, name: 'customer-register-success', component: CustomerRegisterSuccess },
         { path: 'verify_fail', meta: { title: 'Xác thực thất bại', hideForAuth: true }, name: 'customer-verify-fail', component: CustomerVerifyFail },
         { path: 'password_setting/:token', meta: { title: 'Xác thực token', hideForAuth: true }, name: 'customer-password-setting', component: CustomerPasswordSetting },
+        { path: 'register_confirm', meta: { title: 'Xác thực email', hideForAuth: true }, name: 'customer-confirm', component: CustomerRegisterConfirm },
         { path: 'cart', meta: { title: 'Giỏ hàng' }, name: 'customer-cart', component: CustomerCart },
         { path: 'order', meta: { title: 'Đặt hàng' }, name: 'customer-order', component: CustomerOrder },
-        { path: 'register_confirm', meta: { title: 'Xác thực email', hideForAuth: true }, name: 'customer-confirm', component: CustomerRegisterConfirm },
+        { path: 'order_success/:id', meta: { title: 'Đặt hàng thành công' }, name: 'customer-order-success', component: CustomerOrderSuccess },
 
       ]
     },

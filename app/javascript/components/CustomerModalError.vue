@@ -9,11 +9,12 @@
           </button>
         </div>
         <div class="modal-body">
-          <slot />
+          <span v-for="error in errors" :key="error" class="text-danger">
+            {{ error }}
+          </span>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" @click="$emit('onClose')">{{textButtonClose}}</button>
-          <button type="button" class="btn btn-primary" @click="$emit('onSubmit')">{{ textButtonSubmit }}</button>
+          <button type="button" class="btn btn-primary" @click="$emit('onClose')">{{ textButtonClose }}</button>
         </div>
       </div>
     </div>
@@ -23,17 +24,16 @@
 <script>
 export default {
   props: {
-    textButtonSubmit: {
-      type: String,
-      default: "Đồng ý"
-    },
     textButtonClose: {
-      type: String,
+      typeof: String,
       default: "Đóng"
     },
     title: {
-      type: String,
-      default: "Tiêu đề"
+      typeof: String,
+      default: "Lỗi"
+    },
+    errors: {
+      typeof: Array,
     },
   }
 }

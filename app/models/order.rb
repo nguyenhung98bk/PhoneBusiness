@@ -2,6 +2,7 @@ class Order < ApplicationRecord
   has_many :order_items, dependent: :destroy
   belongs_to :customer
   belongs_to :customer_destination
+  belongs_to :payment_type
   belongs_to :staff, optional: true
 
   accepts_nested_attributes_for :order_items, allow_destroy: true

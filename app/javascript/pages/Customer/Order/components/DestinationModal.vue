@@ -5,30 +5,35 @@
     @onSubmit="onSubmitSelectDestination"
   >
     <div v-if="customerDestinations.length > 0">
-      <div v-for="(destination, index) in customerDestinations" class="d-flex">
-        <div>
-          <input type="radio" :checked="destinationSelectId == destination.id || (destinationSelectId == null && destinationId == destination.id)" @change="destinationSelectId = destination.id">
-        </div>
-        <div>
+      <div v-for="(destination, index) in customerDestinations">
+        <div class="select-destination-contaner">
           <div>
-            {{ destination.recipient_name }} | {{ destination.recipient_phone }}
+            <input type="radio" :checked="destinationSelectId == destination.id || (destinationSelectId == null && destinationId == destination.id)" @change="destinationSelectId = destination.id">
           </div>
           <div>
-            {{ destination.address }}
+            <div class="select-destination-2-line">
+              {{ destination.recipient_name }} | {{ destination.recipient_phone }}
+            </div>
+            <div class="select-destination-2-line">
+              {{ destination.address }}
+            </div>
+            <div class="select-destination-2-line">
+              {{ destination.ward_name }} , {{ destination.district_name }} , {{ destination.province_name }}
+            </div>
           </div>
-          <div>
-            {{ destination.ward_name }} , {{ destination.district_name }} , {{ destination.province_name }}
+          <div class="destination-button-edit">
+            <button class="destination-btn-edit" @click="editDestination(destination)">Sửa</button>
           </div>
         </div>
-        <div>
-          <button @click="editDestination(destination)">Sửa</button>
-        </div>
+        <hr>
       </div>
     </div>
-    <div v-else>Chưa có địa chỉ nhận hàng</div>
-    <hr>
+    <div v-else>
+      Chưa có địa chỉ nhận hàng
+      <hr>
+    </div>
     <div>
-      <button @click="addDestination"><b-icon-plus />Thêm địa chỉ mới</button>
+      <button @click="addDestination" class="w-100 text-align-left"><b-icon-plus />Thêm địa chỉ mới</button>
     </div>
     <CustomerModal
       v-if="showModalDestination"
@@ -57,6 +62,7 @@
           v-model="destination.province_id"
           :options="provinces"
           :reduce="(option) => option.ProvinceID"
+          :clearable="false"
           class="v-select"
           label="ProvinceName"
           @input="onChangeProvince"
@@ -73,6 +79,7 @@
           v-model="destination.district_id"
           :options="districts"
           :reduce="(option) => option.DistrictID"
+          :clearable="false"
           class="v-select"
           label="DistrictName"
           @input="onChangeDistrict"
@@ -89,6 +96,7 @@
           v-model="destination.ward_code"
           :options="wards"
           :reduce="(option) => option.WardCode"
+          :clearable="false"
           class="v-select"
           label="WardName"
           @input="onChangeWard"

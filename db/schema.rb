@@ -104,6 +104,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
 
   create_table "orders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "customer_id", null: false
+    t.bigint "payment_type_id", null: false
     t.bigint "staff_id"
     t.bigint "customer_destination_id", null: false
     t.string "order_number", null: false
@@ -112,11 +113,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
     t.string "message"
     t.integer "transport_status", default: 10, null: false
     t.integer "payment_status", default: 10, null: false
+    t.integer "transaction_service_id", null: false
+    t.string "transaction_service_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_destination_id"], name: "index_orders_on_customer_destination_id"
     t.index ["customer_id"], name: "index_orders_on_customer_id"
     t.index ["order_number"], name: "index_orders_on_order_number", unique: true
+    t.index ["payment_type_id"], name: "index_orders_on_payment_type_id"
     t.index ["staff_id"], name: "index_orders_on_staff_id"
   end
 
@@ -136,6 +140,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_password_settings_on_customer_id"
+  end
+
+  create_table "payment_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "bank_name"
+    t.string "account_holders"
+    t.string "account_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "staffs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -167,6 +180,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
   add_foreign_key "order_items", "orders"
   add_foreign_key "orders", "customer_destinations"
   add_foreign_key "orders", "customers"
+  add_foreign_key "orders", "payment_types"
   add_foreign_key "orders", "staffs"
   add_foreign_key "password_resets", "customers"
   add_foreign_key "password_settings", "customers"

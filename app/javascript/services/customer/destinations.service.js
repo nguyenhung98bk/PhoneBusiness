@@ -4,7 +4,7 @@ import axios from 'axios';
 export class DestinationsService {
   constructor() {
     this.instance = axios.create({
-      baseURL: `https://online-gateway.ghn.vn/shiip/public-api/master-data/`,
+      baseURL: `https://online-gateway.ghn.vn/shiip/public-api/`,
       withCredentials: false,
       headers: {
         token: 'b355a4f5-e4ea-11ee-b6f7-7a81157ff3b1',
@@ -28,7 +28,7 @@ export class DestinationsService {
   static async getProvinces() {
     try {
       const response = await this.request().get(
-        'province',
+        'master-data/province',
       );
       return new ResponseWrapper(response);
     } catch (error) {
@@ -39,7 +39,7 @@ export class DestinationsService {
   static async getDistricts(provinceId) {
     try {
       const response = await this.request().get(
-        `district?province_id=${provinceId}`,
+        `master-data/district?province_id=${provinceId}`,
       );
       return new ResponseWrapper(response);
     } catch (error) {
@@ -50,7 +50,20 @@ export class DestinationsService {
   static async getWards(districtId) {
     try {
       const response = await this.request().get(
-        `ward?district_id=${districtId}`,
+        `master-data/ward?district_id=${districtId}`,
+      );
+      return new ResponseWrapper(response);
+    } catch (error) {
+      throw new ApiError(error);
+    }
+  }
+
+  static async getTransports(parameters = {}) {
+    const params = { ...parameters };
+    try {
+      const response = await this.request().get(
+        `v2/shipping-order/available-services`,
+        { params }
       );
       return new ResponseWrapper(response);
     } catch (error) {

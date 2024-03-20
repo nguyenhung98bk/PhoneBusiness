@@ -52,6 +52,7 @@ Rails.application.routes.draw do
       get 'account/active_account/:token', to: 'account#active_account'
 
       resources :customer_destinations
+      resources :payment_types
       resources :orders
     end
 
