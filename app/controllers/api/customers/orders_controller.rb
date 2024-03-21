@@ -4,6 +4,10 @@ module Api
       def index
       end
 
+      def show
+        @order = Order.find(params[:id])
+      end
+
       def create
         @order = Order.new(request_params)
         total_price = 0

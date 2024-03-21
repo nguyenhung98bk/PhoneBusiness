@@ -10,13 +10,13 @@ export default {
     return template;
   },
 
-  // validationエラーメッセージ
+  // validation Thông báo lỗi
   1111: 'Vui lòng nhập đầy đủ {attr}',
   1112: '{attr}を選択してください。',
   1113: '{attr}を追加してください。',
 
-  1121: '{attr}は{min}文字以上で入力してください。',
-  1122: '{attr}は{max}文字以下で入力してください。',
+  1121: '{attr} tối thiểu {min} ký tự',
+  1122: '{attr} tối đa {max} ký tự',
   1123: '{attr}は{min}文字以上{max}文字以下で入力してください。',
   1124: '{attr}は{max}桁以下で入力してください。',
   1125: '{attr}は半角数字{length}桁で入力してください。',
@@ -27,9 +27,9 @@ export default {
   1134: '{attr}は{min} ～ {max}で入力してください。',
   1135: '{attr}は{max}より過去の日付で入力してください。',
 
-  1141: '{attr}は正しい形式で入力してください。',
+  1141: 'Vui lòng nhập đúng định dạng {attr}',
   1142: '{attr}は英文字、数字、記号をそれぞれ１文字以上含んでください。',
-  1143: '{attr}が一致していません。',
+  1143: '{attr} không khớp. Hãy thử lại.',
   1144: '{attr}に使用不可能な文字が含まれています。',
 
   1151: '{attr}は半角数字で入力してください。',

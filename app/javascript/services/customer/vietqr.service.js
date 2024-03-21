@@ -7,9 +7,8 @@ export class VietqrService {
       baseURL: `https://api.vietqr.io/v2/`,
       withCredentials: false,
       headers: {
-        'x-client-id': '11b81c00-5469-48fa-9361-830441a04e38',
-        'x-api-key': '92ed2d34-ba74-46c6-8397-77244863cd53',
-        'Content-Type': 'application/json',
+        'X-Client-Id': '11b81c00-5469-48fa-9361-830441a04e38',
+        'X-Api-Key': '92ed2d34-ba74-46c6-8397-77244863cd53',
       },
     });
 
@@ -29,10 +28,24 @@ export class VietqrService {
 
   static async getAccountNo(parameters = {}) {
     const params = { ...parameters };
+    console.log(params);
     try {
       const response = await this.request().post(
         'lookup',
-        { params }
+        params
+      );
+      return new ResponseWrapper(response);
+    } catch (error) {
+      throw new ApiError(error);
+    }
+  }
+
+  static async getQrCode(parameters = {}) {
+    const params = { ...parameters };
+    try {
+      const response = await this.request().post(
+        'generate',
+        params
       );
       return new ResponseWrapper(response);
     } catch (error) {

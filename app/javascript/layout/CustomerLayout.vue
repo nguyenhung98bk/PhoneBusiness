@@ -10,7 +10,7 @@
           </div>
           <div class="customer-sidebar-item">
             <div class="serach_field_2">
-              <input v-model="nameSearch" type="text" class="form-control input-search-user" placeholder="Hôm nay bạn cần tìm gì" @input="onSearchItems" @click="isSuggestItem = true">
+              <input v-model="nameSearch" type="text" class="form-control input-search-user" placeholder="Hôm nay bạn cần tìm gì?" @input="onSearchItems" @click="isSuggestItem = true">
               <div class="icon-search-end"><b-icon-search scale="1.5" /></div>
               <div v-if="isSuggestItem" class="list-item-suggest-container">
                 <div>
@@ -52,13 +52,13 @@
             </div>
           </div>
           <div v-if="isLogin" class="customer-sidebar-item" @click="logout">
-            <b-icon-geo-alt variant="light" scale="1.5"></b-icon-geo-alt>
+            <b-icon-person variant="light" scale="1.5"></b-icon-person>
             <div class="number-phone-contact text-hidden-mobile">
               <div><span>Đăng xuất</span></div>
             </div>
           </div>
           <div v-else class="customer-sidebar-item" @click="$router.push('/customer/login')">
-            <b-icon-geo-alt variant="light" scale="1.5"></b-icon-geo-alt>
+            <b-icon-person variant="light" scale="1.5"></b-icon-person>
             <div class="number-phone-contact text-hidden-mobile">
               <div><span>Đăng nhập</span></div>
             </div>

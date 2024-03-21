@@ -60,7 +60,7 @@ export default {
         this.$loading(false);
         window.location.href = "/customer/cart";
       } catch (error) {
-        this.errors = {password: ['Tên đăng nhập hoặc mật khẩu của bạn là không chính xác.']};
+        this.errors = {password: ['Tên đăng nhập hoặc mật khẩu không chính xác.']};
         this.$loading(false);
       }
     },

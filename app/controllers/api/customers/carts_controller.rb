@@ -7,11 +7,11 @@ module Api
       end
 
       def create
-        cart = Cart.find_by(customer_id: @current_customer.id, item_id: params[:item_id])
-        if cart.nil?
-          Cart.create(request_params)
+        @cart = Cart.find_by(customer_id: @current_customer.id, item_id: params[:item_id])
+        if @cart.nil?
+          @cart = Cart.create(request_params)
         else
-          cart.update(quantity: cart.quantity + params[:quantity])
+          @cart.update(quantity: cart.quantity + params[:quantity])
         end
       end
 

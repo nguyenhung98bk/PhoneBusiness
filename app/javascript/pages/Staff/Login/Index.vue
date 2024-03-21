@@ -56,7 +56,7 @@ export default {
         await AuthService.login({ email: this.email, password: this.password });
         return this.$router.push({ path: '/staff' });
       } catch (error) {
-        return this.errors = {password: ['Tên đăng nhập hoặc mật khẩu của bạn là không chính xác.']};
+        return this.errors = {password: ['Tên đăng nhập hoặc mật khẩu không chính xác.']};
       }
     },
     validate() {

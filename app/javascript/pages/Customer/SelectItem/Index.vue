@@ -44,8 +44,8 @@
               Miễn phí vận chuyển toàn quốc
             </div>
             <div class="info-group-button">
-              <button class="button-buy">Mua ngay</button>
-              <button class="button-save-buy" @click="addToCart">Thêm vào giỏ hàng</button>
+              <button class="button-buy" @click="showModalBuy = true">Mua ngay</button>
+              <button class="button-save-buy" @click="showModalCart = true">Thêm vào giỏ hàng</button>
             </div>
           </div>
         </div>
@@ -55,6 +55,18 @@
       :show="showCheckSuccess"
       @onClose="showCheckSuccess = false"
     />
+    <CustomerModal
+      v-if="showModalBuy || showModalCart"
+      :title="`Chọn số lượng`"
+      @onClose="onCloseQuantity"
+      @onSubmit="onSubmitModal"
+    >
+      <div class="cart-item-quantity">
+        <button class="button-change-quantity left" @click="changeQuantity(-1)"><b-icon-dash variant="danger" scale="1.5" /></button>
+        <div class="display-item-quantity">{{ quantity }}</div>
+        <button class="button-change-quantity right" @click="changeQuantity(1)"><b-icon-plus variant="danger" scale="1.5" /></button>
+      </div>
+    </CustomerModal>
   </div>
 </template>
 
@@ -64,10 +76,12 @@ import noImage from '../../../../assets/images/no_image.png';
 import utils from '../../../common/util';
 import { CartsService } from '../../../services/customer/carts.service';
 import CheckSuccess from '../../../components/CheckSuccess.vue';
+import CustomerModal from '../../../components/CustomerModal.vue';
 
 export default {
   components: {
     CheckSuccess,
+    CustomerModal,
   },
   data() {
     return {
@@ -82,10 +96,16 @@ export default {
       item: {
         id: this.$router.history.current.params.item_id,
         name: this.$router.history.current.params.item_name,
+        price: 0,
+        original_price: 0,
       },
       noImage: noImage,
       indexImage: 0,
       showCheckSuccess: false,
+      showModalBuy: false,
+      showModalCart: false,
+      quantity: 1,
+      newCartId: null,
     }
   },
   async mounted() {
@@ -109,21 +129,71 @@ export default {
       this.indexImage = index % this.item.item_images.length;
     },
 
-    async addToCart() {
+    async addToCart(isBuy = false) {
       const params = {
-        quantity: 1,
+        quantity: this.quantity,
         item_id: this.item.id,
       }
 
+      this.onCloseQuantity();
+
       this.$loading(true);
       try {
-        await CartsService.create(params);
-        this.showCheckSuccess = true;
+        const { response } = await CartsService.create(params);
+        if (!isBuy) {
+          this.showCheckSuccess = true;
+        }
+        else {
+          this.newCartId = response.data.id;
+        }
         this.$loading(false);
       } catch (error) {
         this.$loading(false);
       }
     },
+
+    onCloseQuantity() {
+      this.showModalBuy = false;
+      this.showModalCart = false;
+      this.quantity = 1;
+    },
+
+    changeQuantity(value) {
+      const newQuantity = this.quantity + value;
+      if (newQuantity < 1 || newQuantity > 99) return;
+      this.quantity = newQuantity;
+    },
+
+    async onSubmitModal() {
+      if (this.showModalCart) {
+        this.addToCart();
+      }
+      else if(this.showModalBuy) {
+        await this.addToCart(true);
+        localStorage.setItem('cart_ids', this.newCartId);
+        this.$router.push('/customer/order');
+      }
+    },
   },
 }
 </script>
+
+<style scoped>
+.cart-item-quantity {
+  width: fit-content;
+  margin: auto;
+}
+
+.button-change-quantity {
+  width: 50px;
+  height: 50px;
+}
+
+.display-item-quantity {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>

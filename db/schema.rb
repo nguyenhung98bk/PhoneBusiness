@@ -113,8 +113,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
     t.string "message"
     t.integer "transport_status", default: 10, null: false
     t.integer "payment_status", default: 10, null: false
-    t.integer "transaction_service_id", null: false
-    t.string "transaction_service_name", null: false
+    t.integer "transport_service_id", null: false
+    t.string "transport_service_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_destination_id"], name: "index_orders_on_customer_destination_id"

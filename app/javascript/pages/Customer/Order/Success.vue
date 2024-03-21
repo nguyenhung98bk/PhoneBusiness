@@ -5,8 +5,39 @@
           <div class="order-success-title">
             Đặt hàng thành công
           </div>
+          <div v-if="order.account_number" class="info-payment-container">
+            <img :src="qrCode.qrDataURL" class="image-qrcode">
+            <div class="d-flex align-items-center">
+              <div class="info-payment-content">
+                <div>Vui lòng thanh toán</div>
+                <div class="order-info-details">
+                  <div>Chủ tài khoản</div>
+                  <div>{{ order.account_holders }}</div>
+                </div>
+                <div class="order-info-details">
+                  <div>Số tài khoản</div>
+                  <div>{{ order.account_number }}</div>
+                </div>
+                <div class="order-info-details">
+                  <div>Ngân hàng</div>
+                  <div>{{ order.bank_name }}</div>
+                </div>
+                <div class="order-info-details">
+                  <div>Số tiền</div>
+                  <div>{{convertNumberFormat(Number(order.total_price) + Number(order.ship_amount)) }}đ</div>
+                </div>
+                <div class="order-info-details">
+                  <div>Nội dung</div>
+                  <div>{{ order.order_number }}</div>
+                </div>
+                <div class="btn-payment-container">
+                  <button class="button-buy order-success-btn-payment">Đã chuyển khoản</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="btn-order-success">
-            <button class="button-buy order-success-btn-buy">Trang chủ</button>
+            <button class="button-buy order-success-btn-buy" @click="$router.push('/')">Trang chủ</button>
             <button class="button-save-buy order-success-btn-save">Đơn hàng</button>
           </div>
         </div>
@@ -16,24 +47,55 @@
 
 <script>
 import { VietqrService } from '../../../services/customer/vietqr.service';
+import { OrdersService } from '../../../services/customer/orders.service';
+import utils from '../../../common/util';
 
 export default {
   data() {
     return {
       id: this.$router.history.current.params.id,
+      order: {},
+      qrCode: {},
     }
   },
   mounted() {
-    this.getAccountNo();
+    this.getOrder();
   },
   methods: {
-    async getAccountNo() {
-      const params = {
-        bin: '970436',
-        accountNumber: '1015545743',
+    ...utils,
+
+    async getOrder() {
+      this.$loading(true);
+      try {
+        const { response } = await OrdersService.get(this.id);
+        this.order = response.data;
+        if (this.order.account_number) {
+          await this.getQrCode();
+        }
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
       }
-      const { response } = VietqrService.getAccountNo(params);
-      console.log(response);
+    },
+
+    async getQrCode() {
+      const params = {
+        accountNo: 1015545743,
+        accountName: "NGUYEN VIET HUNG",
+        acqId: 970436,
+        amount: Number(this.order.total_price) + Number(this.order.ship_amount),
+        addInfo: this.order.order_number,
+        format: "text",
+        template: "compact"
+      }
+      this.$loading(true);
+      try {
+        const { response } = await VietqrService.getQrCode(params);
+        this.qrCode = response.data;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     }
   },
 }

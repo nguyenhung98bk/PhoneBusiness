@@ -13,9 +13,9 @@
             <div class="cart-item-price">{{ convertNumberFormat(cart.item_price) }}đ</div>
           </div>
           <div class="cart-item-quantity">
-            <button class="button-change-quantity left"><b-icon-dash variant="danger" scale="1.5" @click="changeQuantity(cart, -1)" /></button>
+            <button class="button-change-quantity left" @click="changeQuantity(cart, -1)"><b-icon-dash variant="danger" scale="1.5" /></button>
             <div class="display-item-quantity">{{ cart.quantity }}</div>
-            <button class="button-change-quantity right"><b-icon-plus variant="danger" scale="1.5" @click="changeQuantity(cart, 1)" /></button>
+            <button class="button-change-quantity right" @click="changeQuantity(cart, 1)"><b-icon-plus variant="danger" scale="1.5" /></button>
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@ export default {
       cart.quantity = cart.quantity + value;
     },
 
-    async updateCarts(fromSubmit = false) {
+    async updateCarts() {
       const params = { carts: this.carts.map(cart => {
         return {
           id: cart.id,
@@ -85,9 +85,7 @@ export default {
         await CartsService.updateCarts(params);
         this.getCarts();
         this.$loading(false);
-        if (!fromSubmit) {
-          this.showCheckSuccess = true;
-        }
+        this.showCheckSuccess = true;
       } catch (error) {
         this.$loading(false);
       }
@@ -96,7 +94,7 @@ export default {
     async onSubmit() {
       const cartIds = this.carts.filter(c => c.checked).map(c => c.id).join(',');
       if (cartIds != '') {
-        await this.updateCarts(true);
+        await this.updateCarts();
         localStorage.setItem('cart_ids', cartIds);
         this.$router.push('/customer/order');
       }

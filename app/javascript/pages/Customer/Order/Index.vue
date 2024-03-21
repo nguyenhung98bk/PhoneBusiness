@@ -18,6 +18,9 @@
           </div>
           <div v-else>Chưa có địa chỉ nhận hàng</div>
         </div>
+        <span v-for="error in errors['destination']" :key="error" class="text-danger">
+          {{ error }}
+        </span>
       </div>
       <div class="cart-content-container">
         <div v-for="(cart, index) in carts" :key="index" class="cart-item">
@@ -47,6 +50,9 @@
             >
               <span slot="no-options">Không có lựa chọn</span>
             </vSelect>
+            <span v-for="error in errors['transport']" :key="error" class="text-danger">
+              {{ error }}
+            </span>
           </div>
           <div class="w-100 mt-3">
             <label class="form-label">Phương thức thanh toán</label>
@@ -60,6 +66,9 @@
             >
               <span slot="no-options">Không có lựa chọn</span>
             </vSelect>
+            <span v-for="error in errors['payment']" :key="error" class="text-danger">
+              {{ error }}
+            </span>
           </div>
         </div>
         <div class="cart-item cart-item-d-block">
@@ -99,12 +108,6 @@
       @onClose="showSelectDestination = false"
       @onSubmitSelectDestination="onSubmitSelectDestination"
     />
-    <CustomerModalError
-      v-if="showModalError"
-      :errors="errors"
-      :title="`Đặt hàng lỗi`"
-      @onClose="showModalError = false"
-    />
   </div>
 </template>
 
@@ -120,6 +123,7 @@ import DestinationModal from './components/DestinationModal.vue';
 import CustomerModalError from '../../../components/CustomerModalError.vue';
 import constant from '../../../common/constants';
 import vSelect from 'vue-select';
+import Validator from '../../../validator';
 
 export default {
   components: {
@@ -150,8 +154,10 @@ export default {
     this.getPaymentTypes();
   },
   watch: {
-    destination() {
-      this.getTransport();
+    destination(value) {
+      if (value?.district_id) {
+        this.getTransport();
+      }
     }
   },
 
@@ -233,18 +239,18 @@ export default {
     },
 
     validate() {
-      this.errors = [];
-      if (!this.destination) {
-        this.errors.push("Vui lòng chọn địa chỉ nhận hàng.");
-      }
+      const validator = new Validator();
+      validator.checkRequire('destination', this.destination.id, 'Địa chỉ người nhận');
+      validator.checkRequire('payment', this.paymentTypeId, 'Phương thức thanh toán');
+      validator.checkRequire('transport', this.transport.service_id, 'Phương thức vận chuyển');
+
+      this.errors = validator.errors;
     },
 
     async onSubmit() {
       this.validate();
-      if (this.errors.length) {
-        this.showModalError = true;
-        return;
-      }
+      if (Object.keys(this.errors).length) return;
+
       const params = {
         order_items: this.carts.map(cart => {
           return {
@@ -263,7 +269,9 @@ export default {
 
       this.$loading(true);
       try {
-        await OrdersService.create(params);
+        const { response } = await OrdersService.create(params);
+        const orderId = response.data.id;
+        this.$router.push(`/customer/order_success/${orderId}`);
         this.$loading(false);
       } catch (error) {
         this.$loading(false);
