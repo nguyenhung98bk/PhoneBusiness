@@ -11,7 +11,7 @@ module Api
         if @cart.nil?
           @cart = Cart.create(request_params)
         else
-          @cart.update(quantity: cart.quantity + params[:quantity])
+          @cart.update(quantity: @cart.quantity + params[:quantity])
         end
       end
 

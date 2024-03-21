@@ -24,10 +24,10 @@
       </div>
       <div class="cart-content-container">
         <div v-for="(cart, index) in carts" :key="index" class="cart-item">
-          <div class="cart-item-image-container">
+          <div class="cart-item-image-container" @click="$router.push(`/${cart.category_id}-${cart.category_name}/${cart.supplier_id}-${cart.supplier_name}/${cart.item_id}-${cart.item_name}`)">
             <img :src="cart.item_images[0] ? cart.item_images[0].image_url : noImage" class="image-full-width">
           </div>
-          <div class="cart-item-name-price">
+          <div class="cart-item-name-price" @click="$router.push(`/${cart.category_id}-${cart.category_name}/${cart.supplier_id}-${cart.supplier_name}/${cart.item_id}-${cart.item_name}`)">
             <div class="cart-item-name">{{ cart.item_name }}</div>
             <div class="cart-item-price">{{ convertNumberFormat(cart.item_price) }}đ</div>
           </div>

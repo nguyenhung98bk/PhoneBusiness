@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       end
 
       resources :staffs
+      resources :customers
     end
 
     namespace :staffs do

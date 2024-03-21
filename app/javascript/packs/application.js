@@ -8,6 +8,10 @@ import VueLoading from '../plugins/loading';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/locale/vi';
+Vue.component('DateTimePicker', DatePicker);
+
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(DisableAutocomplete);

@@ -20,9 +20,10 @@ export default {
   data() {
     return {
       sidebar: [
-        { text: 'Quản lý nhân viên', url: '/admin/staffs', icon: 'person-bounding-box' },
-        { text: 'Quản lý khách hàng', url: '/admin/customers', icon: 'people' },
-        { text: 'Thống kê', url: '/admin/report', icon: 'reception-4' },
+        { text: 'Hãng sản phẩm', url: '/staff/suppliers', icon: 'card-list' },
+        { text: 'Phân loại sản phẩm', url: '/staff/categories', icon: 'tablet' },
+        { text: 'Quản lý sản phẩm', url: '/staff/items', icon: 'stack' },
+        { text: 'Quản lý đơn hàng', url: '/staff/orders', icon: 'view-stacked' },
       ],
     }
   }

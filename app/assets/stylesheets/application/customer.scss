@@ -484,6 +484,7 @@
 .cart-item-image-container {
   width: 60px;
   height: 60px;
+  cursor: pointer;
 }
 
 .button-change-quantity.left {
@@ -557,6 +558,7 @@
 
 .cart-item-name-price {
   width: calc(100% - 195px);
+  cursor: pointer;
 }
 
 .select-destination-contaner {

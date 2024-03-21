@@ -15,5 +15,9 @@ json.data do
         json.image_url item_image.image_url
       end
     end
+    json.supplier_id item.supplier_id
+    json.category_id item.category_id
+    json.supplier_name item.supplier.name
+    json.category_name item.category.name
   end
 end

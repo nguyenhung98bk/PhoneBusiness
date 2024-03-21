@@ -21,7 +21,7 @@ export default {
         { text: 'Trang chủ', url: '/admin', icon: 'house-door' },
         { text: 'Quản lý nhân viên', url: '/admin/staffs', icon: 'person-bounding-box' },
         { text: 'Quản lý khách hàng', url: '/admin/customers', icon: 'people' },
-        { text: 'Thống kê', url: '/admin/thongke', icon: 'reception-4' },
+        { text: 'Thống kê', url: '/admin/report', icon: 'reception-4' },
       ],
       loginUrl: "/admin/login",
       emailLogin: localStorage.getItem('admin_login'),

@@ -7,7 +7,7 @@
         <div class="text-light fs-3 ms-4">Store</div>
       </div>
       <ul>
-        <a v-for="(item, key) in sidebar" :href="item.url" class="text-light admin-sidebar-url">
+        <a v-for="(item, key) in sidebar" :key="key" :href="item.url" class="text-light admin-sidebar-url">
           <li class="admin-sidebar-li">
             <b-icon :icon="item.icon" v-if='showSidebar' variant='Light' scale='2' />
             {{ item.text }}

@@ -25,7 +25,6 @@ export default {
   props: {
     imagesProps: {
       typeof: Array,
-      default: [{ id: null, name: '', image_url: '', is_new: true }]
     }
   },
   watch: {
