@@ -67,37 +67,120 @@
           <div class="information-statistics">
             <div v-if="typeSearchTime == searchTime.month" class="infomation-by-month">
               <div class="order-statistical-container"> 
-                <button class="btn-month pre actived" @click="preMonth">&#8249;</button>
+                <button class="btn-month pre actived" @click="previewMonth">&#8249;</button>
                 <div class="detail-month">
                   <div class="month">
                     <div class="content-month">
-                      <p class="title-time">xxxxxxxxxxxx</p>
-                      <p class="count">Số lượng  <span class="content_right"><span class="text_content font_text-bold"></span></span></p>
-                      <p>Doanh thu <span class="content_right"><span class="text_content font_text-bold"></span>đ</span></p>
+                      <p class="title-time">Tháng {{ currentMonth() }}</p>
+                      <p class="count">Số đơn hàng  <span class="content_right">{{ countOrderFirst }}<span class="text_content font_text-bold"></span></span></p>
+                      <p>Doanh thu <span class="content_right">{{ convertNumberFormat(sumOrderFirst) }}<span class="text_content font_text-bold"></span>đ</span></p>
                     </div>
                   </div>
                 </div>
                 <div class="detail-month">
                   <div class="month">
                     <div class="content-month">
-                      <p class="title-time">xxxxxxxxxxxx</p>
-                      <p class="count">Số lượng  <span class="content_right"><span class="text_content font_text-bold"></span></span></p>
-                      <p>Doanh thu <span class="content_right"><span class="text_content font_text-bold"></span>đ</span></p>
+                      <p class="title-time">Tháng {{ preMonth() }}</p>
+                      <p class="count">Số đơn hàng  <span class="content_right">{{ countOrderSecond }}<span class="text_content font_text-bold"></span></span></p>
+                      <p>Doanh thu <span class="content_right">{{ convertNumberFormat(sumOrderSecond) }}<span class="text_content font_text-bold"></span>đ</span></p>
                     </div>
                   </div>
                 </div>
                 <div class="detail-month">
                   <div class="month">
                     <div class="content-month">
-                      <p class="title-time">xxxxxxxxxxxx</p>
-                      <p class="count">Số lượng  <span class="content_right"><span class="text_content font_text-bold"></span></span></p>
-                      <p>Doanh thu <span class="content_right"><span class="text_content font_text-bold"></span>đ</span></p>
+                      <p class="title-time">Tháng {{ preTwoMonth() }}</p>
+                      <p class="count">Số đơn hàng  <span class="content_right">{{ countOrderThird }}<span class="text_content font_text-bold"></span></span></p>
+                      <p>Doanh thu <span class="content_right">{{ convertNumberFormat(sumOrderThird) }}<span class="text_content font_text-bold"></span>đ</span></p>
                     </div>
                   </div>
                 </div>
                 <button class="btn-month next" :class="isActiveBtnNextMonth() ? 'actived' : 'disabled'" @click="nextMonth">&#8250;</button>
               </div>
             </div>
+            <div v-if="typeSearchTime == searchTime.year" class="infomation-by-month">
+              <div class="order-statistical-container"> 
+                <button class="btn-month pre actived" @click="previewYear">&#8249;</button>
+                <div class="detail-month">
+                  <div class="month">
+                    <div class="content-month">
+                      <p class="title-time">Năm {{ currentYear() }}</p>
+                      <p class="count">Số đơn hàng  <span class="content_right">{{ countOrderFirst }}<span class="text_content font_text-bold"></span></span></p>
+                      <p>Doanh thu <span class="content_right">{{ convertNumberFormat(sumOrderFirst) }}<span class="text_content font_text-bold"></span>đ</span></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="detail-month">
+                  <div class="month">
+                    <div class="content-month">
+                      <p class="title-time">Năm {{ preYear() }}</p>
+                      <p class="count">Số đơn hàng  <span class="content_right">{{ countOrderSecond }}<span class="text_content font_text-bold"></span></span></p>
+                      <p>Doanh thu <span class="content_right">{{ convertNumberFormat(sumOrderSecond) }}<span class="text_content font_text-bold"></span>đ</span></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="detail-month">
+                  <div class="month">
+                    <div class="content-month">
+                      <p class="title-time">Năm {{ preTwoYear() }}</p>
+                      <p class="count">Số đơn hàng  <span class="content_right">{{ countOrderThird }}<span class="text_content font_text-bold"></span></span></p>
+                      <p>Doanh thu <span class="content_right">{{ convertNumberFormat(sumOrderThird) }}<span class="text_content font_text-bold"></span>đ</span></p>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn-month next" :class="isActiveBtnNextYear() ? 'actived' : 'disabled'" @click="nextYear">&#8250;</button>
+              </div>
+            </div>
+            <div v-if="typeSearchTime == searchTime.range" class="infomation-by-month">
+              <div class="order-statistical-container"> 
+                <div class="detail-month">
+                  <div class="month">
+                    <div class="content-month">
+                      <p class="title-time">Năm {{ displayRange() }}</p>
+                      <p class="count">Số đơn hàng  <span class="content_right">{{ countOrderFirst }}<span class="text_content font_text-bold"></span></span></p>
+                      <p>Doanh thu <span class="content_right">{{ convertNumberFormat(sumOrderFirst) }}<span class="text_content font_text-bold"></span>đ</span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <div class="report-category-group-button">
+              <ul class="btn-choose-type">
+                <li>
+                  <input type="radio" v-model="typeReportCategory" value="1" name="typeReportCategory" />
+                  <label class="type-search-time">Số sản phẩm bán</label>
+                </li>
+                <li>
+                  <input type="radio" v-model="typeReportCategory" v-on:change="onChangeTypeSearchTime" value="2" name="typeReportCategory" />
+                  <label class="type-search-time">Doanh thu</label>
+                </li>
+              </ul>
+            </div>
+            <div class="fs-4">Thống kê theo phân loại sản phẩm</div>
+            <DoughnutChart
+              v-if="typeReportCategory == 1"
+              :data="dataSumItemByCategory"
+            />
+            <DoughnutChart
+              v-if="typeReportCategory == 2"
+              :data="dataSumPriceByCategory"
+            />
+          </div>
+          <div class="mt-4">
+            <div class="fs-4">Thống kê theo hãng sản phẩm</div>
+            <BarChart
+              v-if="typeReportCategory == 1"
+              :data="dataSumItemBySupplier"
+              :unit="'Số lượng'"
+            />
+            <BarChart
+              v-if="typeReportCategory == 2"
+              :data="dataSumPriceBySupplier"
+              :unit="'Doanh thu (đ)'"
+            />
           </div>
         </div>
       </div>
@@ -109,10 +192,18 @@
 import moment from 'moment';
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
+import { ReportService } from '../../../services/admin/report.service';
+import utils from '../../../common/util';
+import { CategoriesService } from '../../../services/admin/categories.service';
+
+import DoughnutChart from './components/Doughnut.vue';
+import BarChart from './components/Bar.vue';
 
 export default {
   components: {
     DatePicker,
+    DoughnutChart,
+    BarChart,
   },
   data() {
     return {
@@ -125,32 +216,201 @@ export default {
       month: new Date(),
       year: new Date(),
       rangeDate: [new Date(), new Date()],
+      countOrderFirst: 0,
+      sumOrderFirst: 0,
+      countOrderSecond: 0,
+      sumOrderSecond: 0,
+      countOrderThird: 0,
+      sumOrderThird: 0,
+      categories: [],
+      dataSumItemByCategory: [],
+      dataSumPriceByCategory: [],
+      dataSumItemBySupplier: [],
+      dataSumPriceBySupplier: [],
+      typeReportCategory: 1,
+      typeReportSupplier: 1,
     }
   },
+  mounted() {
+    this.onLoadData();
+  },
   methods: {
-    onChangeTypeSearchTime() {
+    ...utils,
 
+    onLoadData() {
+      this.getReportRevenue();
+      this.getReportByCategory();
+      this.getReportBySupplier();
+    },
+
+    onChangeTypeSearchTime() {
+      this.onLoadData();
     },
 
     onChangeMonth() {
-
+      this.onLoadData();
     },
 
     onChangeRange() {
-
+      this.onLoadData();
     },
 
-    preMonth() {
+    previewMonth() {
       this.month = new Date(moment(this.month).subtract(1, 'month'));
+      this.onLoadData();
     },
 
     nextMonth() {
       this.month = new Date(moment(this.month).add(1, 'month'));
+      this.onLoadData();
     },
 
     isActiveBtnNextMonth() {
-      return moment(this.startTime).format('YYYY/MM') == moment().format('YYYY/MM') ? false : true;
+      return moment(this.month).format('YYYY/MM') == moment().format('YYYY/MM') ? false : true;
     },
+
+    currentMonth() {
+      return moment(this.month).format('MM/YYYY');
+    },
+
+    preMonth() {
+      const month = new Date(moment(this.month).subtract(1, 'month'));
+      return moment(month).format('MM/YYYY');
+    },
+
+    preTwoMonth() {
+      const month = new Date(moment(this.month).subtract(2, 'month'));
+      return moment(month).format('MM/YYYY');
+    },
+
+    previewYear() {
+      this.year = new Date(moment(this.year).subtract(1, 'year'));
+      this.onLoadData();
+    },
+
+    nextYear() {
+      this.year = new Date(moment(this.year).add(1, 'year'));
+      this.onLoadData();
+    },
+
+    isActiveBtnNextYear() {
+      return moment(this.year).format('YYYY') == moment().format('YYYY') ? false : true;
+    },
+
+    currentYear() {
+      return moment(this.year).format('YYYY');
+    },
+
+    preYear() {
+      const year = new Date(moment(this.year).subtract(1, 'year'));
+      return moment(year).format('YYYY');
+    },
+
+    preTwoYear() {
+      const year = new Date(moment(this.year).subtract(2, 'year'));
+      return moment(year).format('YYYY');
+    },
+
+    displayRange() {
+      return `${moment(this.rangeDate[0]).format('DD/MM/YYYY')} - ${moment(this.rangeDate[1]).format('DD/MM/YYYY')}`;
+    },
+
+    async getReportRevenue() {
+      const params = {
+        month: moment(this.month).format('YYYY/MM/DD'),
+        year: moment(this.year).format('YYYY/MM/DD'),
+        type_search_time: this.typeSearchTime,
+        start_time: moment(this.rangeDate[0]).format('YYYY/MM/DD'),
+        end_time: moment(this.rangeDate[1]).format('YYYY/MM/DD'),
+      }
+      this.$loading(true);
+      try {
+        const { response } = await ReportService.getReportRevenue(params);
+        const calculate = response.data;
+        this.countOrderFirst = calculate.count_order_first ? calculate.count_order_first : 0;
+        this.sumOrderFirst = calculate.sum_order_first ? calculate.sum_order_first : 0;
+        this.countOrderSecond = calculate.count_order_second ? calculate.count_order_second : 0;
+        this.sumOrderSecond = calculate.sum_order_second ? calculate.sum_order_second : 0;
+        this.countOrderThird = calculate.count_order_third ? calculate.count_order_third : 0;
+        this.sumOrderThird = calculate.sum_order_third ? calculate.sum_order_third : 0;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
+    },
+
+    async getReportByCategory() {
+      const params = {
+        month: moment(this.month).format('YYYY/MM/DD'),
+        year: moment(this.year).format('YYYY/MM/DD'),
+        type_search_time: this.typeSearchTime,
+        start_time: moment(this.rangeDate[0]).format('YYYY/MM/DD'),
+        end_time: moment(this.rangeDate[1]).format('YYYY/MM/DD'),
+      }
+      this.$loading(true);
+      try {
+        const { response } = await ReportService.getReportByCategory(params);
+        const dataReportByCategory = response.data;
+        this.dataSumItemByCategory = dataReportByCategory.map(data => {
+          return {
+            label: data.name,
+            data: data.sum_item,
+          }
+        })
+        this.dataSumPriceByCategory = dataReportByCategory.map(data => {
+          return {
+            label: data.name,
+            data: data.sum_price,
+          }
+        })
+        this.$loading(false);
+      } catch (error) {
+        console.log(error);
+        this.$loading(false);
+      }
+    },
+
+    async getReportBySupplier() {
+      const params = {
+        month: moment(this.month).format('YYYY/MM/DD'),
+        year: moment(this.year).format('YYYY/MM/DD'),
+        type_search_time: this.typeSearchTime,
+        start_time: moment(this.rangeDate[0]).format('YYYY/MM/DD'),
+        end_time: moment(this.rangeDate[1]).format('YYYY/MM/DD'),
+      }
+      this.$loading(true);
+      try {
+        const { response } = await ReportService.getReportBySupplier(params);
+        const dataReportBySupplier = response.data;
+        this.dataSumItemBySupplier = dataReportBySupplier.map(data => {
+          return {
+            label: data.name,
+            data: data.sum_item,
+          }
+        })
+        this.dataSumPriceBySupplier = dataReportBySupplier.map(data => {
+          return {
+            label: data.name,
+            data: data.sum_price,
+          }
+        })
+        this.$loading(false);
+      } catch (error) {
+        console.log(error);
+        this.$loading(false);
+      }
+    },
+
+    async getCategories() {
+      this.$loading(true);
+      try {
+        const { response } = await CategoriesService.index();
+        this.categories = response.data;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
+    }
   },
 }
 </script>

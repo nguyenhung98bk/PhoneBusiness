@@ -13,6 +13,15 @@ Rails.application.routes.draw do
 
       resources :staffs
       resources :customers
+      resources :admins
+
+      resources :reports do
+        collection do
+          get 'report_revenue', to: 'reports#report_revenue'
+          get 'report_by_category', to: 'reports#report_by_category'
+          get 'report_by_supplier', to: 'reports#report_by_supplier'
+        end
+      end
     end
 
     namespace :staffs do
