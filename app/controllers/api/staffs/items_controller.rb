@@ -34,6 +34,15 @@ module Api
           :original_price,
           :price,
           :note,
+          item_colors_attributes: [
+            :id,
+            :color,
+            :quantity,
+            :purchase_price,
+            :original_price,
+            :price,
+            :_destroy,
+          ]
         ).merge(item_images_attributes: image_params)
       end
 

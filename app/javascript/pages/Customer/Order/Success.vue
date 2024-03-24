@@ -31,7 +31,15 @@
                   <div>{{ order.order_number }}</div>
                 </div>
                 <div class="btn-payment-container">
-                  <button class="button-buy order-success-btn-payment">Đã chuyển khoản</button>
+                  <button v-if="this.order.payment_status == 'wait_confirm'" class="button-buy order-success-btn-payment disabled">
+                    Chờ xác nhận thanh toán
+                  </button>
+                  <button v-else-if="this.order.payment_status == 'paid'" class="button-buy order-success-btn-payment disabled">
+                    Thanh toán thành công
+                  </button>
+                  <button v-else="this.order.payment_status == 'unpaid'" class="button-buy order-success-btn-payment" @click="updateOrderStatus()">
+                    Click vào đây nếu bạn đã chuyển khoản
+                  </button>
                 </div>
               </div>
             </div>
@@ -96,7 +104,30 @@ export default {
       } catch (error) {
         this.$loading(false);
       }
+    },
+
+    async updateOrderStatus() {
+      this.$loading(true);
+      try {
+        const { response } = await OrdersService.update(this.id);
+        this.order = response.data;
+        this.$loading(false);
+      } catch (error) {
+        console.log(error);
+        this.$loading(false);
+      }
     }
   },
 }
 </script>
+
+<style scoped>
+.button-buy {
+  height: unset !important;
+  padding: 10px;
+}
+
+.button-buy.disabled {
+  background-color: #cccccc !important;
+}
+</style>

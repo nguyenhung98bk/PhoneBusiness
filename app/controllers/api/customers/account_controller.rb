@@ -20,7 +20,6 @@ module Api
         rescue StandardError => e
           Rails.logger.info("send mail false customer_id: #{@customer.id}")
         end
-        # @token = "abcgxgaufdklad"
       end
 
       def active_account
@@ -32,6 +31,33 @@ module Api
         @customer = @password_setting.customer.update(status: :active)
         @password_setting.delete
         render json: { status: 'ok', messages: 'ok' }, status: :ok
+      end
+
+      def forgot_password
+        customer = Customer.find_by(email: params[:email], status: [:not_yet_authenticated, :active])
+        return error_422('Email không tồn tại.') if customer.nil?
+
+        @password_reset = customer.password_reset.new
+        @password_reset.save
+
+        begin
+          ::CustomerMailer.send_mail_forgot_password(customer, @password_reset.token).deliver_later
+        rescue StandardError => e
+          Rails.logger.info("send mail false customer_id: #{customer.id}")
+        end
+      end
+
+      def reset_password
+        @customer = Customer.find_by(email: params[:email], status: [:not_yet_authenticated, :active])
+        return error_422('Email không tồn tại.') if @customer.nil?
+
+        password_reset = PasswordReset.find_by(token: params[:token])
+        if password_reset.nil? || password_reset.password_reset_token_expired?
+          return render json: { status: 'NG', message: 'not_found' }, status: :ok
+        end
+
+        @customer.update(password: params[:password], status: :active)
+        password_reset.delete
       end
 
       private

@@ -154,7 +154,7 @@
                   <label class="type-search-time">Số sản phẩm bán</label>
                 </li>
                 <li>
-                  <input type="radio" v-model="typeReportCategory" v-on:change="onChangeTypeSearchTime" value="2" name="typeReportCategory" />
+                  <input type="radio" v-model="typeReportCategory" value="2" name="typeReportCategory" />
                   <label class="type-search-time">Doanh thu</label>
                 </li>
               </ul>
@@ -233,6 +233,9 @@ export default {
   },
   mounted() {
     this.onLoadData();
+    setInterval(() => {
+      this.onLoadData();
+    }, 300000);
   },
   methods: {
     ...utils,

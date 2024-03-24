@@ -668,3 +668,41 @@
   justify-content: center;
   margin-top: 30px;
 }
+
+.cm-item-color-content {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.cm-item-color-element {
+  border: 1px solid #cccccc;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+
+}
+
+.cm-item-color-element.active {
+  border-color: #d70018;
+}
+
+.cm-item-color-element:hover {
+  border-color: #ff6801;
+}
+
+.btn-getToken {
+  background-color: #d70018;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #ffffff;
+}
+
+.w-fit-content {
+  width: fit-content;
+}
+
+.btn-getToken.disabled {
+  background-color: #cccccc;
+}

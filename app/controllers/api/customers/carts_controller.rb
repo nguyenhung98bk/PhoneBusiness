@@ -7,7 +7,7 @@ module Api
       end
 
       def create
-        @cart = Cart.find_by(customer_id: @current_customer.id, item_id: params[:item_id])
+        @cart = Cart.find_by(customer_id: @current_customer.id, item_id: params[:item_id], item_color_id: params[:item_color_id])
         if @cart.nil?
           @cart = Cart.create(request_params)
         else
@@ -31,6 +31,7 @@ module Api
         params.permit(
           :item_id,
           :quantity,
+          :item_color_id
         ).merge(customer_id: current_customer.id)
       end
 

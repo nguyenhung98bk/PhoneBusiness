@@ -64,6 +64,9 @@ export default {
       showSidebar: screen.width > 1024,
     };
   },
+  // mounted() {
+  //   console.log(screen.width);
+  // },
   methods: {
     logout() {
       this.$emit('logout');

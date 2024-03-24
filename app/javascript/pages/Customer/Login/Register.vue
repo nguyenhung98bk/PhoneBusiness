@@ -103,6 +103,7 @@ export default {
             validator.checkSameValue('password_confirmation', this.password, this.password_confirmation, 'Mật khẩu xác nhận');
 
       validator.checkMaxLength('phone', this.phone, 10, 'Số điện thoại') &&
+        validator.checkDigit('phone', this.phone, 'Số điện thoại') &&
           validator.checkMinLength('phone', this.phone, 10, 'Số điện thoại');
       this.errors = validator.errors;
     },

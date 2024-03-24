@@ -12,8 +12,6 @@ export class AccountService {
         'account/register',
         params
       );
-      // localStorage.setItem('customer_csrf', response.data.csrf);
-      // localStorage.setItem('customer_login', JSON.parse(response.config.data).email);
       return new ResponseWrapper(response);
     } catch (error) {
       throw new ApiError(error);
@@ -25,8 +23,32 @@ export class AccountService {
       const response = await this.request().get(
         `account/active_account/${token}`,
       );
-      
-      console.log(response);
+      return new ResponseWrapper(response);
+    } catch (error) {
+      throw new ApiError(error);
+    }
+  }
+
+  static async forgotPassword(parameters = {}) {
+    const params = { ...parameters };
+    try {
+      const response = await this.request().get(
+        `account/forgot_password/`,
+        { params }
+      );
+      return new ResponseWrapper(response);
+    } catch (error) {
+      throw new ApiError(error);
+    }
+  }
+
+  static async resetPassword(parameters = {}) {
+    const params = { ...parameters };
+    try {
+      const response = await this.request().post(
+        `account/reset_password/`,
+        params
+      );
       return new ResponseWrapper(response);
     } catch (error) {
       throw new ApiError(error);

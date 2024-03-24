@@ -16,4 +16,15 @@ json.data do
       json.image_url item_image.image_url
     end
   end
+  
+  json.item_colors do
+    json.array! @item.item_colors do |item_color|
+      json.id item_color.id
+      json.color item_color.color
+      json.quantity item_color.quantity
+      json.purchase_price item_color.purchase_price
+      json.original_price item_color.original_price
+      json.price item_color.price
+    end
+  end
 end

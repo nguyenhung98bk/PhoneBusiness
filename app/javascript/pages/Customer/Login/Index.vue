@@ -19,7 +19,7 @@
             </span>
           </div>
           <div class="btn-reset-password mb-4">
-            <a>Quên mật khẩu</a>
+            <a @click="$router.push('/customer/forgot_password')">Quên mật khẩu</a>
           </div>
           <div class="mb-4">
             <button type="button" class="btn-submit-login-customer" @click="onSubmit">Đăng nhập</button>

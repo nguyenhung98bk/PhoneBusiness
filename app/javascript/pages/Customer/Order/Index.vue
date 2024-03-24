@@ -28,7 +28,7 @@
             <img :src="cart.item_images[0] ? cart.item_images[0].image_url : noImage" class="image-full-width">
           </div>
           <div class="cart-item-name-price" @click="$router.push(`/${cart.category_id}-${cart.category_name}/${cart.supplier_id}-${cart.supplier_name}/${cart.item_id}-${cart.item_name}`)">
-            <div class="cart-item-name">{{ cart.item_name }}</div>
+            <div class="cart-item-name">{{ cart.item_name + (cart.color ? ' - ' + cart.color : '') }}</div>
             <div class="cart-item-price">{{ convertNumberFormat(cart.item_price) }}đ</div>
           </div>
           <div class="cart-item-quantity">
@@ -257,6 +257,7 @@ export default {
             cart_id: cart.id,
             item_id: cart.item_id,
             quantity: cart.quantity,
+            item_color_id: cart.item_color_id,
           }
         }),
         customer_destination_id: this.destination.id,

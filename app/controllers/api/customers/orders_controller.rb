@@ -16,19 +16,31 @@ module Api
           @order.save!
           order_item_params[:order_items].each do |order_item_params|
             Cart.find(order_item_params[:cart_id]).destroy
-            item = Item.find(order_item_params[:item_id])
+            if order_item_params[:item_color_id].present?
+              item = ItemColor.find(order_item_params[:item_color_id])
+            else
+              item = Item.find(order_item_params[:item_id])
+            end
             item.quantity -= order_item_params[:quantity]
             return error_422('Không đủ hàng') if item.quantity < 0
             item.save
             total_price += item.price.to_i * order_item_params[:quantity]
             order_item = @order.order_items.new()
             order_item.item_id = order_item_params[:item_id]
+            order_item.item_color_id = order_item_params[:item_color_id]
             order_item.quantity = order_item_params[:quantity]
             order_item.price = item.price
             order_item.purchase_price = item.purchase_price
             order_item.save
           end
           @order.update(total_price: total_price)
+        end
+      end
+
+      def update
+        @order = Order.find(params[:id])
+        if (@order.payment_status == :unpaid)
+          @order.update(payment_status: :wait_confirm)
         end
       end
 
@@ -47,7 +59,7 @@ module Api
 
       def order_item_params
         params.permit(
-          order_items: [:cart_id, :item_id, :quantity]
+          order_items: [:cart_id, :item_id, :quantity, :item_color_id]
         )
       end
     end

@@ -19,6 +19,7 @@ import CustomerVerifyFail from './pages/Customer/Login/VerifyFail.vue';
 import CustomerCart from './pages/Customer/Cart/Index.vue';
 import CustomerOrder from './pages/Customer/Order/Index.vue';
 import CustomerOrderSuccess from './pages/Customer/Order/Success.vue';
+import CustomerForgotPassword from './pages/Customer/Login/ForgotPassword.vue';
 
 import AdminLogin from './pages/Admin/Login/Index.vue';
 import AdminHome from './pages/Admin/Home/Index.vue';
@@ -91,6 +92,7 @@ const router = new VueRouter({
       component: CustomerLayout,
       children: [
         { path: 'login', meta: { title: 'Đăng nhập' }, name: 'customer-login', component: CustomerLogin },
+        { path: 'forgot_password', meta: { title: 'Quên mật khẩu', hideForAuth: true }, name: 'customer-forgot-password', component: CustomerForgotPassword },
         { path: 'register', meta: { title: 'Đăng ký', hideForAuth: true }, name: 'customer-register', component: CustomerRegister },
         { path: 'register_success', meta: { title: 'Xác thực thành công', hideForAuth: true }, name: 'customer-register-success', component: CustomerRegisterSuccess },
         { path: 'verify_fail', meta: { title: 'Xác thực thất bại', hideForAuth: true }, name: 'customer-verify-fail', component: CustomerVerifyFail },

@@ -449,3 +449,18 @@
   justify-content: center;
   margin-top: 25px;
 }
+
+.item-color-element {
+  border: 1px solid $primary;
+  padding: 10px 20px;
+  margin-top: 10px;
+}
+
+.btn-add-itemColor {
+  background-color: $primary;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  color: #ffffff;
+  padding: 5px 20px;
+}

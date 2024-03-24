@@ -34,14 +34,23 @@
         </div>
         <div class="info-item">
           <div class="info-item-price">
-            <div class="info-item-price-red">{{ convertNumberFormat(item.price) }}đ</div>
-            <div class="info-item-price-gray">{{ convertNumberFormat(item.original_price) }}đ</div>
+            <div class="info-item-price-red">{{ convertNumberFormat(itemColorSelect ? itemColorSelect.price : item.price) }}đ</div>
+            <div class="info-item-price-gray">{{ convertNumberFormat(itemColorSelect ? itemColorSelect.original_price : item.original_price) }}đ</div>
             <div>| Đã bao gồm VAT</div>
           </div>
           <div class="info-item-order">
             <div class="info-free-ship">
               <b-icon-truck />
               Miễn phí vận chuyển toàn quốc
+            </div>
+            <div class="mt-3">
+              <div>Lựa chọn màu</div>
+              <div class="cm-item-color-content">
+                <div v-for="(itemColor, index) in itemColors" :key="index" class="cm-item-color-element" :class="itemColor.id == itemColorSelectId ? 'active' : ''" @click="itemColorSelectId = itemColor.id">
+                  <input v-model="itemColorSelectId" type="radio" :value="itemColor.id" name="item-color"><label class="ms-2">{{ itemColor.color }}</label>
+                  <div class="text-danger">{{ convertNumberFormat(itemColor.price) }}</div>
+                </div>
+              </div>
             </div>
             <div class="info-group-button">
               <button class="button-buy" @click="showModalBuy = true">Mua ngay</button>
@@ -106,10 +115,18 @@ export default {
       showModalCart: false,
       quantity: 1,
       newCartId: null,
+      itemColors: [],
+      itemColorSelectId: null,
+      itemColorSelect: null,
     }
   },
   async mounted() {
     await this.getItems();
+  },
+  watch: {
+    itemColorSelectId(value) {
+      this.itemColorSelect = this.itemColors.filter(itemColor => itemColor.id == this.itemColorSelectId)[0];
+    }
   },
   methods: {
     ...utils,
@@ -119,6 +136,10 @@ export default {
       try {
         const { response } = await ItemsService.get(this.item.id);
         this.item = response.data;
+        this.itemColors = this.item.item_colors;
+        if (this.itemColors.length) {
+          this.itemColorSelectId = this.itemColors[0].id;
+        }
         this.$loading(false);
       } catch (error) {
         this.$loading(false);
@@ -133,6 +154,7 @@ export default {
       const params = {
         quantity: this.quantity,
         item_id: this.item.id,
+        item_color_id: this.itemColorSelectId,
       }
 
       this.onCloseQuantity();

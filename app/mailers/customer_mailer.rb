@@ -4,4 +4,9 @@ class CustomerMailer < ApplicationMailer
     @url = url
     mail(to: @customer.email, subject: 'Thông báo xác thực tài khoản')
   end
+
+  def send_mail_forgot_password(customer, token)
+    @token = token
+    mail(to: customer.email, subject: 'Mã xác thực quên mật khẩu')
+  end
 end

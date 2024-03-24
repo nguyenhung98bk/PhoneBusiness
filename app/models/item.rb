@@ -4,9 +4,11 @@ class Item < ApplicationRecord
   has_many :order_items
   has_many :carts
   has_many :item_images, dependent: :destroy
+  has_many :item_colors, dependent: :destroy
   before_create :set_initial_data
 
   accepts_nested_attributes_for :item_images, allow_destroy: true
+  accepts_nested_attributes_for :item_colors, allow_destroy: true
 
   def self.search(params)
     query = self.all

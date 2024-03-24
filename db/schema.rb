@@ -22,10 +22,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
   create_table "carts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "customer_id", null: false
     t.bigint "item_id", null: false
+    t.bigint "item_color_id"
     t.integer "quantity", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_carts_on_customer_id"
+    t.index ["item_color_id"], name: "index_carts_on_item_color_id"
     t.index ["item_id"], name: "index_carts_on_item_id"
   end
 
@@ -64,6 +66,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
     t.index ["email"], name: "index_customers_on_email", unique: true
   end
 
+  create_table "item_colors", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "item_id", null: false
+    t.string "color"
+    t.integer "quantity", null: false
+    t.string "purchase_price", null: false
+    t.string "original_price", null: false
+    t.string "price", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_item_colors_on_item_id"
+  end
+
   create_table "item_images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "item_id", null: false
     t.string "image_url"
@@ -93,11 +107,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
   create_table "order_items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "order_id", null: false
     t.bigint "item_id", null: false
+    t.bigint "item_color_id"
     t.integer "quantity", null: false
     t.string "purchase_price", null: false
     t.string "price", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["item_color_id"], name: "index_order_items_on_item_color_id"
     t.index ["item_id"], name: "index_order_items_on_item_id"
     t.index ["order_id"], name: "index_order_items_on_order_id"
   end
@@ -171,11 +187,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
   end
 
   add_foreign_key "carts", "customers"
+  add_foreign_key "carts", "item_colors"
   add_foreign_key "carts", "items"
   add_foreign_key "customer_destinations", "customers"
+  add_foreign_key "item_colors", "items"
   add_foreign_key "item_images", "items"
   add_foreign_key "items", "categories"
   add_foreign_key "items", "suppliers"
+  add_foreign_key "order_items", "item_colors"
   add_foreign_key "order_items", "items"
   add_foreign_key "order_items", "orders"
   add_foreign_key "orders", "customer_destinations"

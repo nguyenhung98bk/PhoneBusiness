@@ -8,4 +8,5 @@ json.data do
   json.account_holders payment_type.account_holders
   json.account_number payment_type.account_number
   json.bank_name payment_type.bank_name
+  json.payment_status @order.payment_status
 end

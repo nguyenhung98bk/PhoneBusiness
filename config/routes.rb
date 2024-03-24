@@ -60,6 +60,8 @@ Rails.application.routes.draw do
       
       post 'account/register', to: 'account#register'
       get 'account/active_account/:token', to: 'account#active_account'
+      get 'account/forgot_password', to: 'account#forgot_password'
+      post 'account/reset_password', to: 'account#reset_password'
 
       resources :customer_destinations
       resources :payment_types
