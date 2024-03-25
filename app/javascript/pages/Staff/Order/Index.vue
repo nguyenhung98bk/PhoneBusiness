@@ -53,6 +53,21 @@
               </div>
             </div>
           </div>
+          <div class="list_header mt-3">
+            <div class="search-status">
+              <DateTimePicker v-model="month" format="MM/YYYY"
+                              :editable="false" :clearable="false"
+                              class="input_wrapper calender full_width" input-class="calendar__input calendar-text"
+                              type="month"
+                              :disabled-date="(date) => date > (new Date().setHours(0, 0, 0, 0))"
+                              @input="getOrders()"
+              >
+                <span slot="icon-calendar">
+                  <b-icon-calendar />
+                </span>
+              </DateTimePicker>
+            </div>
+          </div>
           <div class="list-body">
             <div class="dataTables_wrapper no-footer">
               <table class="table lms_table_active3 dataTable no-footer dtr-inline">
@@ -94,11 +109,14 @@ import noImage from '../../../../assets/images/no_image.png';
 import vSelect from 'vue-select';
 import constants from '../../../common/constants';
 import moment from 'moment';
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 
 export default {
   components: {
     Pager,
     vSelect,
+    DatePicker,
   },
   data() {
     return {
@@ -120,11 +138,15 @@ export default {
       searchPaymentStatus: '',
       searchTransportStatus: '',
       paymentStatus: constants.paymentStatus,
-      transportStatus: constants.transportStatus
+      transportStatus: constants.transportStatus,
+      month: new Date(),
     }
   },
   mounted() {
     this.getOrders();
+    setInterval(() => {
+      this.getOrders();
+    }, 300000);
   },
   methods: {
     async getOrders() {
@@ -132,6 +154,7 @@ export default {
         key_search: this.keySearch,
         transport_status: this.searchTransportStatus,
         payment_status: this.searchPaymentStatus,
+        month: moment(this.month).format('YYYY/MM/DD'),
         ...this.pageParams,
       }
       this.$loading(true);

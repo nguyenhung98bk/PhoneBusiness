@@ -3,12 +3,13 @@
     <div class="cart-header">Chi tiết đơn hàng</div>
     <div class="cart-content">
       <div class="customer-destinations">
-        <div class="customer-destinations-container h-63px">
+        <div class="customer-destinations-container">
+          <div>Mã đơn hàng: {{ orderNumber }}</div>
           <div class="d-flex align-items-center">
-            Trạng thái thanh toán: <span>{{ displayPaymentStatus(payment_status) }}</span>
+            Trạng thái thanh toán: {{ displayPaymentStatus(payment_status) }}
             <button v-if="payment_type_id == 2 && payment_status == 'unpaid'" class="btn-payment-orderdetail" @click="$router.push(`/customer/order_success/${id}`)">Thanh toán ngay</button>
           </div>
-          <div>Trạng thái vận chuyển: <span>{{ displayTransportStatus(transport_status) }}</span></div>
+          <div>Trạng thái vận chuyển: {{ displayTransportStatus(transport_status) }}</div>
         </div>
       </div>
       <div class="customer-destinations">
@@ -61,7 +62,7 @@
             </div>
           <div class="order-info-details">
             <div>Tổng tiền phí vận chuyển</div>
-            <div>0đ</div>
+            <div>{{ convertNumberFormat(shipAmount) }}</div>
             </div>
           <div class="order-info-details">
             <div>Giảm giá hàng</div>
@@ -73,7 +74,7 @@
           </div>
           <div class="order-info-title order-info-details">
             <div>Tổng số tiền cần thanh toán</div>
-            <div>{{ convertNumberFormat(totalPrice) }}đ</div>
+            <div>{{ convertNumberFormat(Number(totalPrice) + Number(shipAmount)) }}đ</div>
           </div>
         </div>
       </div>
@@ -102,8 +103,10 @@
       payment_type_id: null,
       payment_type_name: null,
       totalPrice: 0,
+      shipAmount: 0,
       payment_status: null,
       transport_status: null,
+      orderNumber: null,
     }
   },
   mounted() {
@@ -121,10 +124,12 @@
         this.payment_type_name = response.data.payment_type_name,
         this.destination = response.data.destination;
         this.totalPrice = response.data.total_price;
+        this.shipAmount = response.data.ship_amount;
         this.transport_service_name = response.data.transport_service_name;
         this.payment_status = response.data.payment_status;
         this.transport_status = response.data.transport_status;
         this.payment_type_id = response.data.payment_type_id;
+        this.orderNumber = response.data.order_number;
         this.$loading(false);
       } catch (error) {
         this.$loading(false);

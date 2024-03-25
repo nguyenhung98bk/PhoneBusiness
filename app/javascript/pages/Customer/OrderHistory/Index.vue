@@ -1,7 +1,7 @@
 <template>
   <div class="cart-container">
     <div class="cart-header">Lịch sử đơn hàng</div>
-    <div class="cart-content">
+    <div class="cart-content cart-content-order-history">
       <div class="cart-content-container">
         <div v-for="(order, index) in orders" :key="index" class="cart-item d-block">
           <div @click="$router.push(`/customer/order_detail/${order.id}`)">
@@ -23,9 +23,14 @@
                 {{ order.order_items.length }} sản phẩm
               </div>
               <div>
-                Thành tiền: {{ convertNumberFormat(order.total_price) }}
+                Thành tiền: {{ convertNumberFormat(Number(order.total_price) + Number(order.ship_amount)) }}
               </div>
             </div>
+          </div>
+          <hr>
+          <div class="order-history-subcontent">
+            <div>Mã đơn hàng: {{ order.order_number }}</div>
+            <div>{{ displayDateTime(order.created_at) }}</div>
           </div>
           <hr>
           <div class="d-flex">
@@ -33,6 +38,7 @@
           </div>
         </div>
       </div>
+      <scroll-loader :loader-method="onPageChange" :loader-disable="disable" />
     </div>
   </div>
 </template>
@@ -41,12 +47,28 @@
 import { OrdersService } from '../../../services/customer/orders.service';
 import noImage from '../../../../assets/images/no_image.png';
 import utils from '../../../common/util';
+import moment from 'moment';
+import Vue from 'vue';
+import ScrollLoader from 'vue-scroll-loader';
+Vue.use(ScrollLoader);
 
 export default {
   data() {
     return {
       orders: [],
       noImage: noImage,
+      disable: false,
+      pager: {
+        page: 1,
+        page_count: 1,
+        page_size: 10,
+        item_count: 0,
+      },
+      pageParams: {
+        page: 1,
+        page_size: 10,
+        total_page: 1,
+      }
     }
   },
   mounted() {
@@ -56,15 +78,24 @@ export default {
     ...utils,
 
     async getOrders() {
-      this.$loading(true);
       try {
-        const { response } = await OrdersService.index();
-        this.orders = response.data;
-        console.log(this.orders[0].order_items[0]);
+        const { response } = await OrdersService.index(this.pageParams);
+        this.orders = [...this.orders, ...response.data];
+        this.pager = response.pager;
+        this.disable = this.pager.page === this.pager.page_count;
         this.$loading(false);
       } catch (error) {
         this.$loading(false);
       }
+    },
+
+    displayDateTime(dateTime) {
+      return moment(dateTime).format('HH:mm DD/MM/YYYY');
+    },
+
+    onPageChange() {
+      this.pageParams.page++;
+      this.getOrders();
     },
   }
 }

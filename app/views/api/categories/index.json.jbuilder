@@ -5,5 +5,3 @@ json.data do
     json.name category.name
   end
 end
-
-json.pager pager_meta(@pagy)

@@ -70,4 +70,17 @@ export class DestinationsService {
       throw new ApiError(error);
     }
   }
+
+  static async getShipAmount(parameters = {}) {
+    const params = { ...parameters };
+    try {
+      const response = await this.request().get(
+        `v2/shipping-order/fee`,
+        { params }
+      );
+      return new ResponseWrapper(response);
+    } catch (error) {
+      throw new ApiError(error);
+    }
+  }
 }

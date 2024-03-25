@@ -1,4 +1,4 @@
-const SHOP_GHN_ID=4164988
+const SHOP_GHN_ID=4961549
 const SHOP_GHN_DISTRICT_ID=1485
 
 const paymentStatus = [

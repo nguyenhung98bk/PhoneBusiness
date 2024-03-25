@@ -2,7 +2,7 @@ module Api
   class CategoriesController < Api::ApplicationController
     before_action :find_category, only: [:show]
     def index
-      @pagy, @categories = pagy(Category.search(params))
+      @categories = Category.search(params)
     end
 
     def show

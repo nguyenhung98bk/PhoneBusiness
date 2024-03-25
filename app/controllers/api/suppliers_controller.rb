@@ -3,7 +3,8 @@ module Api
     before_action :find_supplier, only: [:show]
 
     def index
-      @pagy, @suppliers = pagy(Supplier.search(params))
+      @suppliers = Supplier.supplier_by_category
+      p @suppliers
     end
 
     def show

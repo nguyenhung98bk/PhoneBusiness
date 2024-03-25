@@ -4,7 +4,6 @@ json.data do
     json.id supplier.id
     json.logo supplier.logo
     json.name supplier.name
+    json.category_id supplier.category_id
   end
 end
-
-json.pager pager_meta(@pagy)

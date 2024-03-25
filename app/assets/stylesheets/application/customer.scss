@@ -463,6 +463,10 @@
   overflow-y: auto;
 }
 
+.cart-content-order-history {
+  height: calc(100vh - 180px);
+}
+
 .cart-content-container {
   display: flex;
   gap: 20px;
@@ -739,4 +743,8 @@
   padding: 5px 10px;
   border-radius: 5px;
   margin-left: 10px;
+}
+
+.list-categories-ipad {
+  display: none;
 }

@@ -144,12 +144,12 @@ export default {
       this.$loading(true);
       try {
         if (this.category.id) {
-          await CategoriesService.update(this.category.id, params)
-          this.$router.push('../../categories');
+          await CategoriesService.update(this.category.id, params);
+          this.getCategories();
         }
         else {
           await CategoriesService.create(params);
-          this.$router.push('../categories');
+          this.getCategories();
         }
         this.$loading(false);
       } catch (error) {

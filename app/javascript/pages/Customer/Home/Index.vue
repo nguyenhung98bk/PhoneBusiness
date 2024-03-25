@@ -2,12 +2,14 @@
   <div class="customer-content-container">
     <div class="customer-home-header">
       <div class="home-left-header">
-        <div v-for="(category, index) in categories" :key="index" class="home-left-header-item" @click="$router.push(`/${category.id}-${category.name}`)">
-          <div>{{ category.name }}</div>
-          <div>
-            <b-icon-caret-right />
+        <template v-for="(category, index) in categories">
+          <div v-if="index < 8" class="home-left-header-item" @click="$router.push(`/${category.id}-${category.name}`)">
+            <div>{{ category.name }}</div>
+            <div>
+              <b-icon-caret-right />
+            </div>
           </div>
-        </div>
+        </template>
       </div>
       <div class="home-right-header">
         <div class="image-banner-container">
@@ -15,17 +17,22 @@
         </div>
       </div>
     </div>
+    <div class="list-categories-ipad">
+      <div v-for="(category, index) in categories" :key="index">
+        <button class="btn btn-secondary nowrap" @click="$router.push(`/${category.id}-${category.name}`)">{{ category.name }}</button>
+      </div>
+    </div>
     <template v-for="(category, index) in categories">
       <div v-if="index < 5" class="categories-standing mt-4">
         <div class="categories-header">
-          <div>
+          <div class="min-w-fit-content">
             <h3>{{ category.name }} nổi bật nhất</h3>
           </div>
           <div class="list-supplier">
             <div>
               <button class="btn btn-secondary nowrap" @click="$router.push(`/${category.id}-${category.name}`)">Xem tất cả</button>
             </div>
-            <div v-for="(supplier, index) in suppliers" :key="index">
+            <div v-for="(supplier, index) in suppliers.filter(supplier => supplier.category_id == category.id)" :key="index">
               <button class="btn btn-secondary nowrap" @click="$router.push(`/${category.id}-${category.name}/${supplier.id}-${supplier.name}`)">{{ supplier.name }}</button>
             </div>
           </div>

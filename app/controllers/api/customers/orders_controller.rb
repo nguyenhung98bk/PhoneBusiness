@@ -2,7 +2,7 @@ module Api
   module Customers
     class OrdersController < Customers::ApplicationController
       def index
-        @orders = Order.where(customer_id: @current_customer.id)
+        @pagy, @orders = pagy(Order.where(customer_id: @current_customer.id).order(created_at: :desc))
       end
 
       def show
@@ -25,7 +25,9 @@ module Api
         ActiveRecord::Base.transaction do
           @order.save!
           order_item_params[:order_items].each do |order_item_params|
-            Cart.find(order_item_params[:cart_id]).destroy
+            if (order_item_params[:cart_id].present?)
+              Cart.find(order_item_params[:cart_id]).destroy
+            end
             if order_item_params[:item_color_id].present?
               item = ItemColor.find(order_item_params[:item_color_id])
             else

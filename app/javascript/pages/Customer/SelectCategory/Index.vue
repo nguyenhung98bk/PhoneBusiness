@@ -12,7 +12,7 @@
       <div class="categories-standing mt-4">
         <div class="categories-header">
           <div class="list-supplier">
-            <div v-for="(supplier, index) in suppliers" :key="index">
+            <div v-for="(supplier, index) in suppliers.filter(supplier => supplier.category_id == category.id)" :key="index">
               <button class="btn btn-secondary nowrap" @click="$router.push(`/${category.id}-${category.name}/${supplier.id}-${supplier.name}`)">{{ supplier.name }}</button>
             </div>
           </div>

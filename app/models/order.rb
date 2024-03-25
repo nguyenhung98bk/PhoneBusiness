@@ -31,6 +31,12 @@ class Order < ApplicationRecord
     end
     query = query.where(payment_status: params[:payment_status]) if params[:payment_status].present?
     query = query.where(transport_status: params[:transport_status]) if params[:transport_status].present?
+    if (params[:month]) 
+      date_start = Time.zone.parse("#{params[:month]}").beginning_of_month.utc.strftime('%Y-%m-%d %H:%M:%S')
+      date_end = Time.zone.parse("#{params[:month]}").end_of_month.utc.strftime('%Y-%m-%d %H:%M:%S')
+
+      query = query.where('DATE_FORMAT(orders.created_at, "%Y-%m-%d") BETWEEN ? AND ?', date_start, date_end)
+    end
     query = query.order(created_at: :desc)
     query
   end
