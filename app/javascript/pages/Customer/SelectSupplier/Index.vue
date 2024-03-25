@@ -4,7 +4,13 @@
       <button class="d-flex align-items-center" @click="$router.push('/')">
         <b-icon-house-door-fill variant="danger" /><span class="ms-2">Trang chủ</span>
       </button>
+      <div>
+        <b-icon-caret-right />
+      </div>
       <button @click="$router.push(`/${category.id}-${category.name}`)">{{ category.name }}</button>
+      <div>
+        <b-icon-caret-right />
+      </div>
       <button v-if="supplier.id">{{ supplier.name }}</button>
     </div>
     <div class="space-height" />

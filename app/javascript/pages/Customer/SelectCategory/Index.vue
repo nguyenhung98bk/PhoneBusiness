@@ -4,10 +4,12 @@
       <button class="d-flex align-items-center" @click="$router.push('/')">
         <b-icon-house-door-fill variant="danger" /><span class="ms-2">Trang chủ</span>
       </button>
+      <div>
+        <b-icon-caret-right />
+      </div>
       <button>{{ category.name }}</button>
     </div>
     <div class="space-height" />
-
     <div class="select-supplier">
       <div class="categories-standing mt-4">
         <div class="categories-header">

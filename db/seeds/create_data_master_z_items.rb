@@ -86,7 +86,7 @@ if Item.count == 0
   ]
   
   items.each do |item|
-    Item.create(
+    new_item = Item.create(
       category_id: item[:category_id],
       supplier_id: item[:supplier_id],
       name: item[:name],
@@ -95,6 +95,34 @@ if Item.count == 0
       original_price: item[:original_price],
       price: item[:price],
       note: item[:note],
+    )
+    new_item.item_colors.create(
+      color: 'Đỏ',
+      quantity: 25,
+      purchase_price: new_item.purchase_price,
+      original_price: new_item.original_price,
+      price: new_item.price,
+    )
+    new_item.item_colors.create(
+      color: 'Xanh',
+      quantity: 25,
+      purchase_price: new_item.purchase_price,
+      original_price: new_item.original_price,
+      price: new_item.price,
+    )
+    new_item.item_colors.create(
+      color: 'Trắng',
+      quantity: 25,
+      purchase_price: new_item.purchase_price,
+      original_price: new_item.original_price,
+      price: new_item.price,
+    )
+    new_item.item_colors.create(
+      color: 'Đen',
+      quantity: 25,
+      purchase_price: new_item.purchase_price,
+      original_price: new_item.original_price,
+      price: new_item.price,
     )
   end
 end
