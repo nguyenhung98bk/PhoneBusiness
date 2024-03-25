@@ -2,6 +2,7 @@ module Api
   module Customers
     class OrdersController < Customers::ApplicationController
       def index
+        @orders = Order.where(customer_id: @current_customer.id)
       end
 
       def show
@@ -9,6 +10,15 @@ module Api
       end
 
       def create
+        order_item_params[:order_items].each do |order_item_params|
+          if order_item_params[:item_color_id].present?
+            item_color = ItemColor.find(order_item_params[:item_color_id])
+            return error_422("#{item_color.item.name} - #{item_color.color} không đủ hàng") if item_color.quantity < order_item_params[:quantity]
+          else
+            item = Item.find(order_item_params[:item_id])
+            return error_422("#{item.name} không đủ hàng") if item.quantity < order_item_params[:quantity]
+          end
+        end
         @order = Order.new(request_params)
         total_price = 0
         @order.total_price = total_price
@@ -22,7 +32,6 @@ module Api
               item = Item.find(order_item_params[:item_id])
             end
             item.quantity -= order_item_params[:quantity]
-            return error_422('Không đủ hàng') if item.quantity < 0
             item.save
             total_price += item.price.to_i * order_item_params[:quantity]
             order_item = @order.order_items.new()

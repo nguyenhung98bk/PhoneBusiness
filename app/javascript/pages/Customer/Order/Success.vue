@@ -46,7 +46,7 @@
           </div>
           <div class="btn-order-success">
             <button class="button-buy order-success-btn-buy" @click="$router.push('/')">Trang chủ</button>
-            <button class="button-save-buy order-success-btn-save">Đơn hàng</button>
+            <button class="button-save-buy order-success-btn-save" @click="$router.push(`/customer/order_detail/${id}`)">Đơn hàng</button>
           </div>
         </div>
       </div>

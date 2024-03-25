@@ -38,11 +38,11 @@
           </div>
         </div>
         <div class="customer-sidebar-right">
-          <div class="customer-sidebar-item">
-            <b-icon-telephone variant="light" scale="1.5"></b-icon-telephone>
+          <div class="customer-sidebar-item" @click="$router.push('/customer/order_history')">
+            <b-icon-clock-history variant="light" scale="1.5"></b-icon-clock-history>
             <div class="number-phone-contact text-hidden-mobile">
-              <div><span>Liên hệ</span></div>
-              <div><span>1900.0000</span></div>
+              <div><span>Lịch sử</span></div>
+              <div><span>đặt hàng</span></div>
             </div>
           </div>
           <div class="customer-sidebar-item" @click="$router.push('/customer/cart')">

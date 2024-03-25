@@ -108,6 +108,11 @@
       @onClose="showSelectDestination = false"
       @onSubmitSelectDestination="onSubmitSelectDestination"
     />
+    <CustomerModalError
+      v-if="errors.item"
+      :errors="errors.item"
+      @onClose="errors.item = null"
+    />
   </div>
 </template>
 
@@ -214,6 +219,7 @@ export default {
         this.destination = this.destinations[0];
         this.$loading(false);
       } catch (error) {
+        this.errors = {...this.errors, item: [error.response.message]}
         this.$loading(false);
       }
     },
@@ -275,6 +281,7 @@ export default {
         this.$router.push(`/customer/order_success/${orderId}`);
         this.$loading(false);
       } catch (error) {
+        this.errors = {...this.errors, item: [error.response.result.message]}
         this.$loading(false);
       }
     },

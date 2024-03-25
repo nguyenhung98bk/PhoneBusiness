@@ -20,6 +20,9 @@ import CustomerCart from './pages/Customer/Cart/Index.vue';
 import CustomerOrder from './pages/Customer/Order/Index.vue';
 import CustomerOrderSuccess from './pages/Customer/Order/Success.vue';
 import CustomerForgotPassword from './pages/Customer/Login/ForgotPassword.vue';
+import CustomerOrderHistory from './pages/Customer/OrderHistory/Index.vue';
+import CustomerOrderDetail from './pages/Customer/OrderHistory/Detail.vue';
+import CustomerReorder from './pages/Customer/Order/Reorder.vue';
 
 import AdminLogin from './pages/Admin/Login/Index.vue';
 import AdminHome from './pages/Admin/Home/Index.vue';
@@ -101,7 +104,9 @@ const router = new VueRouter({
         { path: 'cart', meta: { title: 'Giỏ hàng' }, name: 'customer-cart', component: CustomerCart },
         { path: 'order', meta: { title: 'Đặt hàng' }, name: 'customer-order', component: CustomerOrder },
         { path: 'order_success/:id', meta: { title: 'Đặt hàng thành công' }, name: 'customer-order-success', component: CustomerOrderSuccess },
-
+        { path: 'order_history', meta: { title: 'Lịch sử đơn hàng' }, name: 'customer-order-history', component: CustomerOrderHistory },
+        { path: 'order_detail/:id', meta: { title: 'Chi tiết đơn hàng' }, name: 'customer-order-detail', component: CustomerOrderDetail },
+        { path: 'reorder/:id', meta: { title: 'Đặt lại đơn hàng' }, name: 'customer-reorder', component: CustomerReorder },
       ]
     },
     { path: '/admin/login', meta: { title: 'Quản trị đăng nhập' }, name: 'admin-login', component: AdminLogin },

@@ -46,10 +46,16 @@
             <div class="mt-3">
               <div>Lựa chọn màu</div>
               <div class="cm-item-color-content">
-                <div v-for="(itemColor, index) in itemColors" :key="index" class="cm-item-color-element" :class="itemColor.id == itemColorSelectId ? 'active' : ''" @click="itemColorSelectId = itemColor.id">
-                  <input v-model="itemColorSelectId" type="radio" :value="itemColor.id" name="item-color"><label class="ms-2">{{ itemColor.color }}</label>
-                  <div class="text-danger">{{ convertNumberFormat(itemColor.price) }}</div>
-                </div>
+                <template v-for="(itemColor, index) in itemColors">
+                  <div v-if="itemColor.quantity > 0" class="cm-item-color-element" :class="itemColor.id == itemColorSelectId ? 'active' : ''" @click="itemColorSelectId = itemColor.id">
+                    <input v-model="itemColorSelectId" type="radio" :value="itemColor.id" name="item-color"><label class="ms-2">{{ itemColor.color }}</label>
+                    <div class="text-danger">{{ convertNumberFormat(itemColor.price) }}</div>
+                  </div>
+                  <div v-else class="cm-item-color-element disabled">
+                    <input type="radio" name="item-color" disabled><label class="ms-2">{{ itemColor.color }}</label>
+                    <div class="text-danger">{{ convertNumberFormat(itemColor.price) }}</div>
+                  </div>
+                </template>
               </div>
             </div>
             <div class="info-group-button">

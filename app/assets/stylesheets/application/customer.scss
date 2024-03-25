@@ -681,7 +681,10 @@
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
+}
 
+.cm-item-color-element.disabled {
+  background-color: #cccccc;
 }
 
 .cm-item-color-element.active {
@@ -705,4 +708,35 @@
 
 .btn-getToken.disabled {
   background-color: #cccccc;
+}
+
+.order-history-item {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.order-history-subcontent {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-reorder {
+  background: linear-gradient(90deg, #F64850, #FB810B);
+  color: #ffffff;
+  padding: 5px 20px;
+  border-radius: 5px;
+  margin-left: auto;
+}
+
+.h-63px {
+  height: 63px;
+}
+
+.btn-payment-orderdetail {
+  background: linear-gradient(90deg, #F64850, #FB810B);
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-left: 10px;
 }
