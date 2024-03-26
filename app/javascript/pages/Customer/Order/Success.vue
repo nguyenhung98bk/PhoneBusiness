@@ -107,9 +107,12 @@ export default {
     },
 
     async updateOrderStatus() {
+      const params = {
+        payment_status: 20
+      }
       this.$loading(true);
       try {
-        const { response } = await OrdersService.update(this.id);
+        const { response } = await OrdersService.update(this.id, params);
         this.order = response.data;
         this.$loading(false);
       } catch (error) {

@@ -7,9 +7,10 @@
           <div>Mã đơn hàng: {{ orderNumber }}</div>
           <div class="d-flex align-items-center">
             Trạng thái thanh toán: {{ displayPaymentStatus(payment_status) }}
-            <button v-if="payment_type_id == 2 && payment_status == 'unpaid'" class="btn-payment-orderdetail" @click="$router.push(`/customer/order_success/${id}`)">Thanh toán ngay</button>
+            <button v-if="payment_type_id == 2 && payment_status == 'unpaid' && status != 'cancel'" class="btn-payment-orderdetail" @click="$router.push(`/customer/order_success/${id}`)">Thanh toán ngay</button>
           </div>
-          <div>Trạng thái vận chuyển: {{ displayTransportStatus(transport_status) }}</div>
+          <div>Trạng thái vận chuyển: {{ displayOrderStatus(status) }}</div>
+          <div v-if="cancelReason && status != 'null'">(Lý do hủy đơn hàng: {{ cancelReason }})</div>
         </div>
       </div>
       <div class="customer-destinations">
@@ -81,18 +82,36 @@
     </div>
     <div class="cart-footer">
       <div class="info-group-button">
-        <button class="button-buy button-by-order h-60" @click="$router.push(`/customer/reorder/${id}`)">Đặt lại</button>
+        <button class="button-save-buy h-60" :class="isCanCancel() ? '' : 'disabled'" @click="cancelOrder">Hủy đơn hàng</button>
+        <button class="button-buy h-60" @click="$router.push(`/customer/reorder/${id}`)">Đặt lại</button>
       </div>
     </div>
+    <CustomerModal
+      v-if="showModalCancel"
+      :title="`Lý do hủy đơn hàng`"
+      @onClose="showModalCancel = false"
+      @onSubmit="onSubmitCancel"
+    >
+      <div>
+        <div v-for="(orderCancelReason, index) in orderCancelReasons" class="mb-3">
+          <input v-model="orderCancelReasonId" :value="orderCancelReason.id" type="radio" :id="orderCancelReason.id" :name="orderCancelReason.id"><label :for="orderCancelReason.id" class="ms-2">{{ orderCancelReason.name }}</label>
+        </div>
+      </div>
+    </CustomerModal>
   </div>
 </template>
  
  <script>
  import { OrdersService } from '../../../services/customer/orders.service';
+ import { OrderCancelReasonsService } from '../../../services/customer/order_cancel_reasons.service';
  import noImage from '../../../../assets/images/no_image.png';
  import utils from '../../../common/util';
+ import CustomerModal from '../../../components/CustomerModal.vue';
  
  export default {
+  components: {
+    CustomerModal,
+  },
   data() {
     return {
       id: this.$router.history.current.params.id,
@@ -105,18 +124,22 @@
       totalPrice: 0,
       shipAmount: 0,
       payment_status: null,
-      transport_status: null,
+      status: null,
       orderNumber: null,
+      showModalCancel: false,
+      orderCancelReasons: [],
+      orderCancelReasonId: 1,
+      cancelReason: null,
     }
   },
   mounted() {
-    this.getCarts();
+    this.getOrder();
   },
    
   methods: {
      ...utils,
  
-    async getCarts() {
+    async getOrder() {
       this.$loading(true);
       try {
         const { response } = await OrdersService.get(this.id);
@@ -127,9 +150,21 @@
         this.shipAmount = response.data.ship_amount;
         this.transport_service_name = response.data.transport_service_name;
         this.payment_status = response.data.payment_status;
-        this.transport_status = response.data.transport_status;
+        this.status = response.data.status;
         this.payment_type_id = response.data.payment_type_id;
         this.orderNumber = response.data.order_number;
+        this.cancelReason = response.data.order_cancel_reason_name;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
+    },
+
+    async getOrderCancelReason() {
+      this.$loading(true);
+      try {
+        const { response } = await OrderCancelReasonsService.index();
+        this.orderCancelReasons = response.data;
         this.$loading(false);
       } catch (error) {
         this.$loading(false);
@@ -147,19 +182,55 @@
       }
     },
 
-    displayTransportStatus(transport_status) {
-      switch (transport_status) {
+    displayOrderStatus(status) {
+      switch (status) {
         case 'complete':
           return ' Giao hàng thành công'
         case 'transporting':
           return ' Đang vận chuyển'
         case 'prepare':
           return 'Đang chuẩn bị hàng'
+        case 'cancel':
+          return 'Đã hủy'
         default:
-          return ' Chờ xác nhận'
+          return 'Chờ xác nhận'
       }
     },
+
+    isCanCancel() {
+      return this.payment_status == 'unpaid' && this.status == 'wait_confirm';
+    },
+
+    async cancelOrder() {
+      if (!this.isCanCancel()) return;
+
+      this.getOrderCancelReason();
+      this.showModalCancel = true;
+    },
+
+    async onSubmitCancel() {
+      const params = {
+        status: 90,
+        order_cancel_reason_id: this.orderCancelReasonId,
+      }
+      this.$loading(true);
+      try {
+        await OrdersService.update(this.id, params);
+        await this.getOrder();
+        this.showModalCancel = false;
+        this.$loading(false);
+      } catch (error) {
+        this.showModalCancel = false;
+        this.$loading(false);
+      }
+    }
   }
 }
- </script>
+</script>
+
+<style scoped>
+.disabled {
+  background: #cccccc;
+}
+</style>
  

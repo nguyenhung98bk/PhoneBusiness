@@ -66,6 +66,7 @@ Rails.application.routes.draw do
       resources :customer_destinations
       resources :payment_types
       resources :orders
+      resources :order_cancel_reasons
     end
 
     resources :suppliers

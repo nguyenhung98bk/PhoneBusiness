@@ -50,12 +50,24 @@ module Api
 
       def update
         @order = Order.find(params[:id])
-        if (@order.payment_status == :unpaid)
-          @order.update(payment_status: :wait_confirm)
+        if @order.payment_status == :unpaid && update_params[:payment_status].present?
+          @order.update(payment_status: update_params[:payment_status])
+        end
+
+        if update_params[:status].present? && @order.status == :wait_confirm && @order.payment_status == :unpaid
+          @order.update(status: update_params[:status], order_cancel_reason_id: params[:order_cancel_reason_id])
         end
       end
 
       private
+
+      def update_params
+        params.permit(
+          :payment_status,
+          :status,
+          :order_cancel_reason_id,
+        )
+      end
 
       def request_params
         params.permit(

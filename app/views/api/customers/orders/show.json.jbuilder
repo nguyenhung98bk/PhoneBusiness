@@ -6,7 +6,7 @@ json.data do
   json.total_price @order.total_price
   json.ship_amount @order.ship_amount
   json.payment_status @order.payment_status
-  json.transport_status @order.transport_status
+  json.status @order.status
   json.transport_service_id @order.transport_service_id
   json.transport_service_name @order.transport_service_name
   json.payment_type_id @order.payment_type_id
@@ -45,4 +45,5 @@ json.data do
   json.account_number payment_type.account_number
   json.bank_name payment_type.bank_name
   json.payment_type_name payment_type.name
+  json.order_cancel_reason_name @order.order_cancel_reason && @order.order_cancel_reason.name
 end

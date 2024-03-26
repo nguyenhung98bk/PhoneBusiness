@@ -40,8 +40,8 @@
               </div>
               <div class="search-order">
                 <vSelect
-                  v-model="searchTransportStatus"
-                  :options="transportStatus"
+                  v-model="searchOrderStatus"
+                  :options="orderStatus"
                   :reduce="(option) => option.value"
                   class="v-select"
                   label="name"
@@ -82,7 +82,7 @@
                     <td>{{ order.order_number }}</td>
                     <td>{{ order.customer_name }}</td>
                     <td>{{ paymentStatus.filter(e => e.value === order.payment_status)[0].name }}</td>
-                    <td>{{ transportStatus.filter(e => e.value === order.transport_status)[0].name }}</td>
+                    <td>{{ orderStatus.filter(e => e.value === order.status)[0].name }}</td>
                     <td>{{ order.staff_name }}</td>
                   </tr>
                 </tbody>
@@ -136,9 +136,9 @@ export default {
       },
       noImage: noImage,
       searchPaymentStatus: '',
-      searchTransportStatus: '',
+      searchOrderStatus: '',
       paymentStatus: constants.paymentStatus,
-      transportStatus: constants.transportStatus,
+      orderStatus: constants.orderStatus,
       month: new Date(),
     }
   },
@@ -152,7 +152,7 @@ export default {
     async getOrders() {
       const params = {
         key_search: this.keySearch,
-        transport_status: this.searchTransportStatus,
+        status: this.searchOrderStatus,
         payment_status: this.searchPaymentStatus,
         month: moment(this.month).format('YYYY/MM/DD'),
         ...this.pageParams,

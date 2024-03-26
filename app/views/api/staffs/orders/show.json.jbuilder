@@ -5,7 +5,7 @@ json.data do
   json.total_price @order.total_price
   json.ship_amount @order.ship_amount
   json.message @order.message
-  json.transport_status @order.transport_status
+  json.status @order.status
   json.payment_status @order.payment_status
   json.transport_service_name @order.transport_service_name
   json.created_at @order.created_at

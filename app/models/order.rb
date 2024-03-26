@@ -4,13 +4,14 @@ class Order < ApplicationRecord
   belongs_to :customer_destination
   belongs_to :payment_type
   belongs_to :staff, optional: true
+  belongs_to :order_cancel_reason, optional: true
 
   accepts_nested_attributes_for :order_items, allow_destroy: true
 
   before_create :set_initial_data
 
   enumerize :payment_status, in: {  unpaid: 10, wait_confirm: 20, paid: 30 }, scope: true
-  enumerize :transport_status, in: {  wait_confirm: 10, prepare: 20, transporting: 30, complete: 40 }, scope: true
+  enumerize :status, in: {  wait_confirm: 10, prepare: 20, transporting: 30, complete: 40, cancel: 90 }, scope: true
 
   SEARCH_BY_MONTH = 'month'.freeze
   SEARCH_BY_YEAR = 'year'.freeze
@@ -30,7 +31,7 @@ class Order < ApplicationRecord
       query = query.where("order_number LIKE ? OR customers.name LIKE ?", "%#{params[:key_search]}%", "%#{params[:key_search]}%")
     end
     query = query.where(payment_status: params[:payment_status]) if params[:payment_status].present?
-    query = query.where(transport_status: params[:transport_status]) if params[:transport_status].present?
+    query = query.where(status: params[:status]) if params[:status].present?
     if (params[:month]) 
       date_start = Time.zone.parse("#{params[:month]}").beginning_of_month.utc.strftime('%Y-%m-%d %H:%M:%S')
       date_end = Time.zone.parse("#{params[:month]}").end_of_month.utc.strftime('%Y-%m-%d %H:%M:%S')
@@ -47,7 +48,7 @@ class Order < ApplicationRecord
       .joins('left join order_items ON order_items.order_id = orders.id')
       .where('DATE_FORMAT(orders.created_at, "%Y-%m-%d") BETWEEN ? AND ?
               AND orders.payment_status = 30
-              AND orders.transport_status = 40',
+              AND orders.status = 40',
              date_start,
              date_end)
   end
@@ -61,7 +62,7 @@ class Order < ApplicationRecord
     query = query.joins('RIGHT JOIN categories c ON i.category_id = c.id')
     query = query.where('DATE_FORMAT(o.created_at, "%Y-%m-%d") BETWEEN ? AND ?
                         AND o.payment_status = 30
-                        AND o.transport_status = 40',
+                        AND o.status = 40',
                         date_start,
                         date_end)
     query.group('c.id').order('c.order')
@@ -76,7 +77,7 @@ class Order < ApplicationRecord
     query = query.joins('RIGHT JOIN suppliers s ON i.supplier_id = s.id')
     query = query.where('DATE_FORMAT(o.created_at, "%Y-%m-%d") BETWEEN ? AND ?
                         AND o.payment_status = 30
-                        AND o.transport_status = 40',
+                        AND o.status = 40',
                         date_start,
                         date_end)
     query.group('s.id').order('s.order')

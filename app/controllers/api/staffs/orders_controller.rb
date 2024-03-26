@@ -21,7 +21,7 @@ module Api
       end
 
       def update_params
-        params.permit(:payment_status, :transport_status).merge(staff_id: @current_staff.id)
+        params.permit(:payment_status, :status).merge(staff_id: @current_staff.id)
       end
     end
   end

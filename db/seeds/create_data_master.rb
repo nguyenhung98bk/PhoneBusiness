@@ -16,3 +16,12 @@ if PaymentType.count == 0
     account_number: "1015545743",
   )
 end
+
+if OrderCancelReason.count == 0
+  reasons = ["Sai thông tin người nhận", "Thay đổi hình thức thanh toán", "Khác"]
+  reasons.each do |reason|
+    OrderCancelReason.create(
+      name: reason
+    )
+  end
+end

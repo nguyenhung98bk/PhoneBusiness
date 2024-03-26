@@ -53,8 +53,8 @@
               <div class="mb-3">
                 <label class="form-label">Trạng thái vận chuyển</label>
                 <vSelect
-                  v-model="order.transport_status"
-                  :options="transportStatus"
+                  v-model="order.status"
+                  :options="orderStatus"
                   :reduce="(option) => option.value"
                   :clearable="false"
                   class="v-select"
@@ -142,7 +142,7 @@ export default {
       id: this.$router.history.current.params.id,
       order: {},
       paymentStatus: constants.paymentStatus,
-      transportStatus: constants.transportStatus,
+      orderStatus: constants.orderStatus,
       customer_destination: {},
       noImage: noImage,
     }
@@ -169,7 +169,7 @@ export default {
     async updateOrder() {
       const params = {
         payment_status: this.order.payment_status,
-        transport_status: this.order.transport_status,
+        status: this.order.status,
       }
 
       this.$loading(true);

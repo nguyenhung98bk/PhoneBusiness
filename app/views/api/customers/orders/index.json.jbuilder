@@ -7,7 +7,7 @@ json.data do
     json.total_price order.total_price
     json.ship_amount order.ship_amount
     json.payment_status order.payment_status
-    json.transport_status order.transport_status
+    json.status order.status
     json.created_at order.created_at
 
     json.order_items do

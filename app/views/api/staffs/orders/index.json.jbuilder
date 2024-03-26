@@ -5,7 +5,7 @@ json.data do
     json.order_number order.order_number
     json.customer_name order.customer.name
     json.payment_status order.payment_status
-    json.transport_status order.transport_status
+    json.status order.status
     json.staff_name order.staff && order.staff.name
     json.created_at order.created_at
   end

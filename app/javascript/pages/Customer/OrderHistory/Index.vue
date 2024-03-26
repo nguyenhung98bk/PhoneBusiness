@@ -33,7 +33,8 @@
             <div>{{ displayDateTime(order.created_at) }}</div>
           </div>
           <hr>
-          <div class="d-flex">
+          <div class="order-history-subcontent">
+            <div>{{ displayOrderStatus(order.status) }}</div>
             <button class="button-reorder" @click="$router.push(`/customer/reorder/${order.id}`)">Mua lại</button>
           </div>
         </div>
@@ -96,6 +97,21 @@ export default {
     onPageChange() {
       this.pageParams.page++;
       this.getOrders();
+    },
+
+    displayOrderStatus(status) {
+      switch (status) {
+        case 'complete':
+          return ' Giao hàng thành công'
+        case 'transporting':
+          return ' Đang vận chuyển'
+        case 'prepare':
+          return 'Đang chuẩn bị hàng'
+        case 'cancel':
+          return 'Đã hủy'
+        default:
+          return 'Chờ xác nhận'
+      }
     },
   }
 }

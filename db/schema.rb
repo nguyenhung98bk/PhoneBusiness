@@ -105,6 +105,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
     t.index ["supplier_id"], name: "index_items_on_supplier_id"
   end
 
+  create_table "order_cancel_reasons", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "order_items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "order_id", null: false
     t.bigint "item_id", null: false
@@ -123,12 +129,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
     t.bigint "customer_id", null: false
     t.bigint "payment_type_id", null: false
     t.bigint "staff_id"
+    t.bigint "order_cancel_reason_id"
     t.bigint "customer_destination_id", null: false
     t.string "order_number", null: false
     t.string "total_price", null: false
     t.string "ship_amount", null: false
     t.string "message"
-    t.integer "transport_status", default: 10, null: false
+    t.integer "status", default: 10, null: false
     t.integer "payment_status", default: 10, null: false
     t.integer "transport_service_id", null: false
     t.string "transport_service_name", null: false
@@ -136,6 +143,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
     t.datetime "updated_at", null: false
     t.index ["customer_destination_id"], name: "index_orders_on_customer_destination_id"
     t.index ["customer_id"], name: "index_orders_on_customer_id"
+    t.index ["order_cancel_reason_id"], name: "index_orders_on_order_cancel_reason_id"
     t.index ["order_number"], name: "index_orders_on_order_number", unique: true
     t.index ["payment_type_id"], name: "index_orders_on_payment_type_id"
     t.index ["staff_id"], name: "index_orders_on_staff_id"
@@ -200,6 +208,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
   add_foreign_key "order_items", "orders"
   add_foreign_key "orders", "customer_destinations"
   add_foreign_key "orders", "customers"
+  add_foreign_key "orders", "order_cancel_reasons"
   add_foreign_key "orders", "payment_types"
   add_foreign_key "orders", "staffs"
   add_foreign_key "password_resets", "customers"
