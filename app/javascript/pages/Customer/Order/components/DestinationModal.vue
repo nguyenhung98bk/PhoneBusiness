@@ -117,6 +117,9 @@
           {{ error }}
         </span>
       </div>
+      <div v-if="destination.id" class="d-flex justify-content-center">
+        <button type="button" class="btn-payment-orderdetail" @click="onDeleteDestination"><b-icon-trash-fill class="me-2" />Xóa địa điểm</button>
+      </div>
      </form>
     </CustomerModal>
   </CustomerModal>
@@ -268,11 +271,17 @@ export default {
       this.validate();
       if (Object.keys(this.errors).length) return;
 
-      if (this.destination.id) {
-        await CustomerDestinationsService.update(this.destination.id, this.destination);
-      }
-      else {
-        await CustomerDestinationsService.create(this.destination);
+      this.$loading(true);
+      try {
+        if (this.destination.id) {
+          await CustomerDestinationsService.update(this.destination.id, this.destination);
+        }
+        else {
+          await CustomerDestinationsService.create(this.destination);
+        }
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
       }
       await this.getCustomerDestinations();
       this.showModalDestination = false;
@@ -313,6 +322,18 @@ export default {
 
       this.errors = validator.errors;
     },
+
+    async onDeleteDestination() {
+      this.$loading(true);
+      try {
+        await CustomerDestinationsService.delete(this.destination.id);
+        await this.getCustomerDestinations();
+        this.showModalDestination = false;
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
+    }
   },
 }
 </script>

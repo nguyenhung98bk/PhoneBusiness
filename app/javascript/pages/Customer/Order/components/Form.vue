@@ -156,6 +156,7 @@ export default {
       paymentTypeId: null,
       totalPrice: 0,
       shipAmount: 0,
+      isErrorByTranpost: false,
     }
   },
   mounted() {
@@ -167,6 +168,10 @@ export default {
       if (value?.district_id) {
         this.getTransport();
       }
+    },
+
+    carts() {
+      this.calculateTotalPrice();
     }
   },
 
@@ -243,6 +248,7 @@ export default {
     },
 
     async onSubmit() {
+      if (this.isErrorByTranpost) return;
       this.validate();
       if (Object.keys(this.errors).length) return;
 
@@ -292,9 +298,11 @@ export default {
       try {
         const { response } = await DestinationsService.getShipAmount(params);
         this.shipAmount = response.data.total;
-        this.errors = {...this.errors, transport: []}
+        this.errors = {...this.errors, transport: []};
+        this.isErrorByTranpost = false;
         this.$loading(false);
       } catch (error) {
+        this.isErrorByTranpost = true;
         this.errors = {...this.errors, transport: ['Không có gói vận chuyển phù hợp']}
         this.$loading(false);
       }

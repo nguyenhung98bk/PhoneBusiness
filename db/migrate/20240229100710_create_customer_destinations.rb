@@ -12,6 +12,7 @@ class CreateCustomerDestinations < ActiveRecord::Migration[7.1]
       t.string :ward_name
       t.string :address
       t.boolean :default
+      t.boolean :is_deleted, null: false, default: false
 
       t.timestamps
     end

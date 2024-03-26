@@ -50,6 +50,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
     t.string "ward_name"
     t.string "address"
     t.boolean "default"
+    t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_customer_destinations_on_customer_id"
