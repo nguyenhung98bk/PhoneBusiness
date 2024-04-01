@@ -64,6 +64,7 @@ export default {
       id: this.$router.history.current.params.id,
       order: {},
       qrCode: {},
+      acqId: null,
     }
   },
   mounted() {
@@ -78,7 +79,7 @@ export default {
         const { response } = await OrdersService.get(this.id);
         this.order = response.data;
         if (this.order.account_number) {
-          await this.getQrCode();
+          await this.getBank();
         }
         this.$loading(false);
       } catch (error) {
@@ -88,9 +89,9 @@ export default {
 
     async getQrCode() {
       const params = {
-        accountNo: 1015545743,
-        accountName: "NGUYEN VIET HUNG",
-        acqId: 970436,
+        accountNo: this.order.account_number,
+        accountName: this.order.account_holders,
+        acqId: this.acqId,
         amount: Number(this.order.total_price) + Number(this.order.ship_amount),
         addInfo: this.order.order_number,
         format: "text",
@@ -102,6 +103,24 @@ export default {
         this.qrCode = response.data;
         this.$loading(false);
       } catch (error) {
+        this.$loading(false);
+      }
+    },
+
+    async getBank() {
+      this.$loading(true);
+      try {
+        const { response } = await VietqrService.getBanks();
+        const banks = response.data;
+        if (banks.length > 0) {
+          this.acqId = banks.filter(bank => bank.shortName == this.order.bank_name)[0]?.bin;
+          if (this.acqId) {
+            await this.getQrCode();
+          }
+        }
+        this.$loading(false);
+      } catch (error) {
+        console.log(error);
         this.$loading(false);
       }
     },

@@ -52,4 +52,15 @@ export class VietqrService {
       throw new ApiError(error);
     }
   }
+
+  static async getBanks() {
+    try {
+      const response = await this.request().get(
+        'banks',
+      );
+      return new ResponseWrapper(response);
+    } catch (error) {
+      throw new ApiError(error);
+    }
+  }
 }
