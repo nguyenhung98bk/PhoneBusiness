@@ -7,8 +7,8 @@ class CreateOrders < ActiveRecord::Migration[7.1]
       t.references :order_cancel_reason, foreign_key: true
       t.references :customer_destination, null: false, foreign_key: true
       t.string :order_number, null: false
-      t.string :total_price, null: false
-      t.string :ship_amount, null: false
+      t.bigint :total_price, null: false
+      t.bigint :ship_amount, null: false
       t.string :message
       t.integer :status, null: false, default: 10
       t.integer :payment_status, null: false, default: 10

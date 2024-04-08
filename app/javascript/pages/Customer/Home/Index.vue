@@ -76,6 +76,7 @@ export default {
     async getItems() {
       const params = {
         category_ids: this.categories.map(category => category.id),
+        status: 'active',
       }
       this.$loading(true);
       try {

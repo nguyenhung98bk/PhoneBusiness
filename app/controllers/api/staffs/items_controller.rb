@@ -34,6 +34,7 @@ module Api
           :original_price,
           :price,
           :note,
+          :status,
           item_colors_attributes: [
             :id,
             :color,

@@ -71,9 +71,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
     t.bigint "item_id", null: false
     t.string "color"
     t.integer "quantity", null: false
-    t.string "purchase_price", null: false
-    t.string "original_price", null: false
-    t.string "price", null: false
+    t.bigint "purchase_price", null: false
+    t.bigint "original_price", null: false
+    t.bigint "price", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["item_id"], name: "index_item_colors_on_item_id"
@@ -93,11 +93,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
     t.string "name", null: false
     t.string "product_no", null: false
     t.integer "quantity", null: false
-    t.string "purchase_price", null: false
-    t.string "original_price", null: false
-    t.string "price", null: false
+    t.bigint "purchase_price", null: false
+    t.bigint "original_price", null: false
+    t.bigint "price", null: false
     t.text "note"
     t.integer "order"
+    t.integer "status"
     t.integer "view", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -116,8 +117,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
     t.bigint "item_id", null: false
     t.bigint "item_color_id"
     t.integer "quantity", null: false
-    t.string "purchase_price", null: false
-    t.string "price", null: false
+    t.bigint "purchase_price", null: false
+    t.bigint "price", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["item_color_id"], name: "index_order_items_on_item_color_id"
@@ -132,8 +133,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
     t.bigint "order_cancel_reason_id"
     t.bigint "customer_destination_id", null: false
     t.string "order_number", null: false
-    t.string "total_price", null: false
-    t.string "ship_amount", null: false
+    t.bigint "total_price", null: false
+    t.bigint "ship_amount", null: false
     t.string "message"
     t.integer "status", default: 10, null: false
     t.integer "payment_status", default: 10, null: false

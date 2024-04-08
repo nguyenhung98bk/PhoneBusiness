@@ -12,7 +12,7 @@ module Api
     def get_item_by_category_ids
       @items = []
       params[:category_ids].each do |category_id|
-        item = Item.where(category_id: category_id).limit(10)
+        item = Item.where(category_id: category_id).search(params).limit(10)
         @items.concat(item)
       end
     end

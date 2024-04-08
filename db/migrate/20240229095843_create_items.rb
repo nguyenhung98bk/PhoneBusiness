@@ -6,11 +6,12 @@ class CreateItems < ActiveRecord::Migration[7.1]
       t.string :name, null: false
       t.string :product_no, null: false
       t.integer :quantity, null: false
-      t.string :purchase_price, null: false
-      t.string :original_price, null: false
-      t.string :price, null: false
+      t.bigint :purchase_price, null: false
+      t.bigint :original_price, null: false
+      t.bigint :price, null: false
       t.text :note
       t.integer :order
+      t.integer :status
       t.integer :view, default: 0, null: false
 
       t.timestamps

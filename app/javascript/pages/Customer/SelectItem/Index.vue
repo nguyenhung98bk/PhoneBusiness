@@ -47,16 +47,22 @@
             <div class="info-item-price-gray">{{ convertNumberFormat(itemColorSelect ? itemColorSelect.original_price : item.original_price) }}đ</div>
             <div>| Đã bao gồm VAT</div>
           </div>
+          <div v-if="item.status == 'stop_selling'" class="text-danger fs-3">
+            Ngưng bán
+          </div>
+          <div v-else-if="item.status == 'out_of_stock'" class="text-danger fs-3">
+            Hết hàng
+          </div>
           <div class="info-item-order">
             <div class="info-free-ship">
               <b-icon-truck />
-              Miễn phí vận chuyển toàn quốc
+              Miễn phí vận chuyển toàn quốc khi trở thành VIP member
             </div>
             <div class="mt-3">
               <div>Lựa chọn màu</div>
               <div class="cm-item-color-content">
                 <template v-for="(itemColor, index) in itemColors">
-                  <div v-if="itemColor.quantity > 0" class="cm-item-color-element" :class="itemColor.id == itemColorSelectId ? 'active' : ''" @click="itemColorSelectId = itemColor.id">
+                  <div :key="index" v-if="itemColor.quantity > 0" class="cm-item-color-element" :class="itemColor.id == itemColorSelectId ? 'active' : ''" @click="itemColorSelectId = itemColor.id">
                     <input v-model="itemColorSelectId" type="radio" :value="itemColor.id" name="item-color"><label class="ms-2">{{ itemColor.color }}</label>
                     <div class="text-danger">{{ convertNumberFormat(itemColor.price) }}</div>
                   </div>
@@ -68,10 +74,16 @@
               </div>
             </div>
             <div class="info-group-button">
-              <button class="button-buy" @click="showModalBuy = true">Mua ngay</button>
-              <button class="button-save-buy" @click="showModalCart = true">Thêm vào giỏ hàng</button>
+              <button class="button-buy" :class="item.status == 'active' ? '' : 'btn-disabled'" @click="item.status == 'active' ? showModalBuy = true : ''">Mua ngay</button>
+              <button class="button-save-buy" :class="item.status == 'active' ? '' : 'btn-disabled'" @click="item.status == 'active' ? showModalCart = true : ''">Thêm vào giỏ hàng</button>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="item-note mt-4">
+        <div class="item-note-title">ĐẶC ĐIỂM NỔI BẬT</div>
+        <div>
+          {{ item.note }}
         </div>
       </div>
     </div>

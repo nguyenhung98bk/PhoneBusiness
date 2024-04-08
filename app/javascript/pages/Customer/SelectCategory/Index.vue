@@ -21,7 +21,28 @@
         </div>
       </div>  
     </div>
-    <div></div>
+    <div class="mt-4">
+      <div><h4>Sắp sếp theo</h4></div>
+      <div class="list-supplier">
+        <button class="btn-sort-customer" :class="sortPrice == 'asc' ? 'active' : ''" @click="onChangeSortPrice('asc')">
+          <b-icon-sort-up></b-icon-sort-up>Giá từ thấp đến cao
+        </button>
+        <button class="btn-sort-customer" :class="sortPrice == 'desc' ? 'active' : ''" @click="onChangeSortPrice('desc')">
+          <b-icon-sort-down-alt></b-icon-sort-down-alt>Giá từ cao đến thấp
+        </button>
+        <div class="list-supplier">
+          <button class="btn-sort-customer bg-gray">
+            <input v-model="checkedStatus" type="checkbox" value="10" id="active" @change="getItems()"><label for="active">Còn hàng</label>
+          </button>
+          <button class="btn-sort-customer bg-gray">
+            <input v-model="checkedStatus" type="checkbox" value="20" id="out_of_stock" @change="getItems()"><label for="out_of_stock">Hết hàng</label>
+          </button>
+          <button class="btn-sort-customer bg-gray">
+            <input v-model="checkedStatus" type="checkbox" value="30" id="stop_selling" @change="getItems()"><label for="stop_selling">Ngưng bán</label>
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="">
       <ListItem :items="items" />
       <div v-if="totalItemNotDisplay > 0" class="customer-open-new-page">
@@ -60,6 +81,9 @@ export default {
         total_page: 1,
       },
       totalItemNotDisplay: 0,
+      sortPrice: null,
+      sortView: null,
+      checkedStatus: [10],
     }
   },
   async mounted() {
@@ -67,9 +91,11 @@ export default {
     await this.getSuppliers();
   },
   methods: {
-    async getItems() {
+    async getItems(isNextPage = false) {
       const params = {
         category_id: this.category.id,
+        sort_price: this.sortPrice,
+        checked_status: this.checkedStatus.map(Number),
         ...this.pageParams,
       }
 
@@ -77,7 +103,7 @@ export default {
       try {
         const { response } = await ItemsService.index(params);
         this.pager = response.pager;
-        this.items = [...this.items, ...response.data];
+        this.items = isNextPage ? [...this.items, ...response.data] : response.data;
         this.totalItemNotDisplay = this.pager.item_count - this.pager.page * this.pager.page_size;
         this.$loading(false);
       } catch (error) {
@@ -98,8 +124,14 @@ export default {
 
     onNextPage() {
       this.pageParams.page++;
-      this.getItems();
+      this.getItems(true);
     },
+
+    onChangeSortPrice(sortPrice) {
+      this.sortPrice = sortPrice;
+      this.pageParams.page == 1;
+      this.getItems();
+    }
   },
 }
 </script>

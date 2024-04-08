@@ -10,6 +10,7 @@ json.data do
   json.original_price @item.original_price
   json.price @item.price
   json.note @item.note
+  json.status @item.status
   json.item_images do
     json.array! @item.item_images do |item_image|
       json.id item_image.id

@@ -62,6 +62,21 @@
                       {{ error }}
                     </span>
                   </div>
+                  <div class="mb-3">
+                    <label class="form-label">Trạng thái</label>
+                    <vSelect
+                      v-model="item.status"
+                      :options="status"
+                      :reduce="(option) => option.value"
+                      class="v-select"
+                      label="text"
+                    >
+                      <span slot="no-options">Không có lựa chọn</span>
+                    </vSelect>
+                    <span v-for="error in errors['category_id']" :key="error" class="admin-error">
+                      {{ error }}
+                    </span>
+                  </div>
                 </div>
                 <div class="mb-3">
                   <label class="form-label">Phân loại màu sắc</label>
@@ -197,6 +212,11 @@ export default {
       images: [],
       itemColors: [],
       isItemColor: 1,
+      status: [
+        { value: 'active', text: 'Còn hàng' },
+        { value: 'out_of_stock', text: 'Hết hàng' },
+        { value: 'stop_selling', text: 'Ngừng bán' },
+      ],
     }
   },
   mounted() {
@@ -220,6 +240,7 @@ export default {
         original_price: this.item.original_price,
         price: this.item.price,
         note: this.item.note,
+        status: this.item.status,
       }
 
       if (this.isItemColor == 2) {

@@ -4,7 +4,6 @@ module Api
 
     def index
       @suppliers = Supplier.supplier_by_category
-      p @suppliers
     end
 
     def show
