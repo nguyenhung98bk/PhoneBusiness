@@ -6,7 +6,7 @@ module Api
     end
 
     def show
-      
+      @reviews = Review.find_by_item(@item.id)
     end
 
     def get_item_by_category_ids

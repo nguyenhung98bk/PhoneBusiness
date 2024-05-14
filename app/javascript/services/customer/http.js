@@ -19,9 +19,13 @@ export class Http {
   init() {
     this.instance.interceptors.response.use(undefined, async error => {
       if (error.response.status === 401) {
+        localStorage.removeItem('customer_csrf');
+        localStorage.removeItem('customer_login');
         window.location.href = '/customer/login';
       }
       if (error.response.status === 423) {
+        localStorage.removeItem('customer_csrf');
+        localStorage.removeItem('customer_login');
         window.location.href = '/customer/login';
       }
       // redirect to LP if get 404 and specific error code

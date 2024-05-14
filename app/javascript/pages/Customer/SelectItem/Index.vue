@@ -86,6 +86,14 @@
           {{ item.note }}
         </div>
       </div>
+      <div class="mt-4">
+        <div style="font-weight: 500; font-size: 18px;">Đánh giá sản phẩm</div>
+        <hr>
+        <div v-for="(review, index) in reviews" :key="index">
+          <Ratings :review="review" ></Ratings>
+          <hr>
+        </div>
+      </div>
     </div>
     <CheckSuccess
       :show="showCheckSuccess"
@@ -113,11 +121,13 @@ import utils from '../../../common/util';
 import { CartsService } from '../../../services/customer/carts.service';
 import CheckSuccess from '../../../components/CheckSuccess.vue';
 import CustomerModal from '../../../components/CustomerModal.vue';
+import Ratings from '../../../components/Ratings.vue';
 
 export default {
   components: {
     CheckSuccess,
     CustomerModal,
+    Ratings,
   },
   data() {
     return {
@@ -145,6 +155,7 @@ export default {
       itemColors: [],
       itemColorSelectId: null,
       itemColorSelect: null,
+      reviews: [],
     }
   },
   async mounted() {
@@ -167,6 +178,8 @@ export default {
         if (this.itemColors.length) {
           this.itemColorSelectId = this.itemColors[0].id;
         }
+        this.reviews = response.reviews;
+        console.log(this.reviews);
         this.$loading(false);
       } catch (error) {
         this.$loading(false);

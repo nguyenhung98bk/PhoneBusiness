@@ -1,5 +1,6 @@
 class Order < ApplicationRecord
   has_many :order_items, dependent: :destroy
+  has_one :review, dependent: :destroy
   belongs_to :customer
   belongs_to :customer_destination
   belongs_to :payment_type

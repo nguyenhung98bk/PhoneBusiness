@@ -38,6 +38,10 @@ json.data do
           json.image_url item_image.image_url
         end
       end
+      json.supplier_id item.supplier_id
+      json.category_id item.category_id
+      json.supplier_name item.supplier.name
+      json.category_name item.category.name
     end
   end
 
@@ -46,4 +50,11 @@ json.data do
   json.bank_name payment_type.bank_name
   json.payment_type_name payment_type.name
   json.order_cancel_reason_name @order.order_cancel_reason && @order.order_cancel_reason.name
+
+  review = @order.review
+  json.review do
+    json.id review&.id
+    json.ratings review&.ratings
+    json.review review&.review
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_14_035737) do
   create_table "admins", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", null: false
     t.string "password_digest", null: false
@@ -177,6 +177,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.integer "ratings", null: false
+    t.text "review"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_reviews_on_order_id"
+  end
+
   create_table "staffs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", null: false
     t.string "name", null: false
@@ -214,4 +223,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_074944) do
   add_foreign_key "orders", "staffs"
   add_foreign_key "password_resets", "customers"
   add_foreign_key "password_settings", "customers"
+  add_foreign_key "reviews", "orders"
 end

@@ -79,6 +79,23 @@
           </div>
         </div>
       </div>
+      <div v-if="payment_status == 'paid' && status == 'complete'">
+        <div class="cart-header">Đánh giá</div>
+        <div class="mt-3">
+          <label>Chất lượng sản phẩm</label>
+          <div class="d-flex gap-5px mt-1">
+            <b-icon-star-fill v-for="star in new Array(review.ratings).fill(0).map((_, i) => i + 1)" :key="star" variant="danger" scale="1.2" class="cursor-pointer" @click="updateStar(star)"></b-icon-star-fill>
+            <b-icon-star v-for="star in new Array(5 - review.ratings).fill(review.ratings).map((_, i) => i + 1)" :key="star + review.ratings" scale="1.2" variant="danger" class="cursor-pointer" @click="updateStar(star + review.ratings)"></b-icon-star>
+          </div>
+        </div>
+        <div class="mt-3">
+          <label>Mô tả sản phẩm</label>
+          <textarea v-model="review.review" class="form-control height-three-line mt-1" :disabled="review.id"></textarea>
+        </div>
+        <div v-if="!review.id" class="mt-3">
+          <button class="button-save-buy h-60" @click="createReview">Xác nhận đánh giá</button>
+        </div>
+      </div>
     </div>
     <div class="cart-footer">
       <div class="info-group-button">
@@ -103,6 +120,7 @@
  
  <script>
  import { OrdersService } from '../../../services/customer/orders.service';
+ import { ReviewsService } from '../../../services/customer/reviews.service';
  import { OrderCancelReasonsService } from '../../../services/customer/order_cancel_reasons.service';
  import noImage from '../../../../assets/images/no_image.png';
  import utils from '../../../common/util';
@@ -130,6 +148,12 @@
       orderCancelReasons: [],
       orderCancelReasonId: 1,
       cancelReason: null,
+      review: {
+        id: null,
+        ratings: 5,
+        review: '',
+        order_id: this.$router.history.current.params.id,
+      }
     }
   },
   mounted() {
@@ -154,6 +178,9 @@
         this.payment_type_id = response.data.payment_type_id;
         this.orderNumber = response.data.order_number;
         this.cancelReason = response.data.order_cancel_reason_name;
+        if (response.data.review.id !== null) {
+          this.review = response.data.review;
+        }
         this.$loading(false);
       } catch (error) {
         this.$loading(false);
@@ -223,6 +250,22 @@
         this.showModalCancel = false;
         this.$loading(false);
       }
+    },
+
+    updateStar(star) {
+      if (this.review.id) return;
+      this.review.ratings = star;
+    },
+
+    async createReview() {
+      this.$loading(true);
+      try {
+        await ReviewsService.create(this.review);
+        this.getOrder();
+        this.$loading(false);
+      } catch (error) {
+        this.$loading(false);
+      }
     }
   }
 }
@@ -231,6 +274,10 @@
 <style scoped>
 .disabled {
   background: #cccccc;
+}
+
+.height-three-line {
+  height: 90px;
 }
 </style>
  
