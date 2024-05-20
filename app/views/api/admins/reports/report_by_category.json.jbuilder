@@ -5,5 +5,7 @@ json.data do
     json.name category_order.name
     json.sum_item category_order.sum_item
     json.sum_price category_order.sum_price
+    json.sum_expense category_order.sum_expense
+    json.sum_income category_order.sum_income
   end
 end

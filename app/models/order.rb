@@ -44,8 +44,12 @@ class Order < ApplicationRecord
   end
 
   def self.calculate_revenue(date_start, date_end)
-    select('count((orders.id)) as count, sum(order_items.quantity * (order_items.price - order_items.purchase_price)) as sum_total')
-      .from('orders')
+    select(
+      'count((orders.id)) as count,
+      sum(order_items.quantity * (order_items.price - order_items.purchase_price)) as sum_total,
+      sum(order_items.quantity * order_items.purchase_price) as sum_expense,
+      sum(order_items.quantity * order_items.price) as sum_income
+    ').from('orders')
       .joins('left join order_items ON order_items.order_id = orders.id')
       .where('DATE_FORMAT(orders.created_at, "%Y-%m-%d") BETWEEN ? AND ?
               AND orders.payment_status = 30
@@ -56,8 +60,10 @@ class Order < ApplicationRecord
 
   def self.count_category_order(date_start, date_end)
     query = select('c.name, c.id, sum(oi.quantity) as sum_item,
-                    sum(oi.quantity * (oi.price - oi.purchase_price)) as sum_price')
-                    .from('orders as o')
+                    sum(oi.quantity * (oi.price - oi.purchase_price)) as sum_price,
+                    sum(oi.quantity * oi.purchase_price) as sum_expense,
+                    sum(oi.quantity * oi.price) as sum_income
+                  ').from('orders as o')
     query = query.joins("INNER JOIN order_items as oi ON oi.order_id = o.id")
     query = query.joins('INNER JOIN items as i ON oi.item_id = i.id')
     query = query.joins('RIGHT JOIN categories c ON i.category_id = c.id')
@@ -71,8 +77,10 @@ class Order < ApplicationRecord
 
   def self.count_supplier_order(date_start, date_end)
     query = select('s.name, s.id, sum(oi.quantity) as sum_item,
-                    sum(oi.quantity * (oi.price - oi.purchase_price)) as sum_price')
-                    .from('orders as o')
+                    sum(oi.quantity * (oi.price - oi.purchase_price)) as sum_price,
+                    sum(oi.quantity * oi.purchase_price) as sum_expense,
+                    sum(oi.quantity * oi.price) as sum_income
+                  ').from('orders as o')
     query = query.joins("INNER JOIN order_items as oi ON oi.order_id = o.id")
     query = query.joins('INNER JOIN items as i ON oi.item_id = i.id')
     query = query.joins('RIGHT JOIN suppliers s ON i.supplier_id = s.id')

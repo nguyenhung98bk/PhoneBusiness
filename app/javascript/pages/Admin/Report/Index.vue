@@ -72,7 +72,9 @@
                   <div class="month">
                     <div class="content-month">
                       <p class="title-time">Tháng {{ currentMonth() }}</p>
-                      <p class="count">Số đơn hàng  <span class="content_right">{{ countOrderFirst }}<span class="text_content font_text-bold"></span></span></p>
+                      <p class="count">Số đơn hàng <span class="content_right">{{ countOrderFirst }}<span class="text_content font_text-bold"></span></span></p>
+                      <p>Thu về <span class="content_right">{{ convertNumberFormat(sumIncomeOrderFirst) }}<span class="text_content font_text-bold"></span>đ</span></p>
+                      <p>Chi phí <span class="content_right">{{ convertNumberFormat(sumExpenseOrderFirst) }}<span class="text_content font_text-bold"></span>đ</span></p>
                       <p>Doanh thu <span class="content_right">{{ convertNumberFormat(sumOrderFirst) }}<span class="text_content font_text-bold"></span>đ</span></p>
                     </div>
                   </div>
@@ -82,6 +84,8 @@
                     <div class="content-month">
                       <p class="title-time">Tháng {{ preMonth() }}</p>
                       <p class="count">Số đơn hàng  <span class="content_right">{{ countOrderSecond }}<span class="text_content font_text-bold"></span></span></p>
+                      <p>Thu về <span class="content_right">{{ convertNumberFormat(sumIncomeOrderSecond) }}<span class="text_content font_text-bold"></span>đ</span></p>
+                      <p>Chi phí <span class="content_right">{{ convertNumberFormat(sumExpenseOrderSecond) }}<span class="text_content font_text-bold"></span>đ</span></p>
                       <p>Doanh thu <span class="content_right">{{ convertNumberFormat(sumOrderSecond) }}<span class="text_content font_text-bold"></span>đ</span></p>
                     </div>
                   </div>
@@ -91,6 +95,8 @@
                     <div class="content-month">
                       <p class="title-time">Tháng {{ preTwoMonth() }}</p>
                       <p class="count">Số đơn hàng  <span class="content_right">{{ countOrderThird }}<span class="text_content font_text-bold"></span></span></p>
+                      <p>Thu về <span class="content_right">{{ convertNumberFormat(sumIncomeOrderThird) }}<span class="text_content font_text-bold"></span>đ</span></p>
+                      <p>Chi phí <span class="content_right">{{ convertNumberFormat(sumExpenseOrderThird) }}<span class="text_content font_text-bold"></span>đ</span></p>
                       <p>Doanh thu <span class="content_right">{{ convertNumberFormat(sumOrderThird) }}<span class="text_content font_text-bold"></span>đ</span></p>
                     </div>
                   </div>
@@ -106,6 +112,8 @@
                     <div class="content-month">
                       <p class="title-time">Năm {{ currentYear() }}</p>
                       <p class="count">Số đơn hàng  <span class="content_right">{{ countOrderFirst }}<span class="text_content font_text-bold"></span></span></p>
+                      <p>Thu về <span class="content_right">{{ convertNumberFormat(sumIncomeOrderFirst) }}<span class="text_content font_text-bold"></span>đ</span></p>
+                      <p>Chi phí <span class="content_right">{{ convertNumberFormat(sumExpenseOrderFirst) }}<span class="text_content font_text-bold"></span>đ</span></p>
                       <p>Doanh thu <span class="content_right">{{ convertNumberFormat(sumOrderFirst) }}<span class="text_content font_text-bold"></span>đ</span></p>
                     </div>
                   </div>
@@ -115,6 +123,8 @@
                     <div class="content-month">
                       <p class="title-time">Năm {{ preYear() }}</p>
                       <p class="count">Số đơn hàng  <span class="content_right">{{ countOrderSecond }}<span class="text_content font_text-bold"></span></span></p>
+                      <p>Thu về <span class="content_right">{{ convertNumberFormat(sumIncomeOrderSecond) }}<span class="text_content font_text-bold"></span>đ</span></p>
+                      <p>Chi phí <span class="content_right">{{ convertNumberFormat(sumExpenseOrderSecond) }}<span class="text_content font_text-bold"></span>đ</span></p>
                       <p>Doanh thu <span class="content_right">{{ convertNumberFormat(sumOrderSecond) }}<span class="text_content font_text-bold"></span>đ</span></p>
                     </div>
                   </div>
@@ -124,6 +134,8 @@
                     <div class="content-month">
                       <p class="title-time">Năm {{ preTwoYear() }}</p>
                       <p class="count">Số đơn hàng  <span class="content_right">{{ countOrderThird }}<span class="text_content font_text-bold"></span></span></p>
+                      <p>Thu về <span class="content_right">{{ convertNumberFormat(sumIncomeOrderThird) }}<span class="text_content font_text-bold"></span>đ</span></p>
+                      <p>Chi phí <span class="content_right">{{ convertNumberFormat(sumExpenseOrderThird) }}<span class="text_content font_text-bold"></span>đ</span></p>
                       <p>Doanh thu <span class="content_right">{{ convertNumberFormat(sumOrderThird) }}<span class="text_content font_text-bold"></span>đ</span></p>
                     </div>
                   </div>
@@ -138,6 +150,8 @@
                     <div class="content-month">
                       <p class="title-time">Năm {{ displayRange() }}</p>
                       <p class="count">Số đơn hàng  <span class="content_right">{{ countOrderFirst }}<span class="text_content font_text-bold"></span></span></p>
+                      <p>Thu về <span class="content_right">{{ convertNumberFormat(sumIncomeOrderFirst) }}<span class="text_content font_text-bold"></span>đ</span></p>
+                      <p>Chi phí <span class="content_right">{{ convertNumberFormat(sumExpenseOrderFirst) }}<span class="text_content font_text-bold"></span>đ</span></p>
                       <p>Doanh thu <span class="content_right">{{ convertNumberFormat(sumOrderFirst) }}<span class="text_content font_text-bold"></span>đ</span></p>
                     </div>
                   </div>
@@ -157,6 +171,14 @@
                   <input type="radio" v-model="typeReportCategory" value="2" name="typeReportCategory" />
                   <label class="type-search-time">Doanh thu</label>
                 </li>
+                <li>
+                  <input type="radio" v-model="typeReportCategory" value="3" name="typeReportCategory" />
+                  <label class="type-search-time">Thu về</label>
+                </li>
+                <li>
+                  <input type="radio" v-model="typeReportCategory" value="4" name="typeReportCategory" />
+                  <label class="type-search-time">Chi phí</label>
+                </li>
               </ul>
             </div>
             <div class="fs-4">Thống kê theo phân loại sản phẩm</div>
@@ -167,6 +189,14 @@
             <DoughnutChart
               v-if="typeReportCategory == 2"
               :data="dataSumPriceByCategory"
+            />
+            <DoughnutChart
+              v-if="typeReportCategory == 3"
+              :data="dataSumIncomeByCategory"
+            />
+            <DoughnutChart
+              v-if="typeReportCategory == 4"
+              :data="dataSumExpenseByCategory"
             />
           </div>
           <div class="mt-4">
@@ -179,6 +209,16 @@
             <BarChart
               v-if="typeReportCategory == 2"
               :data="dataSumPriceBySupplier"
+              :unit="'Doanh thu (đ)'"
+            />
+            <BarChart
+              v-if="typeReportCategory == 3"
+              :data="dataSumIncomeBySupplier"
+              :unit="'Số lượng'"
+            />
+            <BarChart
+              v-if="typeReportCategory == 4"
+              :data="dataSumExpenseBySupplier"
               :unit="'Doanh thu (đ)'"
             />
           </div>
@@ -218,15 +258,27 @@ export default {
       rangeDate: [new Date(), new Date()],
       countOrderFirst: 0,
       sumOrderFirst: 0,
+      sumExpenseOrderFirst: 0,
+      sumIncomeOrderFirst: 0,
       countOrderSecond: 0,
       sumOrderSecond: 0,
+      sumExpenseOrderSecond: 0,
+      sumIncomeOrderSecond: 0,
       countOrderThird: 0,
       sumOrderThird: 0,
+      sumExpenseOrderThird: 0,
+      sumIncomeOrderThird: 0,
       categories: [],
       dataSumItemByCategory: [],
+      dataSumExpenseByCategory: [],
+      dataSumIncomeByCategory: [],
       dataSumPriceByCategory: [],
+
       dataSumItemBySupplier: [],
+      dataSumExpenseBySupplier: [],
+      dataSumIncomeBySupplier: [],
       dataSumPriceBySupplier: [],
+
       typeReportCategory: 1,
       typeReportSupplier: 1,
     }
@@ -332,10 +384,18 @@ export default {
         const calculate = response.data;
         this.countOrderFirst = calculate.count_order_first ? calculate.count_order_first : 0;
         this.sumOrderFirst = calculate.sum_order_first ? calculate.sum_order_first : 0;
+        this.sumExpenseOrderFirst = calculate.sum_expense_order_first ? calculate.sum_expense_order_first : 0;
+        this.sumIncomeOrderFirst = calculate.sum_income_order_first ? calculate.sum_income_order_first : 0;
+
         this.countOrderSecond = calculate.count_order_second ? calculate.count_order_second : 0;
         this.sumOrderSecond = calculate.sum_order_second ? calculate.sum_order_second : 0;
+        this.sumExpenseOrderSecond = calculate.sum_expense_order_second ? calculate.sum_expense_order_second : 0;
+        this.sumIncomeOrderSecond = calculate.sum_income_order_second ? calculate.sum_income_order_second : 0;
+
         this.countOrderThird = calculate.count_order_third ? calculate.count_order_third : 0;
         this.sumOrderThird = calculate.sum_order_third ? calculate.sum_order_third : 0;
+        this.sumExpenseOrderThird = calculate.sum_expense_order_third ? calculate.sum_expense_order_third : 0;
+        this.sumIncomeOrderThird = calculate.sum_income_order_third ? calculate.sum_income_order_third : 0;
         this.$loading(false);
       } catch (error) {
         this.$loading(false);
@@ -364,6 +424,18 @@ export default {
           return {
             label: data.name,
             data: data.sum_price,
+          }
+        })
+        this.dataSumIncomeByCategory = dataReportByCategory.map(data => {
+          return {
+            label: data.name,
+            data: data.sum_income,
+          }
+        })
+        this.dataSumExpenseByCategory = dataReportByCategory.map(data => {
+          return {
+            label: data.name,
+            data: data.sum_expense,
           }
         })
         this.$loading(false);
@@ -395,6 +467,18 @@ export default {
           return {
             label: data.name,
             data: data.sum_price,
+          }
+        })
+        this.dataSumIncomeBySupplier = dataReportBySupplier.map(data => {
+          return {
+            label: data.name,
+            data: data.sum_income,
+          }
+        })
+        this.dataSumExpenseBySupplier = dataReportBySupplier.map(data => {
+          return {
+            label: data.name,
+            data: data.sum_expense,
           }
         })
         this.$loading(false);
